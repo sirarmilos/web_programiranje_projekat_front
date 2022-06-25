@@ -4,12 +4,36 @@
     <!-- vidi kako na link da vezes onclick metodu, nesto v-bind mozda ne znam-->
     <!-- https://forum.vuejs.org/t/how-to-call-a-function-by-click-on-some-class-in-href-tag/37181 --> 
     <div class="topnav">
-        <a href="#home" >Pregled podataka</a>
-        <a href="#news">Ažuriranje podataka</a>
-        <a href="#contact">Restorani</a>
-        <a class="active" href="#about">Porudžbina</a>
-        <a href="#about">Izloguj se</a>
+        <a href="/kupacPocetna" >Pregled podataka</a>
+        <a href="/kupacAzuriranjePodataka">Ažuriranje podataka</a>
+        <a href="/kupacRestorani">Restorani</a>
+        <a class="active" href="/kupacPorudzbine">Porudžbina</a>
+        <a href="/">Izloguj se</a>
     </div>
+
+    <p>Pregled porudzbina</p>
+
+    <table id="listaPorudzbina">
+
+        <tr>
+          <th>DatumVreme</th>
+          <th>Cena</th>
+          <th>Status</th>
+          <th>Vise informacija</th>
+        </tr>
+
+        <tr v-for="porudzbina in listaPorudzbina" :key="listaPorudzbina.id">
+          <td>{{ porudzbina.datumVreme }}</td>
+          <td>{{ porudzbina.cena }}</td>
+          <td>{{ porudzbina.status }}</td>
+          <td>
+            <button class="dugmeViseInformacija" v-on:click="viseInformacija(porudzbina)">
+              Vise informacija
+            </button>
+          </td>
+        </tr>
+
+    </table>
 
     <table>
 
@@ -25,6 +49,58 @@
 
 export default {
   name: "KupacPorudzbineView",
+
+  data: function () {
+    return {
+      listaPorudzbina:{
+        datumVreme: "",
+        cena: "",
+        status: "",
+      },
+    };
+  },
+  mounted: function () {
+
+    //if(localStorage.name === "kkkk")
+    //{
+    //primer axios poziva
+    /*axios
+      .get("http://localhost:8081/api/korisnik/pregled_podataka")
+      .then((res) => {
+        
+        this.korisnik = res.data;
+
+      })
+      .catch((err) =>{
+        //console.log(err)
+      })*/
+
+      fetch('http://localhost:8081/api/porudzbina/dobaviSve' /*+ localStorage.name*/, {
+        method: "GET",
+        credentials: 'include',
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+        },
+        //body: JSON.stringify(this.logovanjeSlanje),
+
+      })
+        .then(response => response.json())
+        .then(data => {console.log("Success:", data); this.listaPorudzbina = data})
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+  //}
+  },
+
+  methods: {
+
+    viseInformacija : function(porudzbina) {
+      this.$router.push("/kupacPregledPojedinacnePorudzbine/?id=" + porudzbina.id);
+    },
+
+  }
+
 };
 
 </script>

@@ -4,53 +4,51 @@
     <!-- vidi kako na link da vezes onclick metodu, nesto v-bind mozda ne znam-->
     <!-- https://forum.vuejs.org/t/how-to-call-a-function-by-click-on-some-class-in-href-tag/37181 --> 
     <div class="topnav">
-        <a href="#home">Pregled podataka</a>
-        <a class="active" href="#news">Ažuriranje podataka</a>
-        <a href="#contact">Restorani</a>
-        <a href="#about">Porudžbina</a>
-        <a href="#about">Izloguj se</a>
+        <a href="/kupacPocetna" >Pregled podataka</a>
+        <a class="active" href="/kupacAzuriranjePodataka">Ažuriranje podataka</a>
+        <a href="/kupacRestorani">Restorani</a>
+        <a href="/kupacPorudzbine">Porudžbina</a>
+        <a href="/">Izloguj se</a>
     </div>
 
     <p>
         Ovde možete da ažurirate svoj profil
     </p>
 
-    <form method="post">
+    <!--<form method="post">-->
 
         <label for="poljeLozinka"> Lozinka: </label>
-        <input id="poljeLozinka" type="password" name="lozinka"/>
+        <input v-model="korisnik.lozinka" id="poljeLozinka" type="password" name="lozinka"/>
+
+        <button v-on:click="prikaziLozinku()"> {{ tekstDugmeta }} </button>
 
         <br/>
 
         <label for="poljeIme"> Ime: </label>
-        <input id="poljeIme" type="text" name="ime"/>
+        <input v-model="korisnik.ime" id="poljeIme" type="text" name="ime"/>
 
         <br/>
 
         <label for="poljePrezime"> Prezime: </label>
-        <input id="poljePrezime" type="text" name="prezime"/>
-
-        <br/>
+        <input v-model="korisnik.prezime" id="poljePrezime" type="text" name="prezime"/>
 
         <br/>
 
         <label for="poljePol"> Pol: </label>
-        <input id="poljePol" type="text" name="pol"/>
+        <input v-model="korisnik.pol" id="poljePol" type="text" name="pol"/>
 
         <br/>
 
-        <br/>
-
-        <label for="pojePrezime"> Datum rođenja: </label>
-        <input id="poljePrezime" type="text" name="datumRodjenja"/>
+        <label for="pojeDatumRodjenja"> Datum rođenja: </label>
+        <input v-model="korisnik.datumRodjenja" id="poljeDatumRodjenja" type="text" name="datumRodjenja"/>
 
         <br/>
 
-        <button>
+        <button v-on:click="izvrsiAzuriranjePodataka()">
             Potvrda ažuriranja
         </button>
 
-    </form>
+    <!--</form>-->
 
 </template>
 
@@ -58,6 +56,75 @@
 
 export default {
   name: "KupacAzuriranjePodatakaView",
+
+  data: function () {
+    return {
+      korisnik: {},
+      tekstDugmeta: "Prikaži lozinku",
+    };
+  },
+  mounted: function () {
+
+      fetch('http://localhost:8081/api/korisnik/pregled_podataka/' /*+ localStorage.name*/, {
+        method: "GET",
+        credentials: 'include',
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+        },
+        //body: JSON.stringify(this.logovanjeSlanje),
+
+      })
+        .then(response => response.json())
+        .then(data => {console.log("Success:", data); this.korisnik = data})
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+  //}
+  },
+
+ methods: {
+
+    prikaziLozinku() {
+      var vrednost = document.getElementById("poljeLozinka");
+      if(vrednost.type === "password")
+      {
+        //document.getElementById("poljeLozinka").setAttribute("type", "text");
+        vrednost.setAttribute("type", "text");
+        this.tekstDugmeta = "Sakrij lozinku";
+      }
+      else
+      {
+        //document.getElementById("poljeLozinka").setAttribute("type", "password");
+        vrednost.setAttribute("type", "password");
+        this.tekstDugmeta = "Prikaži lozinku";
+      }
+    },
+
+    izvrsiAzuriranjePodataka : function() {
+
+      fetch("http://localhost:8081/api/korisnik/azuriranje_podataka", {
+        method: "PUT",
+        credentials: 'include',
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(this.korisnik),
+      })
+        .then((response) => response.json)
+        .then((data) => {
+          console.log("Success : " + data);
+          this.$router.push("/kupacPocetna");
+        })
+        .catch((err) => {
+          console.log("Error : " + err);
+          alert(err);
+        });
+    }
+
+  },
+  
 };
 
 </script>

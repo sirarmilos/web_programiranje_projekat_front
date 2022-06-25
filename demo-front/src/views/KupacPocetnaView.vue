@@ -4,11 +4,11 @@
     <!-- vidi kako na link da vezes onclick metodu, nesto v-bind mozda ne znam-->
     <!-- https://forum.vuejs.org/t/how-to-call-a-function-by-click-on-some-class-in-href-tag/37181 --> 
     <div class="topnav">
-        <a class="active" href="#home" >Pregled podataka</a>
-        <a href="#news">Ažuriranje podataka</a>
-        <a href="#contact">Restorani</a>
-        <a href="#about">Porudžbina</a>
-        <a href="#about">Izloguj se</a>
+        <a class="active" href="/kupacPocetna" >Pregled podataka</a>
+        <a href="/kupacAzuriranjePodataka">Ažuriranje podataka</a>
+        <a href="/kupacRestorani">Restorani</a>
+        <a href="/kupacPorudzbine">Porudžbina</a>
+        <a href="/">Izloguj se</a>
     </div>
 
     <p>
@@ -20,48 +20,51 @@
     <!--<form method="get"> --><!-- get jer ovde samo prihvatamo podatke u polja, ne menjamo i šaljemo-->
 
         <label for="poljeKorisnickoIme"> Korisničko ime: </label>
-       <!--<input  id="poljeKorisnickoIme" type="text" name="korisnickoIme" required="required" readonly/>
-        --> 
-        <p> {{korisnik.korisnickoIme}} </p>
+        <input v-model="korisnik.korisnickoIme" id="poljeKorisnickoIme" type="text" name="korisnickoIme" required="required" readonly/>
+        
+        <!--<p> {{korisnik.korisnickoIme}} </p>
+-->
+
         <br/>
 
         <label for="poljeLozinka"> Lozinka: </label>
-        <input id="poljeLozinka" type="password" name="lozinka" required="required" readonly/>
+        <input v-model="korisnik.lozinka" id="poljeLozinka" type="password" name="lozinka" required="required" readonly/>
 
-        <p> {{korisnik.lozinka}} </p>
+        <!--<p> {{korisnik.lozinka}} </p>
+-->
+        <!--<label for="cekPrikaziLozinku"> Prikaži lozinku </label>
+        <input id="cekPrikaziLozinku" type="checkbox" v-on:click="prikaziLozinku(this)" />
+-->
+        <button v-on:click="prikaziLozinku()"> {{ tekstDugmeta }} </button>
 
         <br/>
 
         <label for="poljeIme"> Ime: </label>
-        <input id="poljeIme" type="text" name="ime" required="required" readonly/>
+        <input v-model="korisnik.ime" id="poljeIme" type="text" name="ime" required="required" readonly/>
 
-        <p> {{korisnik.ime}} </p>
-
+        <!--<p> {{korisnik.ime}} </p>
+-->
         <br/>
 
         <label for="poljePrezime"> Prezime: </label>
-        <input id="poljePrezime" type="text" name="prezime" required="required" readonly/>
+        <input v-model="korisnik.prezime" id="poljePrezime" type="text" name="prezime" required="required" readonly/>
 
-        <p> {{korisnik.prezime}} </p>
-
-        <br/>
-
+        <!--<p> {{korisnik.prezime}} </p>
+-->
         <br/>
 
         <label for="poljePol"> Pol: </label>
-        <input id="poljePol" type="text" name="pol" required="required" readonly/>
+        <input v-model="korisnik.pol" id="poljePol" type="text" name="pol" required="required" readonly/>
 
-        <p> {{korisnik.pol}} </p> 
-
-        <br/>
-
+        <!--<p> {{korisnik.pol}} </p> 
+-->
         <br/>
 
         <label for="pojePrezime"> Datum rođenja: </label>
-        <input id="poljeDatumRodjenja" type="text" name="datumRodjenja" required="required" readonly/>
+        <input v-model="korisnik.datumRodjenja" id="poljeDatumRodjenja" type="text" name="datumRodjenja" required="required" readonly/>
 
-        <p> {{korisnik.datumRodjenja}} </p>
-
+        <!--<p> {{korisnik.datumRodjenja}} </p>
+-->
         <br/>
 
     <!--</form>-->
@@ -76,6 +79,7 @@ export default {
   data: function () {
     return {
       korisnik: {},
+      tekstDugmeta: "Prikaži lozinku",
     };
   },
   mounted: function () {
@@ -83,7 +87,7 @@ export default {
     //if(localStorage.name === "kkkk")
     //{
     //primer axios poziva
-    axios
+    /*axios
       .get("http://localhost:8081/api/korisnik/pregled_podataka")
       .then((res) => {
         
@@ -92,17 +96,44 @@ export default {
       })
       .catch((err) =>{
         //console.log(err)
-      })
+      })*/
 
-      /*fetch('http://localhost:8081/api/korisnik/pregled_podataka/' + localStorage.name, {
+      fetch('http://localhost:8081/api/korisnik/pregled_podataka/' /*+ localStorage.name*/, {
+        method: "GET",
         credentials: 'include',
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+        },
+        //body: JSON.stringify(this.logovanjeSlanje),
+
       })
         .then(response => response.json())
         .then(data => {console.log("Success:", data); this.korisnik = data})
         .catch((error) => {
           console.error("Error:", error);
-        });*/
+        });
   //}
+  },
+
+ methods: {
+
+    prikaziLozinku() {
+      var vrednost = document.getElementById("poljeLozinka");
+      if(vrednost.type === "password")
+      {
+        //document.getElementById("poljeLozinka").setAttribute("type", "text");
+        vrednost.setAttribute("type", "text");
+        this.tekstDugmeta = "Sakrij lozinku";
+      }
+      else
+      {
+        //document.getElementById("poljeLozinka").setAttribute("type", "password");
+        vrednost.setAttribute("type", "password");
+        this.tekstDugmeta = "Prikaži lozinku";
+      }
+    }
+
   },
 
   /*methods: {
