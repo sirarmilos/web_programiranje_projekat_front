@@ -4,12 +4,14 @@
     <!-- vidi kako na link da vezes onclick metodu, nesto v-bind mozda ne znam-->
     <!-- https://forum.vuejs.org/t/how-to-call-a-function-by-click-on-some-class-in-href-tag/37181 --> 
     <div class="topnav">
-        <a href="#home">Pregled podataka</a>
-        <a href="#news">Ažuriranje podataka</a>
-        <a class="active" href="#contact">Restorani</a>
-        <a href="#about">Porudžbina</a>
-        <a href="#about">Izloguj se</a>
+        <a href="/kupacPocetna" >Pregled podataka</a>
+        <a href="/kupacAzuriranjePodataka">Ažuriranje podataka</a>
+        <a class="active" href="/kupacRestorani">Restorani</a>
+        <a href="/kupacPorudzbine">Porudžbina</a>
+        <a v-on:click="odlogovanje()">Izloguj se</a>
     </div>
+
+<!-- PRETRAGA JOS NE RADI, TREBA JE PROMENITI, U REAL TIME DA RADI KADA SE ISKUCA NOVO SLOVO, TAKODJE ADRESA SE NE PRIKAZUJE, VIDI DA LI TREBA NOVI DTO-->
 
     <p>
         Parametri za pretragu
@@ -20,24 +22,24 @@
 
     <!-- https://v2.vuejs.org/v2/cookbook/form-validation.html?redirect=true -->
     <!-- https://vuejs.org/guide/essentials/forms.html -->
-    <form method="post">
+    <!--<form method="post">-->
 
         <label for="poljeNazivRestorana"> Naziv restorana: </label>
-        <input id="poljeNazivRestorana" type="text" name="nazivRestorana"/>
+        <input v-on:change="pretragaPoNazivu()" id="poljeNazivRestorana" type="text" name="nazivRestorana"/>
 
         <br/>
 
         <label for="poljeTipRestorana"> Tip restorana: </label>
-        <input id="poljeTipRestorana" type="text" name="tipRestorana"/>
+        <input v-on:change="pretragaPoTipu()" id="poljeTipRestorana" type="text" name="tipRestorana"/>
 
         <br/>
 
         <label for="poljeAdresaRestorana"> Adresa restorana: </label>
-        <input id="poljeAdresaRestorana" type="text" name="adresaRestorana"/>
+        <input v-on:change="pretragaPoAdresi()" id="poljeAdresaRestorana" type="text" name="adresaRestorana"/>
 
         <br/>
 
-    </form>
+    <!--</form>-->
 
     <table id="restorani">
 
@@ -47,17 +49,9 @@
           <th>Više informacija</th>
         </tr>
 
-        <tr>
-          <td> aaaaaaaa</td>
-          <td> bbbbbbbbbbb</td>
-          <td>
-            ccccccccccc
-          </td>
-        </tr>
-
-        <tr v-for="restoran in restorani" :key="employee.id">
-          <td>{{ restorani.naziv }}</td>
-          <td>{{ restorani.tip }}</td>
+        <tr v-for="restoran in restorani" :key="restoran.id">
+          <td>{{ restoran.naziv }}</td>
+          <td>{{ restoran.tip }}</td>
           <td>
             <button class="dugmeViseInformacija" v-on:click="viseInformacija(restoran)">
               Vise informacija
@@ -75,6 +69,100 @@
 
 export default {
   name: "KupacRestoraniView",
+
+  data: function () {
+    return {
+      restorani: [],
+    };
+  },
+  mounted: function () {
+
+    //if(localStorage.name === "kkkk")
+    //{
+    //primer axios poziva
+    /*axios
+      .get("http://localhost:8081/api/korisnik/pregled_podataka")
+      .then((res) => {
+        
+        this.korisnik = res.data;
+
+      })
+      .catch((err) =>{
+        //console.log(err)
+      })*/
+
+      fetch('http://localhost:8081/api/restoran/prikaz_restorana' /*+ localStorage.name*/, {
+        method: "GET",
+        credentials: 'include',
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(this.logovanjeSlanje),
+
+      })
+        .then(response => response.json())
+        .then(data => {console.log("Success:", data); this.restorani = data})
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+  //}
+  },
+
+  methods: {
+
+    viseInformacija : function(restoran) {
+      this.$router.push("/kupacDetaljanPrikazRestorana?id=" + restoran.id);
+    },
+
+    pretragaPoNazivu : function() {
+      this.$router.push("/kupacDetaljanPrikazRestorana?id=" + 1);
+    },
+
+    odlogovanje : function () {
+      fetch("http://localhost:8081/api/odlogovanje", {
+        method: "POST",
+        credentials: 'include',
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+        },
+        //body: JSON.stringify(this.korisnik),
+      })
+        .then((response) => response.json)
+        .then((data) => {
+          console.log("Success : " + data);
+          this.$ses;
+          this.$router.push("/");
+        })
+        .catch((err) => {
+          console.log("Error : " + err);
+          alert(err);
+        });
+
+      }
+
+/*deleteEmployee: function (id) {
+      fetch("http://localhost:8081/api/employees/" + id, {
+        method: "PUT",
+        credentials: 'include',
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(this.korisnik),
+      }).then((res) => {
+        if (res.ok) {
+          window.location.reload();
+        }
+      });
+    },*/
+
+
+
+  },
+
+
 };
 
 </script>
