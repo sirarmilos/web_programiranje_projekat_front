@@ -4,10 +4,12 @@
     <!-- vidi kako na link da vezes onclick metodu, nesto v-bind mozda ne znam-->
     <!-- https://forum.vuejs.org/t/how-to-call-a-function-by-click-on-some-class-in-href-tag/37181 --> 
     <div class="topnav">
-        <a href="/kupacPocetna" >Pregled podataka</a>
-        <a href="/kupacAzuriranjePodataka">Ažuriranje podataka</a>
-        <a class="active" href="/kupacRestorani">Restorani</a>
-        <a href="/kupacPorudzbine">Porudžbina</a>
+        <a href="/adminPocetna" >Pregled podataka</a>
+        <a href="/adminAzuriranjePodataka">Ažuriranje podataka</a>
+        <a href="/adminKreiranjeNovogDostavljaca">Kreiranje dostavljača</a>
+        <a href="/adminKreiranjeNovogRestoranaIMenadzera">Kreiraj novi restoran i menadžera</a>
+        <a href="/adminPrikazSvihKorisnika">Prikaz svih korisnika</a>
+        <a class="active" href="/adminRestorani">Restorani</a>
         <a v-on:click="odlogovanje()">Izloguj se</a>
     </div>
 
@@ -52,7 +54,6 @@
             <th>Kolicina</th>
             <th>Tip</th>
             <th>Opis</th>
-            <th>Dodaj artikal u korpu</th>
           </tr>
 
           <tr v-for="artikal in PrikaziIzabraniRestoranDto.listaArtikala" :key="artikal.id">
@@ -61,7 +62,6 @@
             <td>{{ artikal.kolicina }}</td>
             <td>{{ artikal.tip }}</td>
             <td>{{ artikal.opis }}</td>
-            <button v-on:click="dodajArtikalUKorpu()"> Dodaj</button>
           </tr>
 
         </table>
@@ -91,7 +91,7 @@
 <script>
 
 export default {
-  name: "KupacDetaljanPrikazRestoranaView",
+  name: "AdminDetaljanPrikazRestoranaView",
 
    data: function () {
     return {
@@ -177,12 +177,6 @@ export default {
         });
 
       },
-
-    dodajArtikalUKorpu : function() {
-
-      
-
-      }
 
   }
 

@@ -4,12 +4,11 @@
     <!-- vidi kako na link da vezes onclick metodu, nesto v-bind mozda ne znam-->
     <!-- https://forum.vuejs.org/t/how-to-call-a-function-by-click-on-some-class-in-href-tag/37181 --> 
     <div class="topnav">
-        <a class="active" href="/adminPocetna" >Pregled podataka</a>
-        <a href="/adminAzuriranjePodataka">Ažuriranje podataka</a>
-        <a href="/adminKreiranjeNovogDostavljaca">Kreiranje dostavljača</a>
-        <a href="/adminKreiranjeNovogRestoranaIMenadzera">Kreiraj novi restoran i menadžera</a>
-        <a href="/adminPrikazSvihKorisnika">Prikaz svih korisnika</a>
-        <a href="/adminRestorani">Restorani</a>
+        <a class="active" href="/menadzerPocetna" >Pregled podataka</a>
+        <a href="/menadzerAzuriranjePodataka">Ažuriranje podataka</a>
+        <a href="/menadzerNjegovRestoran">Moj restoran</a>
+        <a href="/menadzerDodavanjeArtikla">Kreiraj novi artikal</a>
+        <a href="/menadzerPorudzbine">Porudžbina</a>
         <a v-on:click="odlogovanje()">Izloguj se</a>
     </div>
 
@@ -76,7 +75,7 @@
 <script>
 
 export default {
-  name: "AdminPocetnaView",
+  name: "MenadzerPocetnaView",
 
   data: function () {
     return {

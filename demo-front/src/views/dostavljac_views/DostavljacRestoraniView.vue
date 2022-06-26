@@ -4,12 +4,10 @@
     <!-- vidi kako na link da vezes onclick metodu, nesto v-bind mozda ne znam-->
     <!-- https://forum.vuejs.org/t/how-to-call-a-function-by-click-on-some-class-in-href-tag/37181 --> 
     <div class="topnav">
-        <a href="/adminPocetna" >Pregled podataka</a>
-        <a href="/adminAzuriranjePodataka">Ažuriranje podataka</a>
-        <a href="/adminKreiranjeNovogDostavljaca">Kreiranje dostavljača</a>
-        <a href="/adminKreiranjeNovogRestoranaIMenadzera">Kreiraj novi restoran i menadžera</a>
-        <a href="/adminPrikazSvihKorisnika">Prikaz svih korisnika</a>
-        <a class="active" href="/adminRestorani">Restorani</a>
+        <a href="/dostavljacPocetna" >Pregled podataka</a>
+        <a href="/dostavljacAzuriranjePodataka">Ažuriranje podataka</a>
+        <a class="active" href="/dostavljacRestorani">Restorani</a>
+        <a href="/dostavljacPorudzbine">Porudžbina</a>
         <a v-on:click="odlogovanje()">Izloguj se</a>
     </div>
 
@@ -49,7 +47,6 @@
           <th>Naziv restorana</th>
           <th>Tip restorana</th>
           <th>Više informacija</th>
-          <th>Brisanje restorana</th>
         </tr>
 
         <tr v-for="restoran in restorani" :key="restoran.id">
@@ -58,11 +55,6 @@
           <td>
             <button class="dugmeViseInformacija" v-on:click="viseInformacija(restoran)">
               Vise informacija
-            </button>
-          </td>
-          <td>
-            <button class="dugmeObrisiRestoran" v-on:click="obrisiRestoran(restoran)">
-              Obriši restoran
             </button>
           </td>
         </tr>
@@ -76,7 +68,7 @@
 <script>
 
 export default {
-  name: "AdminRestoraniView",
+  name: "DostavljacRestoraniView",
 
   data: function () {
     return {
@@ -124,12 +116,8 @@ export default {
 
   methods: {
 
-    obrisiRestoran: function(restoran) {
-        // vodi racuna ono dto brisanje tri odjednom, da se obrisu i lokacija, i restoran i menadzer zaduzen za taj restoran
-    },
-
     viseInformacija : function(restoran) {
-      this.$router.push("/adminDetaljanPrikazRestorana?id=" + restoran.id);
+      this.$router.push("/dostavljacDetaljanPrikazRestorana?id=" + restoran.id);
     },
 
     pretraga : function() {
@@ -150,12 +138,16 @@ export default {
 
           //var proizvodi = JSON.stringify(data);
           //var proizvodi = [{naziv, tip}];
-          var proizvodi = new Array(JSON.stringify(data)); // lista proizvoda
+          var p = JSON.stringify(data).split('}');
+          var proizvodi = new Array(p[0],p[1]); // lista proizvoda
           //this.restorani = JSON.stringify(data);
           var pomocna = {};
+          console.log(proizvodi);
+          console.log(proizvodi[0]);
           for(var i = 1; i < 2; i++)
           {
-            console.log(pomocna); // naziv:proizvodi[i].naziv
+            //console.log(pomocna); // naziv:proizvodi[i].naziv
+            //console.log(pomocna);
             //pomocna.naziv = proizvodi[naziv];
             //pomocna[1] = {tip: proizvodi[id : i].naziv, adresa:"c"};
             //this.restorani.push({naziv:"a", tip:"b", adresa:"c"});
