@@ -4,70 +4,50 @@
     <!-- vidi kako na link da vezes onclick metodu, nesto v-bind mozda ne znam-->
     <!-- https://forum.vuejs.org/t/how-to-call-a-function-by-click-on-some-class-in-href-tag/37181 --> 
     <div class="topnav">
-        <a class="active" href="/adminPocetna" >Pregled podataka</a>
-        <a href="/adminAzuriranjePodataka">Ažuriranje podataka</a>
-        <a href="/adminKreiranjeNovogDostavljaca">Kreiranje dostavljača</a>
-        <a href="/adminKreiranjeNovogRestoranaIMenadzera">Kreiraj novi restoran i menadžera</a>
-        <a href="/adminPrikazSvihKorisnika">Prikaz svih korisnika</a>
-        <a href="/adminRestorani">Restorani</a>
+        <a href="/menadzerPocetna" >Pregled podataka</a>
+        <a class="active" href="/menadzerAzuriranjePodataka">Ažuriranje podataka</a>
+        <a href="/menadzerNjegovRestoran">Moj restoran</a>
+        <a href="/menadzerDodavanjeArtikla">Kreiraj novi artikal</a>
+        <a href="/menadzerPorudzbine">Porudžbina</a>
         <a v-on:click="odlogovanje()">Izloguj se</a>
     </div>
 
     <p>
-        Vaš profil
+        Ovde možete da ažurirate svoj profil
     </p>
 
-    <!-- treba jos logika da se odradi-->
-
-    <!--<form method="get"> --><!-- get jer ovde samo prihvatamo podatke u polja, ne menjamo i šaljemo-->
-
-        <label for="poljeKorisnickoIme"> Korisničko ime: </label>
-        <input v-model="korisnik.korisnickoIme" id="poljeKorisnickoIme" type="text" name="korisnickoIme" required="required" readonly/>
-        
-        <!--<p> {{korisnik.korisnickoIme}} </p>
--->
-
-        <br/>
+    <!--<form method="post">-->
 
         <label for="poljeLozinka"> Lozinka: </label>
-        <input v-model="korisnik.lozinka" id="poljeLozinka" type="password" name="lozinka" required="required" readonly/>
+        <input v-model="korisnik.lozinka" id="poljeLozinka" type="password" name="lozinka"/>
 
-        <!--<p> {{korisnik.lozinka}} </p>
--->
-        <!--<label for="cekPrikaziLozinku"> Prikaži lozinku </label>
-        <input id="cekPrikaziLozinku" type="checkbox" v-on:click="prikaziLozinku(this)" />
--->
         <button v-on:click="prikaziLozinku()"> {{ tekstDugmeta }} </button>
 
         <br/>
 
         <label for="poljeIme"> Ime: </label>
-        <input v-model="korisnik.ime" id="poljeIme" type="text" name="ime" required="required" readonly/>
+        <input v-model="korisnik.ime" id="poljeIme" type="text" name="ime"/>
 
-        <!--<p> {{korisnik.ime}} </p>
--->
         <br/>
 
         <label for="poljePrezime"> Prezime: </label>
-        <input v-model="korisnik.prezime" id="poljePrezime" type="text" name="prezime" required="required" readonly/>
+        <input v-model="korisnik.prezime" id="poljePrezime" type="text" name="prezime"/>
 
-        <!--<p> {{korisnik.prezime}} </p>
--->
         <br/>
 
         <label for="poljePol"> Pol: </label>
-        <input v-model="korisnik.pol" id="poljePol" type="text" name="pol" required="required" readonly/>
+        <input v-model="korisnik.pol" id="poljePol" type="text" name="pol"/>
 
-        <!--<p> {{korisnik.pol}} </p> 
--->
         <br/>
 
-        <label for="pojePrezime"> Datum rođenja: </label>
-        <input v-model="korisnik.datumRodjenja" id="poljeDatumRodjenja" type="text" name="datumRodjenja" required="required" readonly/>
+        <label for="pojeDatumRodjenja"> Datum rođenja: </label>
+        <input v-model="korisnik.datumRodjenja" id="poljeDatumRodjenja" type="text" name="datumRodjenja"/>
 
-        <!--<p> {{korisnik.datumRodjenja}} </p>
--->
         <br/>
+
+        <button v-on:click="izvrsiAzuriranjePodataka()">
+            Potvrda ažuriranja
+        </button>
 
     <!--</form>-->
 
@@ -76,7 +56,7 @@
 <script>
 
 export default {
-  name: "AdminPocetnaView",
+  name: "MenadzerAzuriranjePodatakaView",
 
   data: function () {
     return {
@@ -85,20 +65,6 @@ export default {
     };
   },
   mounted: function () {
-
-    //if(localStorage.name === "kkkk")
-    //{
-    //primer axios poziva
-    /*axios
-      .get("http://localhost:8081/api/korisnik/pregled_podataka")
-      .then((res) => {
-        
-        this.korisnik = res.data;
-
-      })
-      .catch((err) =>{
-        //console.log(err)
-      })*/
 
       fetch('http://localhost:8081/api/korisnik/pregled_podataka/' /*+ localStorage.name*/, {
         method: "GET",
@@ -136,7 +102,29 @@ export default {
       }
     },
 
-        odlogovanje : function () {
+    izvrsiAzuriranjePodataka : function() {
+
+      fetch("http://localhost:8081/api/korisnik/azuriranje_podataka", {
+        method: "PUT",
+        credentials: 'include',
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(this.korisnik),
+      })
+        .then((response) => response.json)
+        .then((data) => {
+          console.log("Success : " + data);
+          this.$router.push("/menadzerPocetna");
+        })
+        .catch((err) => {
+          console.log("Error : " + err);
+          alert(err);
+        });
+    },
+
+    odlogovanje : function () {
       fetch("http://localhost:8081/api/odlogovanje", {
         method: "POST",
         credentials: 'include',
@@ -160,36 +148,7 @@ export default {
       }
 
   },
-
-  /*methods: {
-    addEmployee: function() {
-      this.$router.push("/add-employee");
-    },
-    seeMore: function (employee) {
-      this.$router.push("/employee?id=" + employee.id);
-    },
-    deleteEmployee: function (id) {
-      fetch("http://localhost:8081/api/employees/" + id, {
-        method: "DELETE",
-      }).then((res) => {
-        if (res.ok) {
-          window.location.reload();
-        }
-      });
-    },
-  },*/
-
-
-
-
-
-
-
-
-
-
-
-
+  
 };
 
 </script>

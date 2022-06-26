@@ -4,49 +4,41 @@
     <!-- vidi kako na link da vezes onclick metodu, nesto v-bind mozda ne znam-->
     <!-- https://forum.vuejs.org/t/how-to-call-a-function-by-click-on-some-class-in-href-tag/37181 --> 
     <div class="topnav">
-        <a href="/adminPocetna" >Pregled podataka</a>
-        <a class="active" href="/adminAzuriranjePodataka">Ažuriranje podataka</a>
-        <a href="/adminKreiranjeNovogDostavljaca">Kreiranje dostavljača</a>
-        <a href="/adminKreiranjeNovogRestoranaIMenadzera">Kreiraj novi restoran i menadžera</a>
-        <a href="/adminPrikazSvihKorisnika">Prikaz svih korisnika</a>
-        <a href="/adminRestorani">Restorani</a>
+        <a href="/menadzerPocetna" >Pregled podataka</a>
+        <a href="/menadzerAzuriranjePodataka">Ažuriranje podataka</a>
+        <a class="active" href="/menadzerNjegovRestoran">Moj restoran</a>
+        <a href="/menadzerDodavanjeArtikla">Kreiraj novi artikal</a>
+        <a href="/menadzerPorudzbine">Porudžbina</a>
         <a v-on:click="odlogovanje()">Izloguj se</a>
     </div>
 
     <p>
-        Ovde možete da ažurirate svoj profil
+        Ovde možete da ažurirate podatke o proizvodu
     </p>
-
+<!-- naziv, kolicina, cena, opis, tip-->
     <!--<form method="post">-->
 
-        <label for="poljeLozinka"> Lozinka: </label>
-        <input v-model="korisnik.lozinka" id="poljeLozinka" type="password" name="lozinka"/>
-
-        <button v-on:click="prikaziLozinku()"> {{ tekstDugmeta }} </button>
-
+        <label for="naziv"> Naziv: </label>
+        <input id="naziv" type="text" name="naziv"/>
         <br/>
 
-        <label for="poljeIme"> Ime: </label>
-        <input v-model="korisnik.ime" id="poljeIme" type="text" name="ime"/>
-
+        <label for="tip"> Tip: </label>
+        <input id="tip" type="text" name="tip"/>
         <br/>
 
-        <label for="poljePrezime"> Prezime: </label>
-        <input v-model="korisnik.prezime" id="poljePrezime" type="text" name="prezime"/>
-
+        <label for="kolicina"> Količina: </label>
+        <input id="kolicina" type="text" name="kolicina"/>
         <br/>
 
-        <label for="poljePol"> Pol: </label>
-        <input v-model="korisnik.pol" id="poljePol" type="text" name="pol"/>
-
+        <label for="cena"> Cena: </label>
+        <input id="cena" type="text" name="cena"/>
         <br/>
 
-        <label for="pojeDatumRodjenja"> Datum rođenja: </label>
-        <input v-model="korisnik.datumRodjenja" id="poljeDatumRodjenja" type="text" name="datumRodjenja"/>
-
+        <label for="opis"> Opis: </label>
+        <input id="opis" type="text" name="opis"/>
         <br/>
 
-        <button v-on:click="izvrsiAzuriranjePodataka()">
+        <button v-on:click="izvrsiAzuriranje()">
             Potvrda ažuriranja
         </button>
 
@@ -57,7 +49,7 @@
 <script>
 
 export default {
-  name: "AdminAzuriranjePodatakaView",
+  name: "MenadzerAzuriranjeArtiklaView",
 
   data: function () {
     return {
@@ -66,7 +58,7 @@ export default {
     };
   },
   mounted: function () {
-
+// OVDE UMESTO OVOGA UCITAJ PODATKE ZA TAJ KONKRETAN ARTIKAL PRILIKOM UCITAVANJA STRANICE
       fetch('http://localhost:8081/api/korisnik/pregled_podataka/' /*+ localStorage.name*/, {
         method: "GET",
         credentials: 'include',
@@ -103,26 +95,8 @@ export default {
       }
     },
 
-    izvrsiAzuriranjePodataka : function() {
+    izvrsiAzuriranje : function() {
 
-      fetch("http://localhost:8081/api/korisnik/azuriranje_podataka", {
-        method: "PUT",
-        credentials: 'include',
-        headers: {
-          Accept: "application/json",
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(this.korisnik),
-      })
-        .then((response) => response.json)
-        .then((data) => {
-          console.log("Success : " + data);
-          this.$router.push("/adminPocetna");
-        })
-        .catch((err) => {
-          console.log("Error : " + err);
-          alert(err);
-        });
     },
 
     odlogovanje : function () {

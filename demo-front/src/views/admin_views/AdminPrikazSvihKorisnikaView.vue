@@ -8,8 +8,8 @@
         <a href="/adminAzuriranjePodataka">Ažuriranje podataka</a>
         <a href="/adminKreiranjeNovogDostavljaca">Kreiranje dostavljača</a>
         <a href="/adminKreiranjeNovogRestoranaIMenadzera">Kreiraj novi restoran i menadžera</a>
-        <a href="/adminPrikazSvihKorisnika">Prikaz svih korisnika</a>
-        <a class="active" href="/adminRestorani">Restorani</a>
+        <a class="active" href="/adminPrikazSvihKorisnika">Prikaz svih korisnika</a>
+        <a href="/adminRestorani">Restorani</a>
         <a v-on:click="odlogovanje()">Izloguj se</a>
     </div>
 
@@ -26,18 +26,18 @@
     <!-- https://vuejs.org/guide/essentials/forms.html -->
     <!--<form method="post">-->
 
-        <label for="poljeNazivRestorana"> Naziv restorana: </label>
-        <input v-model="slanje.naziv" v-on:input="pretraga()" id="poljeNazivRestorana" type="text" name="nazivRestorana"/>
+        <label for="poljeIme"> Ime: </label>
+        <input v-model="slanje.naziv" v-on:input="pretraga()" id="poljeIme" type="text" name="poljeIme"/>
 
         <br/>
 
-        <label for="poljeTipRestorana"> Tip restorana: </label>
-        <input v-model="slanje.tip" v-on:input="pretraga()" id="poljeTipRestorana" type="text" name="tipRestorana"/>
+        <label for="poljePrezime"> Prezime: </label>
+        <input v-model="slanje.tip" v-on:input="pretraga()" id="poljePrezime" type="text" name="poljePrezime"/>
 
         <br/>
 
-        <label for="poljeAdresaRestorana"> Adresa restorana: </label>
-        <input v-model="slanje.adresa" v-on:input="pretraga()" id="poljeAdresaRestorana" type="text" name="adresaRestorana"/>
+        <label for="poljeKorisnickoIme"> Korisnicko ime: </label>
+        <input v-model="slanje.adresa" v-on:input="pretraga()" id="poljeKorisnickoIme" type="text" name="poljeKorisnickoIme"/>
 
         <br/>
 
@@ -46,25 +46,16 @@
     <table id="restorani">
 
         <tr>
-          <th>Naziv restorana</th>
-          <th>Tip restorana</th>
-          <th>Više informacija</th>
-          <th>Brisanje restorana</th>
+          <th>Korisničko ime</th>
+          <th>Ime</th>
+          <th>Prezime</th>
+          <th>Pol</th>
+          <th>Datum rođenja</th>
         </tr>
 
         <tr v-for="restoran in restorani" :key="restoran.id">
           <td>{{ restoran.naziv }}</td>
           <td>{{ restoran.tip }}</td>
-          <td>
-            <button class="dugmeViseInformacija" v-on:click="viseInformacija(restoran)">
-              Vise informacija
-            </button>
-          </td>
-          <td>
-            <button class="dugmeObrisiRestoran" v-on:click="obrisiRestoran(restoran)">
-              Obriši restoran
-            </button>
-          </td>
         </tr>
 
     </table>
@@ -76,7 +67,7 @@
 <script>
 
 export default {
-  name: "AdminRestoraniView",
+  name: "AdminPrikazSvihKorisnikaView",
 
   data: function () {
     return {
@@ -123,14 +114,6 @@ export default {
   },
 
   methods: {
-
-    obrisiRestoran: function(restoran) {
-        // vodi racuna ono dto brisanje tri odjednom, da se obrisu i lokacija, i restoran i menadzer zaduzen za taj restoran
-    },
-
-    viseInformacija : function(restoran) {
-      this.$router.push("/adminDetaljanPrikazRestorana?id=" + restoran.id);
-    },
 
     pretraga : function() {
 

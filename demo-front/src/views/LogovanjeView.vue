@@ -107,6 +107,16 @@ export default {
             localStorage.name = JSON.stringify(res.data.sesija);
             this.$router.push("/adminPocetna");
           }
+          else if(pomocna2 === "dostavljac")
+          {
+            localStorage.name = JSON.stringify(res.data.sesija);
+            this.$router.push("/dostavljacPocetna");
+          }
+          else if(pomocna2 === "menadzer")
+          {
+            localStorage.name = JSON.stringify(res.data.sesija);
+            this.$router.push("/menadzerPocetna");
+          }
           //this.$router.push("/kupacPocetna");
         })
         .catch((err) => {

@@ -4,12 +4,15 @@
     <!-- vidi kako na link da vezes onclick metodu, nesto v-bind mozda ne znam-->
     <!-- https://forum.vuejs.org/t/how-to-call-a-function-by-click-on-some-class-in-href-tag/37181 --> 
     <div class="topnav">
-        <a href="/kupacPocetna" >Pregled podataka</a>
-        <a href="/kupacAzuriranjePodataka">Ažuriranje podataka</a>
-        <a class="active" href="/kupacRestorani">Restorani</a>
-        <a href="/kupacPorudzbine">Porudžbina</a>
+        <a href="/menadzerPocetna" >Pregled podataka</a>
+        <a href="/menadzerAzuriranjePodataka">Ažuriranje podataka</a>
+        <a class="active" href="/menadzerNjegovRestoran">Moj restoran</a>
+        <a href="/menadzerDodavanjeArtikla">Kreiraj novi artikal</a>
+        <a href="/menadzerPorudzbine">Porudžbina</a>
         <a v-on:click="odlogovanje()">Izloguj se</a>
     </div>
+
+        <p> Ovo je moj restoran </p>
 
         <label for="restoranNaziv"> Naziv restorana: </label>
         <input v-model="PrikaziIzabraniRestoranDto.restoran.naziv" id="restoranNaziv" type="text" name="restoranNaziv" required="required" readonly/>
@@ -52,7 +55,8 @@
             <th>Kolicina</th>
             <th>Tip</th>
             <th>Opis</th>
-            <th>Dodaj artikal u korpu</th>
+            <th>Obriši artikal</th>
+            <th>Ažuriraj artikal</th>
           </tr>
 
           <tr v-for="artikal in PrikaziIzabraniRestoranDto.listaArtikala" :key="artikal.id">
@@ -61,7 +65,8 @@
             <td>{{ artikal.kolicina }}</td>
             <td>{{ artikal.tip }}</td>
             <td>{{ artikal.opis }}</td>
-            <button v-on:click="dodajArtikalUKorpu()"> Dodaj</button>
+            <td><button v-on:click="obrisiArtikal()"> Obriši artikal</button></td>
+            <td><button v-on:click="azurirajArtikal()"> Ažuriraj artikal</button></td>
           </tr>
 
         </table>
@@ -80,10 +85,6 @@
 
         </table>
 
-    <p>
-        Detaljan prikaz tog i tog restorana
-    </p>
-
     <!-- sve podatke prikazi o jednom restoranu, vidi preko Postman-a sve podatke koji dolaze-->
 
 </template>
@@ -91,7 +92,7 @@
 <script>
 
 export default {
-  name: "KupacDetaljanPrikazRestoranaView",
+  name: "MenadzerUvidUSvojRestoran",
 
    data: function () {
     return {
@@ -135,7 +136,8 @@ export default {
         //console.log(err)
       })*/
 
-      fetch('http://localhost:8081/api/korisnik/izbor_restorana/' + this.$route.query.id, {
+    // UMESTO this.$route.query.id TREBA STAVITI ID OD RESTORANA U KOME RADI TAJ MENADZER
+      fetch('http://localhost:8081/api/korisnik/izbor_restorana/' + 1, {
         method: "GET",
         credentials: 'include',
         headers: {
@@ -154,6 +156,14 @@ export default {
   },
 
   methods: {
+
+    obrisiArtikal : function() {
+        // ne treba nova stranica, samo ga ovde obrises iz baze, tj pozoves odgovarajuci end point da to uradi i refresujes stranicu da se izbrise i iz tabele u kojoj se ovde prikazuju artikli
+    },
+
+    azurirajArtikal : function() {
+        //this.$router.push("asdasd"); // posalji ga na stranicu za azuriranje artikla, vidi da prosledis id artikla da se zna o kom je rec i da prilikom ucitavanja stranice azuriranje artikla, budu ucitani pocetni podaci
+    },
 
     odlogovanje : function () {
       fetch("http://localhost:8081/api/odlogovanje", {
@@ -177,12 +187,6 @@ export default {
         });
 
       },
-
-    dodajArtikalUKorpu : function() {
-
-      
-
-      }
 
   }
 
