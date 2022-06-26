@@ -14,6 +14,10 @@ import KupacPorudzbineView from '../views/KupacPorudzbineView.vue'
 import KupacKreiranjePorudzbineView from '../views/KupacKreiranjePorudzbineView.vue'
 import KupacPregledPojedinacnePorudzbineView from '../views/KupacPregledPojedinacnePorudzbineView.vue'
 
+import AdminPocetnaView from '../views/admin_views/AdminPocetnaView.vue'
+import AdminAzuriranjePodatakaView from '../views/admin_views/AdminAzuriranjePodatakaView.vue'
+import AdminRestoraniView from '../views/admin_views/AdminRestoraniView.vue'
+
 const routes = [
 
   {
@@ -68,6 +72,26 @@ const routes = [
     path: '/kupacPregledPojedinacnePorudzbine',
     name: 'kupacPregledPojedinacnePorudzbine',
     component: KupacPregledPojedinacnePorudzbineView
+  },
+
+  //
+
+  {
+    path: '/adminPocetna',
+    name: 'adminPocetna',
+    component: AdminPocetnaView
+  },
+
+  {
+    path: '/adminAzuriranjePodataka',
+    name: 'adminAzuriranjePodataka',
+    component: AdminAzuriranjePodatakaView
+  },
+  
+  {
+    path: '/adminRestorani',
+    name: 'adminRestorani',
+    component: AdminRestoraniView
   },
 
   {

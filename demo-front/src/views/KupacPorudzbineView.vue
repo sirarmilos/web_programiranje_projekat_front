@@ -8,7 +8,7 @@
         <a href="/kupacAzuriranjePodataka">Ažuriranje podataka</a>
         <a href="/kupacRestorani">Restorani</a>
         <a class="active" href="/kupacPorudzbine">Porudžbina</a>
-        <a href="/">Izloguj se</a>
+        <a v-on:click="odlogovanje()">Izloguj se</a>
     </div>
 
     <p>Pregled porudzbina</p>
@@ -35,11 +35,14 @@
 
     </table>
 
-    <table>
+    <button>
+      Korpa - kreiranje nove porudzbine
+    </button>
+
 
         <!-- napraviti tabelu kada se ucita stranica da se ucitaju u nju sve porudzbine od tog kupca koji je ulogovan-->
         <!-- pored svake stavke u tabeli da ima kao dugme pregled porudzbine, gde nas vodi na stranicu KupacPorudzbinaPrikazView, gde mozemo detaljnije da vidimo samo tu porudzbinu-->
-    </table>
+
 
     <!-- ispod ima dugme koje je kao kreiraj novu porudzbinu, gde nas vodi na novu stranicu KupacPorudzbinaKreiranjeView, gde moze korisnik da kreira novu porudzbinu, dodaje proizvode u nju ili brise pre samog kreiranja-->
 
@@ -98,6 +101,29 @@ export default {
     viseInformacija : function(porudzbina) {
       this.$router.push("/kupacPregledPojedinacnePorudzbine/?id=" + porudzbina.id);
     },
+
+    odlogovanje : function () {
+      fetch("http://localhost:8081/api/odlogovanje", {
+        method: "POST",
+        credentials: 'include',
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+        },
+        //body: JSON.stringify(this.korisnik),
+      })
+        .then((response) => response.json)
+        .then((data) => {
+          console.log("Success : " + data);
+          this.$ses;
+          this.$router.push("/");
+        })
+        .catch((err) => {
+          console.log("Error : " + err);
+          alert(err);
+        });
+
+      }
 
   }
 

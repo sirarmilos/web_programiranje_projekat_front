@@ -8,7 +8,7 @@
         <a href="/kupacAzuriranjePodataka">Ažuriranje podataka</a>
         <a href="/kupacRestorani">Restorani</a>
         <a class="active" href="/kupacPorudzbine">Porudžbina</a>
-        <a href="/">Izloguj se</a>
+        <a v-on:click="odlogovanje()">Izloguj se</a>
     </div>
 
     <!-- kao za tu porudzbinu pregled svih artikala u toj porudzbini i svega toga-->
@@ -33,19 +33,25 @@
           <th>Opis</th>
           <th>Kolicina</th>
         </tr>
+       <!-- <tr>
+          <th> Id</th>
+          <th> Kolicina </th>
+        </tr>-->
 
-        <tr v-for="artikal in porudzbina.porudzbineArtikli" :key="porudzbina.porudzbineArtikli.id">
-          <td> <input v-model="nasaPromenljiva.naziv" id="nesto" type="text" name="nesto" required="required" readonly /> </td>
-          <td> <input v-model="nasaPromenljiva.cena" id="nesto" type="text" name="nesto" required="required" readonly /> </td>
-          <td> <input v-model="nasaPromenljiva.opis" id="nesto" type="text" name="nesto" required="required" readonly /> </td>
+        <button v-on:click="funkcija(porudzbina.porudzbineArtikli)"> dd </button>
 
-          <td>{{ artikal.id}}</td>
+        <tr v-for="artikal in porudzbinaBolje" :key="porudzbina.porudzbineArtikli.id" id="tabela">
+         <td> <input v-model="porudzbinaBolje.naziv" id="nesto" type="text" name="nesto" required="required" readonly /> </td>
+          <td> <input v-model="porudzbinaBolje.cena" id="nesto" type="text" name="nesto" required="required" readonly /> </td>
+          <td> <input v-model="porudzbinaBolje.opis" id="nesto" type="text" name="nesto" required="required" readonly /> </td>
+         
+          <td id="polje1">{{ artikal.id}}</td>
           <td>{{ artikal.kolicina }}</td>
         </tr>
-        <p v-on:load="dobaviArtikalPoId(1)"></p>
+       <!-- <p v-on:load="dobaviArtikalPoId(1)"></p>
         <button v-on:click="dobaviArtikalPoId(1)">1</button>
-        <button v-on:click="dobaviArtikalPoId(2)">2</button>
-
+        <button v-on:click="dobaviArtikalPoId(2)">2</button>-->
+        
     <label for="nesto"> Nesto: </label>
     <input v-model="nasaPromenljiva.naziv" id="nesto" type="text" name="nesto" required="required" readonly/>
     <br/>
@@ -72,6 +78,15 @@ export default {
         cena: "",
         opis: "",
       },
+      porudzbinaBolje:[
+        {naziv: ""},
+        {cena: ""},
+        {opis: ""},
+        ],/*{
+        naziv: "",
+        cena: "",
+        opis: "",
+      }*/
     };
   },
   mounted: function () {
@@ -110,6 +125,47 @@ export default {
 
   methods: {
 
+    funkcija : function(porudzbineArtikli)
+    {
+
+      for(var i = 0; i < 2; i++)
+      {
+        var pomocnaListaArtikala = new Array();
+        pomocnaListaArtikala = porudzbineArtikli;//document.getElementById("polje1");
+        /*console.log(pomocnaListaArtikala);
+        console.log(pomocnaListaArtikala[i].id);
+        console.log(pomocnaListaArtikala[i].kolicina);
+        console.log(i);*/
+        
+
+        fetch('http://localhost:8081/api/pretraga_artikla_po_id/' + pomocnaListaArtikala[i].id/*this.$route.query.id*//*+ localStorage.name*/, {
+        method: "GET",
+        credentials: 'include',
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+        },
+        //body: JSON.stringify(this.logovanjeSlanje),
+
+      })
+        .then(response => response.json())
+        .then(data => {console.log("Success:", data); this.porudzbinaBolje.push(data);})
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+
+
+
+
+      }
+
+      for(var i = 0; i < 2; i++)
+      {
+        console.log("Porudzbina bolje: " + this.porudzbinaBolje[1].naziv);
+
+      }
+    },
+
     dobaviArtikalPoId : function(artikal){
 
       fetch('http://localhost:8081/api/pretraga_artikla_po_id/' + artikal/*this.$route.query.id*//*+ localStorage.name*/, {
@@ -130,6 +186,29 @@ export default {
 
       
     },
+
+    odlogovanje : function () {
+      fetch("http://localhost:8081/api/odlogovanje", {
+        method: "POST",
+        credentials: 'include',
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+        },
+        //body: JSON.stringify(this.korisnik),
+      })
+        .then((response) => response.json)
+        .then((data) => {
+          console.log("Success : " + data);
+          this.$ses;
+          this.$router.push("/");
+        })
+        .catch((err) => {
+          console.log("Error : " + err);
+          alert(err);
+        });
+
+      }
 
   },
 

@@ -8,7 +8,7 @@
         <a class="active" href="/kupacAzuriranjePodataka">Ažuriranje podataka</a>
         <a href="/kupacRestorani">Restorani</a>
         <a href="/kupacPorudzbine">Porudžbina</a>
-        <a href="/">Izloguj se</a>
+        <a v-on:click="odlogovanje()">Izloguj se</a>
     </div>
 
     <p>
@@ -121,7 +121,30 @@ export default {
           console.log("Error : " + err);
           alert(err);
         });
-    }
+    },
+
+    odlogovanje : function () {
+      fetch("http://localhost:8081/api/odlogovanje", {
+        method: "POST",
+        credentials: 'include',
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+        },
+        //body: JSON.stringify(this.korisnik),
+      })
+        .then((response) => response.json)
+        .then((data) => {
+          console.log("Success : " + data);
+          this.$ses;
+          this.$router.push("/");
+        })
+        .catch((err) => {
+          console.log("Error : " + err);
+          alert(err);
+        });
+
+      }
 
   },
   
