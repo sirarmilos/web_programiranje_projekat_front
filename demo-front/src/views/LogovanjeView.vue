@@ -31,7 +31,7 @@
         Ukoliko nemate nalog, posetite registraciju.
     </p>
 
-    <button>
+    <button v-on:click="registrujSe()">
         Registracija
     </button>
 
@@ -67,6 +67,13 @@ export default {
   },
   methods: {
 /*lozinkaKupac1*/
+
+    registrujSe: function() {
+
+      this.$router.push("/registracija");
+
+    },
+
     ulogujSe: function () {
       
       axios
@@ -94,6 +101,11 @@ export default {
             //localStorage.name = JSON.stringify(this.logovanjeSlanje.korisnickoIme);
             localStorage.name = JSON.stringify(res.data.sesija);
             this.$router.push("/kupacPocetna");
+          }
+          else if(pomocna2 === "admin")
+          {
+            localStorage.name = JSON.stringify(res.data.sesija);
+            this.$router.push("/adminPocetna");
           }
           //this.$router.push("/kupacPocetna");
         })

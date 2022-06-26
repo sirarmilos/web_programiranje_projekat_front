@@ -68,7 +68,7 @@
 <script>
 
 export default {
-  name: "KupacRestoraniView",
+  name: "AdminRestoraniView",
 
   data: function () {
     return {
@@ -138,16 +138,12 @@ export default {
 
           //var proizvodi = JSON.stringify(data);
           //var proizvodi = [{naziv, tip}];
-          var p = JSON.stringify(data).split('}');
-          var proizvodi = new Array(p[0],p[1]); // lista proizvoda
+          var proizvodi = new Array(JSON.stringify(data)); // lista proizvoda
           //this.restorani = JSON.stringify(data);
           var pomocna = {};
-          console.log(proizvodi);
-          console.log(proizvodi[0]);
           for(var i = 1; i < 2; i++)
           {
-            //console.log(pomocna); // naziv:proizvodi[i].naziv
-            //console.log(pomocna);
+            console.log(pomocna); // naziv:proizvodi[i].naziv
             //pomocna.naziv = proizvodi[naziv];
             //pomocna[1] = {tip: proizvodi[id : i].naziv, adresa:"c"};
             //this.restorani.push({naziv:"a", tip:"b", adresa:"c"});

@@ -4,11 +4,11 @@
     <!-- vidi kako na link da vezes onclick metodu, nesto v-bind mozda ne znam-->
     <!-- https://forum.vuejs.org/t/how-to-call-a-function-by-click-on-some-class-in-href-tag/37181 --> 
     <div class="topnav">
-        <a href="#home" >Pregled podataka</a>
-        <a href="#news">Ažuriranje podataka</a>
-        <a href="#contact">Restorani</a>
-        <a class="active" href="#about">Porudžbina</a>
-        <a href="#about">Izloguj se</a>
+        <a href="/kupacPocetna" >Pregled podataka</a>
+        <a href="/kupacAzuriranjePodataka">Ažuriranje podataka</a>
+        <a href="/kupacRestorani">Restorani</a>
+        <a class="active" href="/kupacPorudzbine">Porudžbina</a>
+        <a v-on:click="odlogovanje()">Izloguj se</a>
     </div>
 
     <p>
@@ -25,6 +25,34 @@
 
 export default {
   name: "KupacKreiranjePorudzbineView",
+
+
+  methods: {
+
+        odlogovanje : function () {
+      fetch("http://localhost:8081/api/odlogovanje", {
+        method: "POST",
+        credentials: 'include',
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+        },
+        //body: JSON.stringify(this.korisnik),
+      })
+        .then((response) => response.json)
+        .then((data) => {
+          console.log("Success : " + data);
+          this.$ses;
+          this.$router.push("/");
+        })
+        .catch((err) => {
+          console.log("Error : " + err);
+          alert(err);
+        });
+
+      }
+
+  }
 };
 
 </script>

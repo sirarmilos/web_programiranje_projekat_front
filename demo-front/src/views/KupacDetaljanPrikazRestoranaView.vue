@@ -8,7 +8,7 @@
         <a href="/kupacAzuriranjePodataka">Ažuriranje podataka</a>
         <a class="active" href="/kupacRestorani">Restorani</a>
         <a href="/kupacPorudzbine">Porudžbina</a>
-        <a href="/">Izloguj se</a>
+        <a v-on:click="odlogovanje()">Izloguj se</a>
     </div>
 
         <label for="restoranNaziv"> Naziv restorana: </label>
@@ -52,6 +52,7 @@
             <th>Kolicina</th>
             <th>Tip</th>
             <th>Opis</th>
+            <th>Dodaj artikal u korpu</th>
           </tr>
 
           <tr v-for="artikal in PrikaziIzabraniRestoranDto.listaArtikala" :key="artikal.id">
@@ -60,6 +61,7 @@
             <td>{{ artikal.kolicina }}</td>
             <td>{{ artikal.tip }}</td>
             <td>{{ artikal.opis }}</td>
+            <button v-on:click="dodajArtikalUKorpu()"> Dodaj</button>
           </tr>
 
         </table>
@@ -150,6 +152,39 @@ export default {
         });
   //}
   },
+
+  methods: {
+
+    odlogovanje : function () {
+      fetch("http://localhost:8081/api/odlogovanje", {
+        method: "POST",
+        credentials: 'include',
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+        },
+        //body: JSON.stringify(this.korisnik),
+      })
+        .then((response) => response.json)
+        .then((data) => {
+          console.log("Success : " + data);
+          this.$ses;
+          this.$router.push("/");
+        })
+        .catch((err) => {
+          console.log("Error : " + err);
+          alert(err);
+        });
+
+      },
+
+    dodajArtikalUKorpu : function() {
+
+      
+
+      }
+
+  }
 
 
 
