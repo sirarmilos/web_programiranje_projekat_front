@@ -6,28 +6,28 @@
     <div class="topnav">
         <a href="/adminPocetna" >Pregled podataka</a>
         <a href="/adminAzuriranjePodataka">Ažuriranje podataka</a>
-        <a href="/adminKreiranjeNovogDostavljaca">Kreiranje dostavljača</a>
+        <a class="active" href="/adminKreiranjeNovogDostavljaca">Kreiranje dostavljača</a>
         <a href="/adminKreiranjeNovogRestoranaIMenadzera">Kreiraj novi restoran i menadžera</a>
         <a href="/adminPrikazSvihKorisnika">Prikaz svih korisnika</a>
-        <a class="active" href="/adminRestorani">Restorani</a>
+        <a href="/adminRestorani">Restorani</a>
         <a v-on:click="odlogovanje()">Izloguj se</a>
     </div>
 
         <p> Unesite podatke o dostavljaču </p>
         <label for="korisnickoIme"> Korisnicko ime: </label>
-        <input id="korisnickoIme" type="text" name="korisnickoIme" required="required"/>
+        <input v-model="Dostavljac.korisnickoIme" id="korisnickoIme" type="text" name="korisnickoIme" required="required"/>
         <br/>
 
         <label for="lozinka"> Lozinika: </label>
-        <input id="lozinka" type="text" name="lozinka" required="required"/>
+        <input v-model="Dostavljac.lozinka" id="lozinka" type="text" name="lozinka" required="required"/>
         <br/>
 
         <label for="ime"> Ime: </label>
-        <input id="ime" type="text" name="ime" required="required"/>
+        <input v-model="Dostavljac.ime" id="ime" type="text" name="ime" required="required"/>
         <br/>
 
         <label for="prezime"> Prezime: </label>
-        <input id="prezime" type="text" name="prezime" required="required"/>
+        <input v-model="Dostavljac.prezime" id="prezime" type="text" name="prezime" required="required"/>
         <br/>
 
         <button v-on:click="dodajNovogDostavljaca()">
@@ -48,27 +48,11 @@ export default {
 
    data: function () {
     return {
-      PrikaziIzabraniRestoranDto: {
-        restoran:{
-          naziv: "",
-          tip: "",
-        },
-        lokacija:{
-          adresa: "",
-          geografskaDuzina: "",
-          geografskaSirina: "",
-        },
-        listaArtikala:{
-          naziv: "",
-          cena: "",
-          kolicina: "",
-          tip: "",
-          opis: "",
-        },
-        listaKomentara:{
-          ocena: "",
-          tekstKomentara: "",
-        },
+      Dostavljac: {
+        korisnickoIme: "",
+        lozinka: "",
+        ime: "",
+        prezime: "",
       },
     };
   },
@@ -77,7 +61,28 @@ export default {
 
     dodajNovogDostavljaca : function(){
 
-
+      fetch("http://localhost:8081/api/admin/kreiraj_dostavljaca", {
+        method: "POST",
+        credentials: 'include',
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(this.Dostavljac),
+      })
+        .then((response) => response.json)
+        .then((data) => {
+          console.log(this.Dostavljac);
+          console.log("Success : " + data);
+          console.log(JSON.stringify(this.Dostavljac));
+          console.log(JSON.stringify(data));
+          this.$router.push("/adminPrikazSvihKorisnika");
+        })
+        .catch((err) => {
+          console.log(response);
+          console.log("Error : " + err);
+          alert(err);
+        });
 
     },
 

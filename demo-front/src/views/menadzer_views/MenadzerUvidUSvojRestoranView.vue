@@ -65,8 +65,8 @@
             <td>{{ artikal.kolicina }}</td>
             <td>{{ artikal.tip }}</td>
             <td>{{ artikal.opis }}</td>
-            <td><button v-on:click="obrisiArtikal()"> Obriši artikal</button></td>
-            <td><button v-on:click="azurirajArtikal()"> Ažuriraj artikal</button></td>
+            <td><button v-on:click="obrisiArtikal(artikal.id)"> Obriši artikal</button></td>
+            <td><button v-on:click="azurirajArtikal(artikal.id)"> Ažuriraj artikal</button></td>
           </tr>
 
         </table>
@@ -135,8 +135,8 @@ export default {
       .catch((err) =>{
         //console.log(err)
       })*/
-
-    // UMESTO this.$route.query.id TREBA STAVITI ID OD RESTORANA U KOME RADI TAJ MENADZER
+    /// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    /// UMESTO this.$route.query.id TREBA STAVITI ID OD RESTORANA U KOME RADI TAJ MENADZER
       fetch('http://localhost:8081/api/korisnik/izbor_restorana/' + 1, {
         method: "GET",
         credentials: 'include',
@@ -157,11 +157,24 @@ export default {
 
   methods: {
 
-    obrisiArtikal : function() {
+    obrisiArtikal : function(id) {
         // ne treba nova stranica, samo ga ovde obrises iz baze, tj pozoves odgovarajuci end point da to uradi i refresujes stranicu da se izbrise i iz tabele u kojoj se ovde prikazuju artikli
+
+      fetch("http://localhost:8081/api/menadzer/obrisi_artikal/" + id, {
+        method: "DELETE",
+        credentials: 'include',
+      }).then((res) => {
+        if (res.ok) {
+          window.location.reload();
+        }
+      });
+
+
     },
 
-    azurirajArtikal : function() {
+    azurirajArtikal : function(id) {
+      
+      this.$router.push("/menadzerAzuriranjeArtikla?id=" + id);
         //this.$router.push("asdasd"); // posalji ga na stranicu za azuriranje artikla, vidi da prosledis id artikla da se zna o kom je rec i da prilikom ucitavanja stranice azuriranje artikla, budu ucitani pocetni podaci
     },
 

@@ -27,17 +27,17 @@
     <!--<form method="post">-->
 
         <label for="poljeIme"> Ime: </label>
-        <input v-model="slanje.naziv" v-on:input="pretraga()" id="poljeIme" type="text" name="poljeIme"/>
+        <input v-model="slanje.ime" v-on:input="pretraga()" id="poljeIme" type="text" name="poljeIme"/>
 
         <br/>
 
         <label for="poljePrezime"> Prezime: </label>
-        <input v-model="slanje.tip" v-on:input="pretraga()" id="poljePrezime" type="text" name="poljePrezime"/>
+        <input v-model="slanje.prezime" v-on:input="pretraga()" id="poljePrezime" type="text" name="poljePrezime"/>
 
         <br/>
 
-        <label for="poljeKorisnickoIme"> Korisnicko ime: </label>
-        <input v-model="slanje.adresa" v-on:input="pretraga()" id="poljeKorisnickoIme" type="text" name="poljeKorisnickoIme"/>
+        <label for="poljeKorisnickoIme"> Korisničko ime: </label>
+        <input v-model="slanje.korisnickoIme" v-on:input="pretraga()" id="poljeKorisnickoIme" type="text" name="poljeKorisnickoIme"/>
 
         <br/>
 
@@ -48,14 +48,19 @@
         <tr>
           <th>Korisničko ime</th>
           <th>Ime</th>
+          <th>Lozinka</th>
           <th>Prezime</th>
           <th>Pol</th>
           <th>Datum rođenja</th>
         </tr>
 
-        <tr v-for="restoran in restorani" :key="restoran.id">
-          <td>{{ restoran.naziv }}</td>
-          <td>{{ restoran.tip }}</td>
+        <tr v-for="korisnik in korisnici" :key="korisnik.id">
+          <td>{{ korisnik.korisnickoIme }}</td>
+          <td>{{ korisnik.lozinka }}</td>
+          <td>{{ korisnik.ime }}</td>
+          <td>{{ korisnik.prezime }}</td>
+          <td>{{ korisnik.pol }}</td>
+          <td>{{ korisnik.datumRodjenja }}</td>
         </tr>
 
     </table>
@@ -71,11 +76,11 @@ export default {
 
   data: function () {
     return {
-      restorani: [],
+      korisnici: [],
       slanje:{
-        naziv: "",
-        tip: "",
-        adresa: "",
+        ime: "",
+        prezime: "",
+        korisnickoIme: "",
       }
     };
   },
@@ -95,7 +100,7 @@ export default {
         //console.log(err)
       })*/
 
-      fetch('http://localhost:8081/api/restoran/prikaz_restorana' /*+ localStorage.name*/, {
+      fetch('http://localhost:8081/api/admin/pregled_svih_korisnika' /*+ localStorage.name*/, {
         method: "GET",
         credentials: 'include',
         headers: {
@@ -106,7 +111,7 @@ export default {
 
       })
         .then(response => response.json())
-        .then(data => {console.log("Success:", data); this.restorani = data})
+        .then(data => {console.log("Success:", data); this.korisnici = data})
         .catch((error) => {
           console.error("Error:", error);
         });
@@ -116,7 +121,7 @@ export default {
   methods: {
 
     pretraga : function() {
-
+/// OVO TREBA URADITI, TREBA NAPRAVITI NOVI END POINT ZA PRETRAGU PO IME, PREZIME, KORISNICKO IME
       fetch("http://localhost:8081/api/restoran/pretraga" /*+ this.slanje*/, {
         method: "POST",
         credentials: 'include',
