@@ -162,21 +162,7 @@ export default {
           console.log("Success:", data);
           console.log(JSON.stringify(data));
 
-          //var proizvodi = JSON.stringify(data);
-          //var proizvodi = [{naziv, tip}];
-          var proizvodi = new Array(JSON.stringify(data)); // lista proizvoda
-          //this.restorani = JSON.stringify(data);
-          var pomocna = {};
-          for(var i = 1; i < 2; i++)
-          {
-            console.log(pomocna); // naziv:proizvodi[i].naziv
-            //pomocna.naziv = proizvodi[naziv];
-            //pomocna[1] = {tip: proizvodi[id : i].naziv, adresa:"c"};
-            //this.restorani.push({naziv:"a", tip:"b", adresa:"c"});
-          }
-          this.restorani = pomocna;
-          //this.restorani = [{naziv:"a", tip:"b", adresa:"c"}];
-          //proizvodi.push(data.)
+          this.restorani = data;
           })
         .catch((error) => {
           console.error("Error:", error);

@@ -121,20 +121,6 @@ export default {
   },
   mounted: function () {
 
-    //if(localStorage.name === "kkkk")
-    //{
-    //primer axios poziva
-    /*axios
-      .get("http://localhost:8081/api/korisnik/pregled_podataka")
-      .then((res) => {
-        
-        this.korisnik = res.data;
-
-      })
-      .catch((err) =>{
-        //console.log(err)
-      })*/
-
       fetch('http://localhost:8081/api/korisnik/izbor_restorana/' + this.$route.query.id, {
         method: "GET",
         credentials: 'include',
@@ -150,7 +136,6 @@ export default {
         .catch((error) => {
           console.error("Error:", error);
         });
-  //}
   },
 
   methods: {
@@ -179,8 +164,6 @@ export default {
       },
 
   }
-
-
 
 };
 
