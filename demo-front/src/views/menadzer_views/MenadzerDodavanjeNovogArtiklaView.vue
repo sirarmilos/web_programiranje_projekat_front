@@ -19,23 +19,23 @@
     <!--<form method="post">-->
 
         <label for="naziv"> Naziv: </label>
-        <input id="naziv" type="text" name="naziv"/>
+        <input v-model="PodaciZaSlanje.naziv" id="naziv" type="text" name="naziv"/>
         <br/>
 
         <label for="tip"> Tip: </label>
-        <input id="tip" type="text" name="tip"/>
+        <input v-model="PodaciZaSlanje.tip" id="tip" type="text" name="tip"/>
         <br/>
 
         <label for="kolicina"> Količina: </label>
-        <input id="kolicina" type="text" name="kolicina"/>
+        <input v-model="PodaciZaSlanje.kolicina" id="kolicina" type="text" name="kolicina"/>
         <br/>
 
         <label for="cena"> Cena: </label>
-        <input id="cena" type="text" name="cena"/>
+        <input v-model="PodaciZaSlanje.cena" id="cena" type="text" name="cena"/>
         <br/>
 
         <label for="opis"> Opis: </label>
-        <input id="opis" type="text" name="opis"/>
+        <input v-model="PodaciZaSlanje.opis" id="opis" type="text" name="opis"/>
         <br/>
 
         <button v-on:click="izvrsiDodavanje()">
@@ -53,30 +53,39 @@ export default {
 
   data: function () {
     return {
-      korisnik: {},
-      tekstDugmeta: "Prikaži lozinku",
+      PodaciZaSlanje: {
+        naziv: "",
+        tip: "",
+        kolicina: "",
+        cena: "",
+        opis: "",
+      },
     };
   },
 
  methods: {
 
-    prikaziLozinku() {
-      var vrednost = document.getElementById("poljeLozinka");
-      if(vrednost.type === "password")
-      {
-        //document.getElementById("poljeLozinka").setAttribute("type", "text");
-        vrednost.setAttribute("type", "text");
-        this.tekstDugmeta = "Sakrij lozinku";
-      }
-      else
-      {
-        //document.getElementById("poljeLozinka").setAttribute("type", "password");
-        vrednost.setAttribute("type", "password");
-        this.tekstDugmeta = "Prikaži lozinku";
-      }
-    },
-
     izvrsiDodavanje : function() {
+
+      fetch("http://localhost:8081/api/menadzer/dodavanje_novog_artikla", {
+        method: "POST",
+        credentials: 'include',
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(this.PodaciZaSlanje),
+      })
+        .then((response) => response.json)
+        .then((data) => {
+          console.log("Success : " + data);
+          console.log(data.response);
+          this.$router.push("/menadzerNjegovRestoran");
+        })
+        .catch((err) => {
+          console.log("Error : " + err);
+          alert(err);
+        });
 
     },
 

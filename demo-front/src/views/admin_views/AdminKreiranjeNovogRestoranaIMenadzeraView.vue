@@ -7,51 +7,51 @@
         <a href="/adminPocetna" >Pregled podataka</a>
         <a href="/adminAzuriranjePodataka">Ažuriranje podataka</a>
         <a href="/adminKreiranjeNovogDostavljaca">Kreiranje dostavljača</a>
-        <a href="/adminKreiranjeNovogRestoranaIMenadzera">Kreiraj novi restoran i menadžera</a>
+        <a class="active" href="/adminKreiranjeNovogRestoranaIMenadzera">Kreiraj novi restoran i menadžera</a>
         <a href="/adminPrikazSvihKorisnika">Prikaz svih korisnika</a>
-        <a class="active" href="/adminRestorani">Restorani</a>
+        <a href="/adminRestorani">Restorani</a>
         <a v-on:click="odlogovanje()">Izloguj se</a>
     </div>
 
         <p> Unesite podatke o menadzeru </p>
         <label for="korisnickoIme"> Korisnicko ime: </label>
-        <input id="korisnickoIme" type="text" name="korisnickoIme" required="required"/>
+        <input v-model="PodaciZaSlanje.korisnickoIme" id="korisnickoIme" type="text" name="korisnickoIme" required="required"/>
         <br/>
 
         <label for="lozinka"> Lozinika: </label>
-        <input id="lozinka" type="text" name="lozinka" required="required"/>
+        <input v-model="PodaciZaSlanje.lozinka" id="lozinka" type="text" name="lozinka" required="required"/>
         <br/>
 
         <label for="ime"> Ime: </label>
-        <input id="ime" type="text" name="ime" required="required"/>
+        <input v-model="PodaciZaSlanje.ime" id="ime" type="text" name="ime" required="required"/>
         <br/>
 
         <label for="prezime"> Prezime: </label>
-        <input id="prezime" type="text" name="prezime" required="required"/>
+        <input v-model="PodaciZaSlanje.prezime" id="prezime" type="text" name="prezime" required="required"/>
         <br/>
         
         <p> Unesite podatke o restoranu </p>
 
         <label for="nazivRestorana"> Naziv restorana: </label>
-        <input id="nazivRestorana" type="text" name="nazivRestorana" required="required"/>
+        <input v-model="PodaciZaSlanje.naziv" id="nazivRestorana" type="text" name="nazivRestorana" required="required"/>
         <br/>
 
         <label for="tipRestorana"> Tip restorana: </label>
-        <input id="tipRestorana" type="text" name="tipRestorana" required="required"/>
+        <input v-model="PodaciZaSlanje.tip" id="tipRestorana" type="text" name="tipRestorana" required="required"/>
         <br/>
         
         <p> Unesite podatke o lokaciji restorana </p>
 
         <label for="adresaGDuzina"> Adresa restorana - geografskaDuzina: </label>
-        <input id="adresaGDuzina" type="text" name="adresaGDuzina" required="required"/>
+        <input v-model="PodaciZaSlanje.geografskaDuzina" id="adresaGDuzina" type="text" name="adresaGDuzina" required="required"/>
         <br/>
 
         <label for="adresaGSirina"> Adresa restorana - geografskaSirina: </label>
-        <input id="adresaGSirina" type="text" name="adresaGSirina" required="required"/>
+        <input v-model="PodaciZaSlanje.geografskaSirina" id="adresaGSirina" type="text" name="adresaGSirina" required="required"/>
         <br/>
         
         <label for="adresa"> Adresa: </label>
-        <input id="adresa" type="text" name="adresa" required="required"/>
+        <input v-model="PodaciZaSlanje.adresa" id="adresa" type="text" name="adresa" required="required"/>
         <br/>
 
         <button v-on:click="dodajNoviRestoranINjegovogMenadzera()">
@@ -72,27 +72,22 @@ export default {
 
    data: function () {
     return {
-      PrikaziIzabraniRestoranDto: {
-        restoran:{
+      PodaciZaSlanje: {
+        //menadzer:{
+          korisnickoIme: "",
+          lozinka: "",
+          ime: "",
+          prezime: "",
+        //},
+        //restoran: {
           naziv: "",
           tip: "",
-        },
-        lokacija:{
+        //},
+        //lokacija: {
           adresa: "",
           geografskaDuzina: "",
           geografskaSirina: "",
-        },
-        listaArtikala:{
-          naziv: "",
-          cena: "",
-          kolicina: "",
-          tip: "",
-          opis: "",
-        },
-        listaKomentara:{
-          ocena: "",
-          tekstKomentara: "",
-        },
+        //},
       },
     };
   },
@@ -101,7 +96,28 @@ export default {
 
     dodajNoviRestoranINjegovogMenadzera : function(){
 
-
+      fetch("http://localhost:8081/api/admin/kreiraj_restoran", {
+        method: "POST",
+        credentials: 'include',
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(this.PodaciZaSlanje),
+      })
+        .then((response) => response.json)
+        .then((data) => {
+          console.log(this.PodaciZaSlanje);
+          console.log("Success : " + data);
+          console.log(JSON.stringify(this.PodaciZaSlanje));
+          console.log(JSON.stringify(data));
+          this.$router.push("/adminRestorani");
+        })
+        .catch((err) => {
+          console.log(response);
+          console.log("Error : " + err);
+          alert(err);
+        });
 
     },
 

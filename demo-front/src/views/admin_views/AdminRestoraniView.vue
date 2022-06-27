@@ -126,6 +126,20 @@ export default {
 
     obrisiRestoran: function(restoran) {
         // vodi racuna ono dto brisanje tri odjednom, da se obrisu i lokacija, i restoran i menadzer zaduzen za taj restoran
+        console.log(restoran.id);
+        fetch("http://localhost:8081/api/admin/obrisi_restoran/" + restoran.id, {
+        method: "DELETE",
+        credentials: 'include',
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+        },
+      }).then((res) => {
+        if (res.ok) {
+          window.location.reload();
+        }
+      });
+
     },
 
     viseInformacija : function(restoran) {
