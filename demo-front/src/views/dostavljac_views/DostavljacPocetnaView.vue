@@ -84,20 +84,6 @@ export default {
   },
   mounted: function () {
 
-    //if(localStorage.name === "kkkk")
-    //{
-    //primer axios poziva
-    /*axios
-      .get("http://localhost:8081/api/korisnik/pregled_podataka")
-      .then((res) => {
-        
-        this.korisnik = res.data;
-
-      })
-      .catch((err) =>{
-        //console.log(err)
-      })*/
-
       fetch('http://localhost:8081/api/korisnik/pregled_podataka/' /*+ localStorage.name*/, {
         method: "GET",
         credentials: 'include',
@@ -113,7 +99,6 @@ export default {
         .catch((error) => {
           console.error("Error:", error);
         });
-  //}
   },
 
  methods: {
@@ -158,35 +143,6 @@ export default {
       }
 
   },
-
-  /*methods: {
-    addEmployee: function() {
-      this.$router.push("/add-employee");
-    },
-    seeMore: function (employee) {
-      this.$router.push("/employee?id=" + employee.id);
-    },
-    deleteEmployee: function (id) {
-      fetch("http://localhost:8081/api/employees/" + id, {
-        method: "DELETE",
-      }).then((res) => {
-        if (res.ok) {
-          window.location.reload();
-        }
-      });
-    },
-  },*/
-
-
-
-
-
-
-
-
-
-
-
 
 };
 

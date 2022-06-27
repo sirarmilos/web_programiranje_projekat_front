@@ -52,6 +52,7 @@
           <th>Prezime</th>
           <th>Pol</th>
           <th>Datum rođenja</th>
+          <th>Uloga</th>
         </tr>
 
         <tr v-for="korisnik in korisnici" :key="korisnik.id">
@@ -61,6 +62,7 @@
           <td>{{ korisnik.prezime }}</td>
           <td>{{ korisnik.pol }}</td>
           <td>{{ korisnik.datumRodjenja }}</td>
+          <td>{{ korisnik.korisnickaUloga }}</td>
         </tr>
 
     </table>
@@ -121,8 +123,8 @@ export default {
   methods: {
 
     pretraga : function() {
-/// OVO TREBA URADITI, TREBA NAPRAVITI NOVI END POINT ZA PRETRAGU PO IME, PREZIME, KORISNICKO IME
-      fetch("http://localhost:8081/api/restoran/pretraga" /*+ this.slanje*/, {
+
+      fetch("http://localhost:8081/api/admin/pretraga_korisnika" /*+ this.slanje*/, {
         method: "POST",
         credentials: 'include',
         headers: {
@@ -134,23 +136,8 @@ export default {
         .then(data => 
         {
           console.log("Success:", data);
-          console.log(JSON.stringify(data));
 
-          //var proizvodi = JSON.stringify(data);
-          //var proizvodi = [{naziv, tip}];
-          var proizvodi = new Array(JSON.stringify(data)); // lista proizvoda
-          //this.restorani = JSON.stringify(data);
-          var pomocna = {};
-          for(var i = 1; i < 2; i++)
-          {
-            console.log(pomocna); // naziv:proizvodi[i].naziv
-            //pomocna.naziv = proizvodi[naziv];
-            //pomocna[1] = {tip: proizvodi[id : i].naziv, adresa:"c"};
-            //this.restorani.push({naziv:"a", tip:"b", adresa:"c"});
-          }
-          this.restorani = pomocna;
-          //this.restorani = [{naziv:"a", tip:"b", adresa:"c"}];
-          //proizvodi.push(data.)
+          this.korisnici = data;
           })
         .catch((error) => {
           console.error("Error:", error);

@@ -25,7 +25,7 @@
     <input v-model="porudzbina.status" id="status" type="text" name="status" required="required" readonly/>
     <br/>
 
-    <table id="listaArtikala">
+    <!--<table id="listaArtikala">
 
         <tr>
           <th>Naziv</th>
@@ -33,29 +33,69 @@
           <th>Opis</th>
           <th>Kolicina</th>
         </tr>
-       <!-- <tr>
+        <tr>
           <th> Id</th>
           <th> Kolicina </th>
-        </tr>-->
+        </tr>
 
         <button v-on:click="funkcija(porudzbina.porudzbineArtikli)"> dd </button>
 
-        <tr v-for="artikal in porudzbinaBolje" :key="porudzbina.porudzbineArtikli.id" id="tabela">
+     <tr v-for="artikal in porudzbinaBolje" :key="porudzbina.porudzbineArtikli.id" id="tabela">
          <td> <input v-model="porudzbinaBolje.naziv" id="nesto" type="text" name="nesto" required="required" readonly /> </td>
           <td> <input v-model="porudzbinaBolje.cena" id="nesto" type="text" name="nesto" required="required" readonly /> </td>
           <td> <input v-model="porudzbinaBolje.opis" id="nesto" type="text" name="nesto" required="required" readonly /> </td>
          
           <td id="polje1">{{ artikal.id}}</td>
           <td>{{ artikal.kolicina }}</td>
-        </tr>
-       <!-- <p v-on:load="dobaviArtikalPoId(1)"></p>
+        </tr> 
+        <p v-on:load="dobaviArtikalPoId(1)"></p>
         <button v-on:click="dobaviArtikalPoId(1)">1</button>
-        <button v-on:click="dobaviArtikalPoId(2)">2</button>-->
+        <button v-on:click="dobaviArtikalPoId(2)">2</button>
         
-    <label for="nesto"> Nesto: </label>
+  <label for="nesto"> Nesto: </label>
     <input v-model="nasaPromenljiva.naziv" id="nesto" type="text" name="nesto" required="required" readonly/>
     <br/>
+    </table>-->
+
+    <br/>
+
+    <table>
+      <tr>
+        <th>Id</th>
+        <th>Kolicina</th>
+      </tr>
+      <tr v-for="artikal in porudzbina.porudzbineArtikli" :key="porudzbina.porudzbineArtikliid" id="tabela">
+       <!-- <td>{{ artikal.id}}</td>
+        <td>{{ artikal.kolicina }}</td>-->
+        <input v-on:click="kliknuo(artikal.id, artikal.kolicina)" v-model="artikal.id"/>
+        <input v-model="artikal.kolicina"/>
+        <button v-on:click="kliknuo(artikal.id)">
+          Kliknuo
+        </button>
+      </tr>
     </table>
+    
+    <br/> <br/>
+
+    <table>
+      <tr>
+        <th>Ja</th>
+        <th>Naziv</th>
+        <th>Cena</th>
+        <th>Opis</th>
+        <th>Kolicina</th>
+      </tr>
+      
+      <tr v-for="noviArtikal in listaNovihArtikala" :key="listaNovihArtikala.id">
+        <input v-model="noviArtikal.naziv" />
+        <td>{{ noviArtikal.naziv }}</td>
+        <td>{{ noviArtikal.cena }}</td>
+        <td>{{ noviArtikal.opis }}</td>
+        <td>{{ noviArtikal.kolicina }}</td>
+      </tr>
+    </table>
+
+
 
 
 </template>
@@ -73,16 +113,28 @@ export default {
           kolicina: "",
         },
       },
-      nasaPromenljiva: {
+      listaNovihArtikala:[
+       { naziv: "",
+        cena: "",
+        opis: "",
+        kolicina: "",}
+      ],
+      /*nasaPromenljiva: {
         naziv: "",
         cena: "",
         opis: "",
+        kolicina: "",
       },
-      porudzbinaBolje:[
+      porudzbineVracene: {
+        naziv: "",
+        cena: "",
+        opis: "",
+      }*/
+     /* porudzbinaBolje:[
         {naziv: ""},
         {cena: ""},
         {opis: ""},
-        ],/*{
+        ],*//*{
         naziv: "",
         cena: "",
         opis: "",
@@ -90,20 +142,6 @@ export default {
     };
   },
   mounted: function () {
-
-    //if(localStorage.name === "kkkk")
-    //{
-    //primer axios poziva
-    /*axios
-      .get("http://localhost:8081/api/korisnik/pregled_podataka")
-      .then((res) => {
-        
-        this.korisnik = res.data;
-
-      })
-      .catch((err) =>{
-        //console.log(err)
-      })*/
 
       fetch('http://localhost:8081/api/porudzbina/dobaviPorudzbinu/' + this.$route.query.id/*+ localStorage.name*/, {
         method: "GET",
@@ -120,12 +158,59 @@ export default {
         .catch((error) => {
           console.error("Error:", error);
         });
-  //}
+
   },
 
   methods: {
 
-    funkcija : function(porudzbineArtikli)
+    kliknuo : function(id, kolicina) {
+      
+      fetch('http://localhost:8081/api/pretraga_artikla_po_id/' + id, {
+        method: "GET",
+        credentials: 'include',
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+        },
+        //body: JSON.stringify(this.logovanjeSlanje),
+
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log("Success:", data);
+          this.listaNovihArtikala.push(data);
+          console.log(kolicina);
+
+          console.log(this.listaNovihArtikala[0]);
+          console.log(this.listaNovihArtikala[1]);
+          console.log(id);
+
+         })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+
+    },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*funkcija : function(porudzbineArtikli)
     {
 
       for(var i = 0; i < 2; i++)
@@ -135,10 +220,10 @@ export default {
         /*console.log(pomocnaListaArtikala);
         console.log(pomocnaListaArtikala[i].id);
         console.log(pomocnaListaArtikala[i].kolicina);
-        console.log(i);*/
+        console.log(i);
         
 
-        fetch('http://localhost:8081/api/pretraga_artikla_po_id/' + pomocnaListaArtikala[i].id/*this.$route.query.id*//*+ localStorage.name*/, {
+        fetch('http://localhost:8081/api/pretraga_artikla_po_id/' + pomocnaListaArtikala[i].id, {
         method: "GET",
         credentials: 'include',
         headers: {
@@ -164,7 +249,7 @@ export default {
         console.log("Porudzbina bolje: " + this.porudzbinaBolje[1].naziv);
 
       }
-    },
+    },*/
 
     dobaviArtikalPoId : function(artikal){
 

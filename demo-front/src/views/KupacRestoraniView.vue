@@ -136,9 +136,11 @@ export default {
           console.log("Success:", data);
           console.log(JSON.stringify(data));
 
+          this.restorani = data;
+
           //var proizvodi = JSON.stringify(data);
           //var proizvodi = [{naziv, tip}];
-          var p = JSON.stringify(data).split('}');
+         /* var p = JSON.stringify(data).split('}');
           var proizvodi = new Array(p[0],p[1]); // lista proizvoda
           //this.restorani = JSON.stringify(data);
           var pomocna = {};
@@ -152,7 +154,7 @@ export default {
             //pomocna[1] = {tip: proizvodi[id : i].naziv, adresa:"c"};
             //this.restorani.push({naziv:"a", tip:"b", adresa:"c"});
           }
-          this.restorani = pomocna;
+          this.restorani = pomocna;*/
           //this.restorani = [{naziv:"a", tip:"b", adresa:"c"}];
           //proizvodi.push(data.)
           })

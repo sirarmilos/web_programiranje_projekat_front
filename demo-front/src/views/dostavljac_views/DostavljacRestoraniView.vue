@@ -46,17 +46,17 @@
         <tr>
           <th>Naziv restorana</th>
           <th>Tip restorana</th>
-          <th>Više informacija</th>
+          <th>Adresa</th>
+          <th>Geografska sirina</th>
+          <th>Geografska duzina</th>
         </tr>
 
         <tr v-for="restoran in restorani" :key="restoran.id">
           <td>{{ restoran.naziv }}</td>
           <td>{{ restoran.tip }}</td>
-          <td>
-            <button class="dugmeViseInformacija" v-on:click="viseInformacija(restoran)">
-              Vise informacija
-            </button>
-          </td>
+          <td></td>
+          <td></td>
+          <td></td>
         </tr>
 
     </table>
@@ -82,20 +82,6 @@ export default {
   },
   mounted: function () {
 
-    //if(localStorage.name === "kkkk")
-    //{
-    //primer axios poziva
-    /*axios
-      .get("http://localhost:8081/api/korisnik/pregled_podataka")
-      .then((res) => {
-        
-        this.korisnik = res.data;
-
-      })
-      .catch((err) =>{
-        //console.log(err)
-      })*/
-
       fetch('http://localhost:8081/api/restoran/prikaz_restorana' /*+ localStorage.name*/, {
         method: "GET",
         credentials: 'include',
@@ -111,14 +97,9 @@ export default {
         .catch((error) => {
           console.error("Error:", error);
         });
-  //}
   },
 
   methods: {
-
-    viseInformacija : function(restoran) {
-      this.$router.push("/dostavljacDetaljanPrikazRestorana?id=" + restoran.id);
-    },
 
     pretraga : function() {
 
@@ -136,25 +117,7 @@ export default {
           console.log("Success:", data);
           console.log(JSON.stringify(data));
 
-          //var proizvodi = JSON.stringify(data);
-          //var proizvodi = [{naziv, tip}];
-          var p = JSON.stringify(data).split('}');
-          var proizvodi = new Array(p[0],p[1]); // lista proizvoda
-          //this.restorani = JSON.stringify(data);
-          var pomocna = {};
-          console.log(proizvodi);
-          console.log(proizvodi[0]);
-          for(var i = 1; i < 2; i++)
-          {
-            //console.log(pomocna); // naziv:proizvodi[i].naziv
-            //console.log(pomocna);
-            //pomocna.naziv = proizvodi[naziv];
-            //pomocna[1] = {tip: proizvodi[id : i].naziv, adresa:"c"};
-            //this.restorani.push({naziv:"a", tip:"b", adresa:"c"});
-          }
-          this.restorani = pomocna;
-          //this.restorani = [{naziv:"a", tip:"b", adresa:"c"}];
-          //proizvodi.push(data.)
+          this.restorani = data;
           })
         .catch((error) => {
           console.error("Error:", error);
@@ -185,26 +148,7 @@ export default {
 
       }
 
-/*deleteEmployee: function (id) {
-      fetch("http://localhost:8081/api/employees/" + id, {
-        method: "PUT",
-        credentials: 'include',
-        headers: {
-          Accept: "application/json",
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(this.korisnik),
-      }).then((res) => {
-        if (res.ok) {
-          window.location.reload();
-        }
-      });
-    },*/
-
-
-
   },
-
 
 };
 
