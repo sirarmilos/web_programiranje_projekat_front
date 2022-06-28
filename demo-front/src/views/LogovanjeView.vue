@@ -46,27 +46,13 @@ export default {
   
   data: function () {
     return {
-      // localStorage. - bice koristan kad tad
       logovanjeSlanje: {
         korisnickoIme: "",
         lozinka: "",
       },
-      /*logovanjeDtoSlanje: {
-        korisnik: {
-          korisnickoIme: "",
-          lozinka: "",
-        },
-        uloga: "", // ??? zasto ulogu nece da ucita
-      },*/
-      /*korisnik: {
-        korisnickoIme: "",
-        lozinka: "",
-      },
-      uloga : "",*/
     };
   },
   methods: {
-/*lozinkaKupac1*/
 
     registrujSe: function() {
 
@@ -80,100 +66,57 @@ export default {
         .post("http://localhost:8081/api/logovanje", this.logovanjeSlanje,
         {
           withCredentials: true
-        }) /// this.korisnik
+        })
         .then((res) => {
           console.log(res);
-          //this.uloga = "kupac"
-          console.log(this.logovanjeSlanje.korisnickoIme);
-          console.log(this.logovanjeSlanje.lozinka);
-          console.log(JSON.stringify(res.data.uloga));
-          console.log(JSON.stringify(res.data.sesija))
-          var pomocna = JSON.stringify(res.data.uloga);
-          var pomocna1 = pomocna.replace('"', '');
-          var pomocna2 = pomocna1.replace('"', '');
-          console.log(pomocna2);
-          console.log(JSON.stringify(res.data.uloga))
-          if(pomocna2 === "kupac")
+
+          var uloga_pomocna = JSON.stringify(res.data.uloga);
+          var uloga_pomocna1 = uloga_pomocna.replace('"', '');
+          var uloga_pomocna2 = uloga_pomocna1.replace('"', '');
+          
+          if(uloga_pomocna2 === "kupac")
           {
-            //localStorage.setItem(uloga, "kupac");
-            //localStorage.name = JSON.stringify(res.data.sesijaId);
-            //localStorage.name = 2222;
-            //localStorage.name = JSON.stringify(this.logovanjeSlanje.korisnickoIme);
-            localStorage.name = JSON.stringify(res.data.sesija);
             this.$router.push("/kupacPocetna");
           }
-          else if(pomocna2 === "admin")
+          else if(uloga_pomocna2 === "admin")
           {
-            localStorage.name = JSON.stringify(res.data.sesija);
             this.$router.push("/adminPocetna");
           }
-          else if(pomocna2 === "dostavljac")
+          else if(uloga_pomocna2 === "dostavljac")
           {
-            localStorage.name = JSON.stringify(res.data.sesija);
             this.$router.push("/dostavljacPocetna");
           }
-          else if(pomocna2 === "menadzer")
+          else if(uloga_pomocna2 === "menadzer")
           {
-            localStorage.name = JSON.stringify(res.data.sesija);
+            fetch('http://localhost:8081/api/menadzer/dobavi_id_restorana', {
+            method: "GET",
+            credentials: 'include',
+            headers: {
+              Accept: "application/json",
+              "Content-type": "application/json",
+            },
+          })
+            .then(response => response.json())
+            .then(data => {
+              console.log("Success:", data);
+              localStorage.name = data; // vrlo vazno
+              })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
+
             this.$router.push("/menadzerPocetna");
           }
-          //this.$router.push("/kupacPocetna");
         })
         .catch((err) => {
           console.log(err);
-          //console.log(this.logovanjeSlanje.korisnickoIme);
-          //console.log(this.logovanjeSlanje.lozinka);
-          //console.log(this.logovanjeDtoSlanje.uloga);
-          /*console.log(this.korisnik.korisnickoIme);
-          console.log(this.korisnik.lozinka);
-          console.log(this.uloga);*/
-          alert("Something went wrong!");
-        });
-    },
-    /*ulogujSe : function() {
-
-      fetch("http://localhost:8081/api/logovanje", {
-        method: "POST",
-        credentials: 'include',
-        headers: {
-          Accept: "application/json",
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(this.logovanjeSlanje),
-      })
-        .then((response) => response.json)
-        .then((data) => {
-          console.log("Success : " + data);
-          this.$router.push("/kupacPocetna");
-        })
-        .catch((err) => {
-          console.log("Error : " + err);
-          alert(err);
+          //console.log(err.response.status);
+          //console.log(err.request.response);
+          alert(err.request.response);
         });
     },
 
-    /*submit: function () {
-
-      fetch("http://localhost:8081/api/employees", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(this.employee),
-      })
-        .then((response) => response.json)
-        .then((data) => {
-          console.log("Success : " + data);
-          this.$router.push("/employees");
-        })
-        .catch((err) => {
-          console.log("Error : " + err);
-          alert(err);
-        });
-    },*/
   },
-
 
 };
 

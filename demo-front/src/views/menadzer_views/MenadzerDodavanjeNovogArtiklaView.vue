@@ -67,6 +67,17 @@ export default {
 
     izvrsiDodavanje : function() {
 
+      if(this.PodaciZaSlanje.naziv == "" || this.PodaciZaSlanje.cena == "" || this.PodaciZaSlanje.tip == "")
+      {
+        console.log("greska");
+      }
+      else if(isNaN(this.PodaciZaSlanje.cena) == true)
+      {
+        console.log("nije broj");
+      }
+      else
+      {
+
       fetch("http://localhost:8081/api/menadzer/dodavanje_novog_artikla", {
         method: "POST",
         credentials: 'include',
@@ -87,6 +98,7 @@ export default {
           alert(err);
         });
 
+        }
     },
 
     odlogovanje : function () {

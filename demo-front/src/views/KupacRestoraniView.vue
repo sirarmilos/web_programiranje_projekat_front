@@ -46,12 +46,14 @@
         <tr>
           <th>Naziv restorana</th>
           <th>Tip restorana</th>
+          <th>Adresa restorana</th>
           <th>Više informacija</th>
         </tr>
 
         <tr v-for="restoran in restorani" :key="restoran.id">
           <td>{{ restoran.naziv }}</td>
           <td>{{ restoran.tip }}</td>
+          <td>{{ restoran.adresa }}</td>
           <td>
             <button class="dugmeViseInformacija" v-on:click="viseInformacija(restoran)">
               Vise informacija
@@ -74,6 +76,7 @@ export default {
     return {
       restorani: [],
       slanje:{
+        id: "",
         naziv: "",
         tip: "",
         adresa: "",

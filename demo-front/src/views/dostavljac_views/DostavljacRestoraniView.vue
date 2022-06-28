@@ -46,7 +46,7 @@
         <tr>
           <th>Naziv restorana</th>
           <th>Tip restorana</th>
-          <th>Adresa</th>
+          <th>Adresa restorana</th>
           <th>Geografska sirina</th>
           <th>Geografska duzina</th>
         </tr>
@@ -54,9 +54,9 @@
         <tr v-for="restoran in restorani" :key="restoran.id">
           <td>{{ restoran.naziv }}</td>
           <td>{{ restoran.tip }}</td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td>{{ restoran.adresa }}</td>
+          <td>{{ restoran.gSirina }}</td>
+          <td>{{ restoran.gDuzina }}</td>
         </tr>
 
     </table>
@@ -77,12 +77,15 @@ export default {
         naziv: "",
         tip: "",
         adresa: "",
-      }
+        gSirina: "",
+        gDuzina: "",
+      },
     };
   },
   mounted: function () {
 
-      fetch('http://localhost:8081/api/restoran/prikaz_restorana' /*+ localStorage.name*/, {
+      //fetch('http://localhost:8081/api/restoran/prikaz_restorana' /*+ localStorage.name*/, {
+        fetch('http://localhost:8081/api/dostavljac/prikaz_restorana', { 
         method: "GET",
         credentials: 'include',
         headers: {
@@ -103,7 +106,8 @@ export default {
 
     pretraga : function() {
 
-      fetch("http://localhost:8081/api/restoran/pretraga" /*+ this.slanje*/, {
+      //fetch("http://localhost:8081/api/restoran/pretraga" /*+ this.slanje*/, {
+        fetch("http://localhost:8081/api/restoran/dostavljac_pretraga", {
         method: "POST",
         credentials: 'include',
         headers: {

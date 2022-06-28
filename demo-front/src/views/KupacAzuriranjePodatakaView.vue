@@ -63,6 +63,7 @@ export default {
       tekstDugmeta: "Prikaži lozinku",
     };
   },
+
   mounted: function () {
 
       fetch('http://localhost:8081/api/korisnik/pregled_podataka/' /*+ localStorage.name*/, {
@@ -72,15 +73,12 @@ export default {
           Accept: "application/json",
           "Content-type": "application/json",
         },
-        //body: JSON.stringify(this.logovanjeSlanje),
-
       })
         .then(response => response.json())
         .then(data => {console.log("Success:", data); this.korisnik = data})
         .catch((error) => {
           console.error("Error:", error);
         });
-  //}
   },
 
  methods: {
@@ -89,13 +87,11 @@ export default {
       var vrednost = document.getElementById("poljeLozinka");
       if(vrednost.type === "password")
       {
-        //document.getElementById("poljeLozinka").setAttribute("type", "text");
         vrednost.setAttribute("type", "text");
         this.tekstDugmeta = "Sakrij lozinku";
       }
       else
       {
-        //document.getElementById("poljeLozinka").setAttribute("type", "password");
         vrednost.setAttribute("type", "password");
         this.tekstDugmeta = "Prikaži lozinku";
       }
@@ -103,24 +99,32 @@ export default {
 
     izvrsiAzuriranjePodataka : function() {
 
-      fetch("http://localhost:8081/api/korisnik/azuriranje_podataka", {
-        method: "PUT",
-        credentials: 'include',
-        headers: {
-          Accept: "application/json",
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(this.korisnik),
-      })
-        .then((response) => response.json)
-        .then((data) => {
-          console.log("Success : " + data);
-          this.$router.push("/kupacPocetna");
+      /*if(this.korisnik.lozinka == "" || this.korisnik.ime == "" || this.korisnik.prezime == "")
+      {
+        alert("Greska! Lozinka je obavezan podatak.");
+      }
+      else
+      {*/
+        fetch("http://localhost:8081/api/korisnik/azuriranje_podataka", {
+          method: "PUT",
+          credentials: 'include',
+          headers: {
+            Accept: "application/json",
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify(this.korisnik),
         })
-        .catch((err) => {
-          console.log("Error : " + err);
-          alert(err);
-        });
+          .then((response) => response.json)
+          .then((data) => {
+            console.log("Success : " + data);
+            alert("Uspesno ste ažurirali svoje podatke.");
+            this.$router.push("/kupacPocetna");
+          })
+          .catch((err) => {
+            console.log("Error : " + err);
+            alert(err);
+          });
+      //}
     },
 
     odlogovanje : function () {
@@ -136,7 +140,6 @@ export default {
         .then((response) => response.json)
         .then((data) => {
           console.log("Success : " + data);
-          this.$ses;
           this.$router.push("/");
         })
         .catch((err) => {
@@ -147,7 +150,7 @@ export default {
       }
 
   },
-  
+ 
 };
 
 </script>
