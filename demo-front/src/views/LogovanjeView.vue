@@ -76,6 +76,7 @@ export default {
           
           if(uloga_pomocna2 === "kupac")
           {
+            localStorage.name = this.logovanjeSlanje.korisnickoIme;
             this.$router.push("/kupacPocetna");
           }
           else if(uloga_pomocna2 === "admin")

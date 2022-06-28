@@ -16,19 +16,38 @@
     <table id="listaPorudzbina">
 
         <tr>
+          <th>Id</th>
           <th>DatumVreme</th>
           <th>Cena</th>
           <th>Status</th>
           <th>Vise informacija</th>
+          <th>Mesto za vas komentar</th>
+          <th>Mesto za vasu ocenu</th>
+          <th>Pošalji komentar</th>
         </tr>
 
         <tr v-for="porudzbina in listaPorudzbina" :key="listaPorudzbina.id">
+          <td>{{ porudzbina.id }}</td>
           <td>{{ porudzbina.datumVreme }}</td>
           <td>{{ porudzbina.cena }}</td>
           <td>{{ porudzbina.status }}</td>
           <td>
             <button class="dugmeViseInformacija" v-on:click="viseInformacija(porudzbina)">
               Vise informacija
+            </button>
+          </td>
+          <td>
+              <input v-model="pom1"/>
+          </td>
+          <td>
+              <input v-model="pom2"/>
+          </td>
+          <td>
+            <button class="dugmePosaljiKomentar" v-on:click="posaljiKomentar(porudzbina)">
+              Pošalji komentar
+            </button>
+            <button v-on:click="proba(porudzbina, pom1, pom2)">
+              Proba
             </button>
           </td>
         </tr>
@@ -50,10 +69,21 @@ export default {
   data: function () {
     return {
       listaPorudzbina:{
+        id: "",
         datumVreme: "",
         cena: "",
         status: "",
+        kupacKorisnickoIme: "",
+        restoranId: "",
       },
+      slanje: {
+        ocena: "",
+        tekstKomentara: "",
+        korisnickoIme: "",
+        restoran_id: "",
+      },
+      pom1: "",
+      pom2: "",
     };
   },
   mounted: function () {
@@ -76,6 +106,67 @@ export default {
   },
 
   methods: {
+
+    posaljiKomentar : function(porudzbina) {
+
+      fetch('http://localhost:8081/api/nadji_restoran_po_id_porudzbini/' + porudzbina.id /*+ localStorage.name*/, {
+        method: "GET",
+        credentials: 'include',
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+        },
+      })
+        .then(response => response.json())
+        .then(data => {
+          //console.log("Success:", data);
+          this.slanje.restoran_id = data;
+          })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+
+    },
+
+    proba : function(porudzbina, pom1, pom2)
+    {
+
+       if(porudzbina.status == "Dostavljena")
+      {
+        //this.slanje.restoran_id = 2;//;//porudzbina.restoranId;
+        this.slanje.korisnickoIme = localStorage.name//"deki1976";//porudzbina.kupacKorisnickoIme;
+        this.slanje.ocena = pom2;//"Lose";
+        this.slanje.tekstKomentara = pom1;//"SUPER";
+        //console.log(this.slanje.restoran_id);
+
+        fetch("http://localhost:8081/api/dodavanje_komentara", {
+        method: "POST",
+        credentials: 'include',
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(this.slanje),
+      })
+        .then((response) => response.json)
+        .then((data) => {
+          console.log("Success : " + data);
+          //console.log(this.slanje);
+        })
+        .catch((err) => {
+          console.log("Error : " + err);
+          alert(err);
+        });
+
+      }
+      else
+      {
+        alert("Ne mozete da posaljete komentar zato sto vasa porudzbina nije dostavljena.");
+      }
+
+
+
+    },
 
     viseInformacija : function(porudzbina) {
       this.$router.push("/kupacPregledPojedinacnePorudzbine/?id=" + porudzbina.id);
