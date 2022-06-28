@@ -10,10 +10,28 @@
         <a class="active" href="/kupacPorudzbine">Porudžbina</a>
         <a v-on:click="odlogovanje()">Izloguj se</a>
     </div>
+    
+    <table id="pregled">
 
-    <p>
-        Kreiranje nove porudzbine
+          <tr>
+            <th>Naziv </th>
+            <th>Cena_po_artiklu </th>
+            <th>Kolicina</th>
+          </tr>
+
+          <tr v-for="artikal in PregledPorudzbine.artikliZaPregledPorudzbineDtos" :key="artikal.id">
+            <td>{{artikal.naziv }}</td>
+            <td>{{artikal.cena}}</td>
+            <td>{{artikal.kolicina}}</td>
+          </tr>
+  
+     </table>
+      
+    <p>Ukupna cena porudzbine iznosi: {{this.PregledPorudzbine.ukupnaCena}}<br>
+    Cena sa popustom iznosi: {{this.PregledPorudzbine.cena_sa_popustom}}
     </p>
+
+    
 
     <!-- napravi neku kao korpu gde mogu da se dodaju artikli, i brisu i na kraju se napravi porudzbina kad se klikne ovo dugme ispod, kao korpa neka-->
 
@@ -47,6 +65,7 @@ export default {
       })
         .then(response => response.json())
         .then(data => {console.log("Success:", data); this.PregledPorudzbine = data})
+
         .catch((error) => {
           console.error("Error:", error);
         });
@@ -54,7 +73,7 @@ export default {
 
 
   methods: {
-
+      
         odlogovanje : function () {
       fetch("http://localhost:8081/api/odlogovanje", {
         method: "POST",
