@@ -14,50 +14,34 @@
     <!-- kao za tu porudzbinu pregled svih artikala u toj porudzbini i svega toga-->
 
     <label for="datumVreme"> Datum vreme: </label>
-    <input v-model="porudzbina.datumVreme" id="datumVreme" type="text" name="datumVreme" required="required" readonly/>
+    <input v-model="datumVreme" id="datumVreme" type="text" name="datumVreme" required="required" readonly/>
     <br/>
 
     <label for="cena"> Cena: </label>
-    <input v-model="porudzbina.cena" id="cena" type="text" name="cena" required="required" readonly/>
+    <input v-model="ukupnaCena" id="cena" type="text" name="cena" required="required" readonly/>
     <br/>
 
     <label for="status"> Status: </label>
-    <input v-model="porudzbina.status" id="status" type="text" name="status" required="required" readonly/>
+    <input v-model="status" id="status" type="text" name="status" required="required" readonly/>
+    
     <br/>
 
-    <table id="listaArtikala">
-
-        <tr>
-          <th>Naziv</th>
-          <th>Cena</th>
-          <th>Opis</th>
-          <th>Kolicina</th>
-        </tr>
-       <!-- <tr>
-          <th> Id</th>
-          <th> Kolicina </th>
-        </tr>-->
-
-        <button v-on:click="funkcija(porudzbina.porudzbineArtikli)"> dd </button>
-
-        <tr v-for="artikal in porudzbinaBolje" :key="porudzbina.porudzbineArtikli.id" id="tabela">
-         <td> <input v-model="porudzbinaBolje.naziv" id="nesto" type="text" name="nesto" required="required" readonly /> </td>
-          <td> <input v-model="porudzbinaBolje.cena" id="nesto" type="text" name="nesto" required="required" readonly /> </td>
-          <td> <input v-model="porudzbinaBolje.opis" id="nesto" type="text" name="nesto" required="required" readonly /> </td>
-         
-          <td id="polje1">{{ artikal.id}}</td>
-          <td>{{ artikal.kolicina }}</td>
-        </tr>
-       <!-- <p v-on:load="dobaviArtikalPoId(1)"></p>
-        <button v-on:click="dobaviArtikalPoId(1)">1</button>
-        <button v-on:click="dobaviArtikalPoId(2)">2</button>-->
-        
-    <label for="nesto"> Nesto: </label>
-    <input v-model="nasaPromenljiva.naziv" id="nesto" type="text" name="nesto" required="required" readonly/>
-    <br/>
+    <table>
+      <tr>
+        <th>Naziv</th>
+        <th>Cena</th>
+        <th>Opis</th>
+        <th>Kolicina</th>
+      </tr>
+      
+      <tr v-for="noviArtikal in listaNovihArtikala" :key="listaNovihArtikala.id"><!--noviArtikal.id-->
+        <td>{{ noviArtikal.naziv }}</td>
+        <td>{{ noviArtikal.cena }}</td>
+        <td>{{ noviArtikal.opis }}</td>
+        <td>{{ noviArtikal.kolicina }}</td>
+      </tr>
     </table>
-
-
+    
 </template>
 
 <script>
@@ -67,45 +51,20 @@ export default {
 
   data: function () {
     return {
-      porudzbina:{
-        porudzbineArtikli:{
-          id: "",
-          kolicina: "",
-        },
-      },
-      nasaPromenljiva: {
+      listaNovihArtikala: {
         naziv: "",
         cena: "",
         opis: "",
+        kolicina: "",
       },
-      porudzbinaBolje:[
-        {naziv: ""},
-        {cena: ""},
-        {opis: ""},
-        ],/*{
-        naziv: "",
-        cena: "",
-        opis: "",
-      }*/
+      datumVreme: "",
+      ukupnaCena: "",
+      status: "",
     };
   },
   mounted: function () {
 
-    //if(localStorage.name === "kkkk")
-    //{
-    //primer axios poziva
-    /*axios
-      .get("http://localhost:8081/api/korisnik/pregled_podataka")
-      .then((res) => {
-        
-        this.korisnik = res.data;
-
-      })
-      .catch((err) =>{
-        //console.log(err)
-      })*/
-
-      fetch('http://localhost:8081/api/porudzbina/dobaviPorudzbinu/' + this.$route.query.id/*+ localStorage.name*/, {
+      fetch('http://localhost:8081/api/porudzbina/dobavi_porudzbinu/' + this.$route.query.id/*+ localStorage.name*/, {
         method: "GET",
         credentials: 'include',
         headers: {
@@ -116,76 +75,20 @@ export default {
 
       })
         .then(response => response.json())
-        .then(data => {console.log("Success:", data); this.porudzbina = data})
+        .then(data => {
+          console.log("Success:", data);
+          this.listaNovihArtikala = data;
+          this.datumVreme = data[0].datumVreme;
+          this.ukupnaCena= data[0].ukupnaCena;
+          this.status = data[0].status;
+          })
         .catch((error) => {
           console.error("Error:", error);
         });
-  //}
+
   },
 
   methods: {
-
-    funkcija : function(porudzbineArtikli)
-    {
-
-      for(var i = 0; i < 2; i++)
-      {
-        var pomocnaListaArtikala = new Array();
-        pomocnaListaArtikala = porudzbineArtikli;//document.getElementById("polje1");
-        /*console.log(pomocnaListaArtikala);
-        console.log(pomocnaListaArtikala[i].id);
-        console.log(pomocnaListaArtikala[i].kolicina);
-        console.log(i);*/
-        
-
-        fetch('http://localhost:8081/api/pretraga_artikla_po_id/' + pomocnaListaArtikala[i].id/*this.$route.query.id*//*+ localStorage.name*/, {
-        method: "GET",
-        credentials: 'include',
-        headers: {
-          Accept: "application/json",
-          "Content-type": "application/json",
-        },
-        //body: JSON.stringify(this.logovanjeSlanje),
-
-      })
-        .then(response => response.json())
-        .then(data => {console.log("Success:", data); this.porudzbinaBolje.push(data);})
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-
-
-
-
-      }
-
-      for(var i = 0; i < 2; i++)
-      {
-        console.log("Porudzbina bolje: " + this.porudzbinaBolje[1].naziv);
-
-      }
-    },
-
-    dobaviArtikalPoId : function(artikal){
-
-      fetch('http://localhost:8081/api/pretraga_artikla_po_id/' + artikal/*this.$route.query.id*//*+ localStorage.name*/, {
-        method: "GET",
-        credentials: 'include',
-        headers: {
-          Accept: "application/json",
-          "Content-type": "application/json",
-        },
-        //body: JSON.stringify(this.logovanjeSlanje),
-
-      })
-        .then(response => response.json())
-        .then(data => {console.log("Success:", data); this.nasaPromenljiva = data})
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-
-      
-    },
 
     odlogovanje : function () {
       fetch("http://localhost:8081/api/odlogovanje", {
@@ -211,7 +114,6 @@ export default {
       }
 
   },
-
 
 };
 

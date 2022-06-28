@@ -34,12 +34,6 @@
         </tr>
 
     </table>
-
-    <button>
-      Korpa - kreiranje nove porudzbine
-    </button>
-
-
         <!-- napraviti tabelu kada se ucita stranica da se ucitaju u nju sve porudzbine od tog kupca koji je ulogovan-->
         <!-- pored svake stavke u tabeli da ima kao dugme pregled porudzbine, gde nas vodi na stranicu KupacPorudzbinaPrikazView, gde mozemo detaljnije da vidimo samo tu porudzbinu-->
 
@@ -64,20 +58,6 @@ export default {
   },
   mounted: function () {
 
-    //if(localStorage.name === "kkkk")
-    //{
-    //primer axios poziva
-    /*axios
-      .get("http://localhost:8081/api/korisnik/pregled_podataka")
-      .then((res) => {
-        
-        this.korisnik = res.data;
-
-      })
-      .catch((err) =>{
-        //console.log(err)
-      })*/
-
       fetch('http://localhost:8081/api/porudzbina/dobaviSve' /*+ localStorage.name*/, {
         method: "GET",
         credentials: 'include',
@@ -93,7 +73,6 @@ export default {
         .catch((error) => {
           console.error("Error:", error);
         });
-  //}
   },
 
   methods: {

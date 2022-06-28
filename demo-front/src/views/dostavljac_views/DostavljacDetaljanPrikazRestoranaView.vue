@@ -1,5 +1,7 @@
 <template>
 
+    <!-- NEPOTREBNA STRANICA, 99% NAM NECE TREBATI UOPSTE, ALI NEKA JE, NECEMO JE BRISATI ZA SAD-->
+
     <!-- template sa w3schools-a, za navbar -->
     <!-- vidi kako na link da vezes onclick metodu, nesto v-bind mozda ne znam-->
     <!-- https://forum.vuejs.org/t/how-to-call-a-function-by-click-on-some-class-in-href-tag/37181 --> 
@@ -119,20 +121,6 @@ export default {
   },
   mounted: function () {
 
-    //if(localStorage.name === "kkkk")
-    //{
-    //primer axios poziva
-    /*axios
-      .get("http://localhost:8081/api/korisnik/pregled_podataka")
-      .then((res) => {
-        
-        this.korisnik = res.data;
-
-      })
-      .catch((err) =>{
-        //console.log(err)
-      })*/
-
       fetch('http://localhost:8081/api/korisnik/izbor_restorana/' + this.$route.query.id, {
         method: "GET",
         credentials: 'include',
@@ -148,7 +136,6 @@ export default {
         .catch((error) => {
           console.error("Error:", error);
         });
-  //}
   },
 
   methods: {
@@ -177,8 +164,6 @@ export default {
       },
 
   }
-
-
 
 };
 

@@ -49,7 +49,6 @@ export default {
 
     izvrsiRegistraciju: function() {
 
-        
         axios
         .post("http://localhost:8081/api/registracija", this.registracijaSlanje,
         {
@@ -57,68 +56,23 @@ export default {
         })
         .then((res) => {
           console.log(res);
-          //this.uloga = "kupac"
-          //console.log(this.registracijaSlanje.korisnickoIme);
-          //console.log(this.registracijaSlanje.lozinka);
-          console.log(JSON.stringify(res.data.korisnickoIme));
-          if(!JSON.stringify(res.data.korisnickoIme))
+          /*if(!JSON.stringify(res.data.korisnickoIme))
           {
             // baca nas u catch deo
           }
           else
-          {
+          {*/
             this.$router.push("/kupacPocetna");
-          }
+          //}
         })
         .catch((err) => {
           console.log(err);
-          alert("Something went wrong!");
+          alert(err.request.response);
         });
-
-
-
-
-       /* fetch("http://localhost:8081/api/registracija", {
-        method: "POST",
-        credentials: 'include',
-        headers: {
-          Accept: "application/json",
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(this.registracijaSlanje),
-      })
-        .then((response) => response.json)
-        .then((data) => {
-          
-          console.log(JSON.stringify(this.registracijaSlanje));
-          console.log("Success : " + data.registracijaSlanje.korisnickoIme);
-
-          
-
-          this.$router.push("/kupacPocetna");
-        })
-        .catch((err) => {
-          console.log("Error : " + err);
-          alert(err);
-        });*/
 
     },
 
-    
- 
   },
-
-
-
-
-
-
-
-
-
-
-
-
 
 };
 

@@ -46,12 +46,14 @@
         <tr>
           <th>Naziv restorana</th>
           <th>Tip restorana</th>
+          <th>Adresa restorana</th>
           <th>Više informacija</th>
         </tr>
 
         <tr v-for="restoran in restorani" :key="restoran.id">
           <td>{{ restoran.naziv }}</td>
           <td>{{ restoran.tip }}</td>
+          <td>{{ restoran.adresa }}</td>
           <td>
             <button class="dugmeViseInformacija" v-on:click="viseInformacija(restoran)">
               Vise informacija
@@ -74,6 +76,7 @@ export default {
     return {
       restorani: [],
       slanje:{
+        id: "",
         naziv: "",
         tip: "",
         adresa: "",
@@ -136,9 +139,11 @@ export default {
           console.log("Success:", data);
           console.log(JSON.stringify(data));
 
+          this.restorani = data;
+
           //var proizvodi = JSON.stringify(data);
           //var proizvodi = [{naziv, tip}];
-          var p = JSON.stringify(data).split('}');
+         /* var p = JSON.stringify(data).split('}');
           var proizvodi = new Array(p[0],p[1]); // lista proizvoda
           //this.restorani = JSON.stringify(data);
           var pomocna = {};
@@ -152,7 +157,7 @@ export default {
             //pomocna[1] = {tip: proizvodi[id : i].naziv, adresa:"c"};
             //this.restorani.push({naziv:"a", tip:"b", adresa:"c"});
           }
-          this.restorani = pomocna;
+          this.restorani = pomocna;*/
           //this.restorani = [{naziv:"a", tip:"b", adresa:"c"}];
           //proizvodi.push(data.)
           })
