@@ -48,6 +48,7 @@
         <tr>
           <th>Naziv restorana</th>
           <th>Tip restorana</th>
+          <th>Adresa restorana</th>
           <th>Više informacija</th>
           <th>Brisanje restorana</th>
         </tr>
@@ -55,6 +56,7 @@
         <tr v-for="restoran in restorani" :key="restoran.id">
           <td>{{ restoran.naziv }}</td>
           <td>{{ restoran.tip }}</td>
+          <td>{{ restoran.adresa }}</td>
           <td>
             <button class="dugmeViseInformacija" v-on:click="viseInformacija(restoran)">
               Vise informacija
@@ -82,27 +84,15 @@ export default {
     return {
       restorani: [],
       slanje:{
+        id: "",
         naziv: "",
         tip: "",
         adresa: "",
       }
     };
   },
+
   mounted: function () {
-
-    //if(localStorage.name === "kkkk")
-    //{
-    //primer axios poziva
-    /*axios
-      .get("http://localhost:8081/api/korisnik/pregled_podataka")
-      .then((res) => {
-        
-        this.korisnik = res.data;
-
-      })
-      .catch((err) =>{
-        //console.log(err)
-      })*/
 
       fetch('http://localhost:8081/api/restoran/prikaz_restorana' /*+ localStorage.name*/, {
         method: "GET",
@@ -111,15 +101,12 @@ export default {
           Accept: "application/json",
           "Content-type": "application/json",
         },
-        //body: JSON.stringify(this.logovanjeSlanje),
-
       })
         .then(response => response.json())
         .then(data => {console.log("Success:", data); this.restorani = data})
         .catch((error) => {
           console.error("Error:", error);
         });
-  //}
   },
 
   methods: {
@@ -138,8 +125,9 @@ export default {
         if (res.ok) {
           window.location.reload();
         }
-      });
-
+      }).catch((error) => {
+          console.error("Error:", error);
+        });
     },
 
     viseInformacija : function(restoran) {
@@ -167,7 +155,6 @@ export default {
         .catch((error) => {
           console.error("Error:", error);
       });
-
     },
 
     odlogovanje : function () {
@@ -183,7 +170,6 @@ export default {
         .then((response) => response.json)
         .then((data) => {
           console.log("Success : " + data);
-          this.$ses;
           this.$router.push("/");
         })
         .catch((err) => {
@@ -193,26 +179,7 @@ export default {
 
       }
 
-/*deleteEmployee: function (id) {
-      fetch("http://localhost:8081/api/employees/" + id, {
-        method: "PUT",
-        credentials: 'include',
-        headers: {
-          Accept: "application/json",
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(this.korisnik),
-      }).then((res) => {
-        if (res.ok) {
-          window.location.reload();
-        }
-      });
-    },*/
-
-
-
   },
-
 
 };
 

@@ -82,21 +82,8 @@ export default {
       tekstDugmeta: "Prikaži lozinku",
     };
   },
+  
   mounted: function () {
-
-    //if(localStorage.name === "kkkk")
-    //{
-    //primer axios poziva
-    /*axios
-      .get("http://localhost:8081/api/korisnik/pregled_podataka")
-      .then((res) => {
-        
-        this.korisnik = res.data;
-
-      })
-      .catch((err) =>{
-        //console.log(err)
-      })*/
 
       fetch('http://localhost:8081/api/korisnik/pregled_podataka/' /*+ localStorage.name*/, {
         method: "GET",
@@ -105,15 +92,15 @@ export default {
           Accept: "application/json",
           "Content-type": "application/json",
         },
-        //body: JSON.stringify(this.logovanjeSlanje),
-
       })
         .then(response => response.json())
-        .then(data => {console.log("Success:", data); this.korisnik = data})
+        .then(data => {
+          console.log("Success:", data);
+          this.korisnik = data;
+        })
         .catch((error) => {
           console.error("Error:", error);
         });
-  //}
   },
 
  methods: {
@@ -122,19 +109,17 @@ export default {
       var vrednost = document.getElementById("poljeLozinka");
       if(vrednost.type === "password")
       {
-        //document.getElementById("poljeLozinka").setAttribute("type", "text");
         vrednost.setAttribute("type", "text");
         this.tekstDugmeta = "Sakrij lozinku";
       }
       else
       {
-        //document.getElementById("poljeLozinka").setAttribute("type", "password");
         vrednost.setAttribute("type", "password");
         this.tekstDugmeta = "Prikaži lozinku";
       }
     },
 
-        odlogovanje : function () {
+    odlogovanje : function () {
       fetch("http://localhost:8081/api/odlogovanje", {
         method: "POST",
         credentials: 'include',
@@ -147,7 +132,6 @@ export default {
         .then((response) => response.json)
         .then((data) => {
           console.log("Success : " + data);
-          this.$ses;
           this.$router.push("/");
         })
         .catch((err) => {
@@ -158,35 +142,6 @@ export default {
       }
 
   },
-
-  /*methods: {
-    addEmployee: function() {
-      this.$router.push("/add-employee");
-    },
-    seeMore: function (employee) {
-      this.$router.push("/employee?id=" + employee.id);
-    },
-    deleteEmployee: function (id) {
-      fetch("http://localhost:8081/api/employees/" + id, {
-        method: "DELETE",
-      }).then((res) => {
-        if (res.ok) {
-          window.location.reload();
-        }
-      });
-    },
-  },*/
-
-
-
-
-
-
-
-
-
-
-
 
 };
 

@@ -124,7 +124,7 @@ export default {
 
     /// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     /// UMESTO this.$route.query.id TREBA STAVITI ID OD RESTORANA U KOME RADI TAJ MENADZER
-      fetch('http://localhost:8081/api/korisnik/izbor_restorana/' + 1, {
+      fetch('http://localhost:8081/api/korisnik/izbor_restorana/' + localStorage.name, {
         ///fetch('http://localhost:8081/api/menadzer/pregled_restorana', {
         method: "GET",
         credentials: 'include',
