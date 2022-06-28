@@ -9,6 +9,7 @@
         <a class="active" href="/kupacRestorani">Restorani</a>
         <a href="/kupacPorudzbine">Porudžbina</a>
         <a v-on:click="odlogovanje()">Izloguj se</a>
+        <a href="/kupackreiranjePorudzbine">Korpa</a>
     </div>
 
         <label for="restoranNaziv"> Naziv restorana: </label>
@@ -61,8 +62,9 @@
             <td>{{ artikal.kolicina }}</td>
             <td>{{ artikal.tip }}</td>
             <td>{{ artikal.opis }}</td>
-            <button v-on:click="dodajArtikalUKorpu()"> Dodaj</button>
+            <button v-on:click="dodajArtikalUKorpu(artikal.id,kolicina_artikla)"> Dodaj</button>
           </tr>
+          <input v-model="kolicina_artikla"/>
 
         </table>
 
@@ -106,6 +108,7 @@ export default {
           geografskaSirina: "",
         },
         listaArtikala:{
+          id:"",
           naziv: "",
           cena: "",
           kolicina: "",
@@ -117,6 +120,11 @@ export default {
           tekstKomentara: "",
         },
       },
+      Slanje:{
+        id:"",
+        kolicina:"",
+      },
+      kolicina_artikla:"0",
     };
   },
   mounted: function () {
@@ -178,8 +186,27 @@ export default {
 
       },
 
-    dodajArtikalUKorpu : function() {
-
+    dodajArtikalUKorpu : function(id,kolicina) {
+        this.Slanje.id = id;
+        this.Slanje.kolicina = Math.floor(kolicina);
+        console.log(this.Slanje);
+      fetch("http://localhost:8081/api/porudzbina/dodajArtikal", {
+        method: "POST",
+        credentials: 'include',
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(this.Slanje),
+      })
+        .then((response) => response.json)
+        .then((data) => {
+          console.log("Success : " + data);
+        })
+        .catch((err) => {
+          console.log("Error : " + err);
+          alert(err);
+        });
       
 
       }

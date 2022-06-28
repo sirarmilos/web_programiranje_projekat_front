@@ -26,6 +26,32 @@
 export default {
   name: "KupacKreiranjePorudzbineView",
 
+  data: function(){
+    return{
+      PregledPorudzbine:"",
+    };
+  },
+  mounted: function () {
+
+    
+
+      fetch('http://localhost:8081/api/porudzbina/pregledPorudzbine', {
+        method: "GET",
+        credentials: 'include',
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+        },
+        //body: JSON.stringify(this.logovanjeSlanje),
+
+      })
+        .then(response => response.json())
+        .then(data => {console.log("Success:", data); this.PregledPorudzbine = data})
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+  },
+
 
   methods: {
 
@@ -50,8 +76,7 @@ export default {
           alert(err);
         });
 
-      }
-
+      },
   }
 };
 
