@@ -47,7 +47,9 @@ export default {
 
   data: function(){
     return{
-      PregledPorudzbine:"",
+      PregledPorudzbine:{
+
+      },
       
     };
   },
@@ -101,7 +103,7 @@ export default {
 
       kreiraj_porudzbinu : function (){
         fetch('http://localhost:8081/api/porudzbina/kreiranjePorudzbine', {
-        method: "GET",
+        method: "POST",
         credentials: 'include',
         headers: {
           Accept: "application/json",
@@ -111,10 +113,12 @@ export default {
 
       })
         .then(response => response.json())
-        .then(data => {console.log("Success:", data);
+        .then(data => {window.location.reload();
+        console.log("Success:", data);
         this.$router.push("/kupacPorudzbine");
         })
         .catch((error) => {
+          this.$router.push("/kupacPorudzbine");
           console.error("Error:", error);
           
         });
