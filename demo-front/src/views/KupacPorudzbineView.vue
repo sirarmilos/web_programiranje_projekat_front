@@ -16,18 +16,18 @@
     <table id="listaPorudzbina">
 
         <tr>
-          <th>Id</th>
+          <!--<th>Id</th>-->
           <th>DatumVreme</th>
           <th>Cena</th>
           <th>Status</th>
           <th>Vise informacija</th>
-          <th>Mesto za vas komentar</th>
+         <!-- <th>Mesto za vas komentar</th>
           <th>Mesto za vasu ocenu</th>
-          <th>Pošalji komentar</th>
+          <th>Pošalji komentar</th>-->
         </tr>
 
         <tr v-for="porudzbina in listaPorudzbina" :key="listaPorudzbina.id">
-          <td>{{ porudzbina.id }}</td>
+          <!--<td>{{ porudzbina.id }}</td>-->
           <td>{{ porudzbina.datumVreme }}</td>
           <td>{{ porudzbina.cena }}</td>
           <td>{{ porudzbina.status }}</td>
@@ -36,7 +36,7 @@
               Vise informacija
             </button>
           </td>
-          <td>
+         <!-- <td>
               <input v-model="pom1"/>
           </td>
           <td>
@@ -49,7 +49,7 @@
             <button v-on:click="proba(porudzbina, pom1, pom2)">
               Proba
             </button>
-          </td>
+          </td>-->
         </tr>
 
     </table>
@@ -76,14 +76,14 @@ export default {
         kupacKorisnickoIme: "",
         restoranId: "",
       },
-      slanje: {
+      /*slanje: {
         ocena: "",
         tekstKomentara: "",
         korisnickoIme: "",
         restoran_id: "",
       },
       pom1: "",
-      pom2: "",
+      pom2: "",*/
     };
   },
   mounted: function () {
@@ -107,9 +107,9 @@ export default {
 
   methods: {
 
-    posaljiKomentar : function(porudzbina) {
+    /*posaljiKomentar : function(porudzbina) {
 
-      fetch('http://localhost:8081/api/nadji_restoran_po_id_porudzbini/' + porudzbina.id /*+ localStorage.name*/, {
+      fetch('http://localhost:8081/api/nadji_restoran_po_id_porudzbini/' + porudzbina.id , {
         method: "GET",
         credentials: 'include',
         headers: {
@@ -166,7 +166,7 @@ export default {
 
 
 
-    },
+    },*/
 
     viseInformacija : function(porudzbina) {
       this.$router.push("/kupacPregledPojedinacnePorudzbine/?id=" + porudzbina.id);
