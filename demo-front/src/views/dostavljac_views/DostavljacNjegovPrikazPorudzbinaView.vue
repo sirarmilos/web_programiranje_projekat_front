@@ -19,7 +19,8 @@
           <th>DatumVreme</th>
           <th>Cena</th>
           <th>Status</th>
-          <th>Vise informacija</th>
+          <th>U transportu</th>
+          <th>Dostavljen</th>
         </tr>
 
         <tr v-for="porudzbina in listaPorudzbina" :key="listaPorudzbina.id">
@@ -27,18 +28,18 @@
           <td>{{ porudzbina.cena }}</td>
           <td>{{ porudzbina.status }}</td>
           <td>
-            <button class="dugmeViseInformacija" v-on:click="viseInformacija(porudzbina)">
-              Vise informacija
+            <button v-on:click="dugmeTransport(porudzbina.id)">
+              U transportu
+            </button>
+          </td>
+          <td>
+            <button v-on:click="dugmeDostavljena(porudzbina.id)">
+              Dostavljena
             </button>
           </td>
         </tr>
 
     </table>
-
-    <button>
-      Korpa - kreiranje nove porudzbine
-    </button>
-
 
         <!-- napraviti tabelu kada se ucita stranica da se ucitaju u nju sve porudzbine od tog kupca koji je ulogovan-->
         <!-- pored svake stavke u tabeli da ima kao dugme pregled porudzbine, gde nas vodi na stranicu KupacPorudzbinaPrikazView, gde mozemo detaljnije da vidimo samo tu porudzbinu-->
@@ -56,42 +57,29 @@ export default {
   data: function () {
     return {
       listaPorudzbina:{
-        datumVreme: "",
+        /*datumVreme: "",
         cena: "",
-        status: "",
+        status: "",*/
       },
     };
   },
   mounted: function () {
 
-    //if(localStorage.name === "kkkk")
-    //{
-    //primer axios poziva
-    /*axios
-      .get("http://localhost:8081/api/korisnik/pregled_podataka")
-      .then((res) => {
-        
-        this.korisnik = res.data;
-
-      })
-      .catch((err) =>{
-        //console.log(err)
-      })*/
-
       // !!!!!!!!!!!!!
 //?????????? mislim da ovde ne treba ovaj, nego novi end point, jer je ovo samo za kupca
-      fetch('http://localhost:8081/api/porudzbina/dobaviSve' /*+ localStorage.name*/, {
+      fetch('http://localhost:8081/api/porudzbina/dobaviZaDostavljaca' /*+ localStorage.name*/, {
         method: "GET",
         credentials: 'include',
         headers: {
           Accept: "application/json",
           "Content-type": "application/json",
         },
-        //body: JSON.stringify(this.logovanjeSlanje),
-
       })
         .then(response => response.json())
-        .then(data => {console.log("Success:", data); this.listaPorudzbina = data})
+        .then(data => {
+          console.log("Success:", data);
+          this.listaPorudzbina = data
+          })
         .catch((error) => {
           console.error("Error:", error);
         });
@@ -99,6 +87,52 @@ export default {
   },
 
   methods: {
+
+    dugmeTransport : function(id) {
+
+      fetch("http://localhost:8081/api/porudzbina/izmenaStatusaUTransportu/" + id, {
+          method: "PUT",
+          credentials: 'include',
+          headers: {
+            Accept: "application/json",
+            "Content-type": "application/json",
+          },
+        })
+          .then((response) => response.json)
+          .then((data) => {
+            console.log("Success : " + data);
+            window.location.reload();
+          })
+          .catch((err) => {
+            console.log("Error : " + err);
+            alert(err);
+          });
+
+
+    },
+
+    dugmeDostavljena : function(id) {
+
+          fetch("http://localhost:8081/api/porudzbina/izmenaStatusaDostavljena/" + id, {
+          method: "PUT",
+          credentials: 'include',
+          headers: {
+            Accept: "application/json",
+            "Content-type": "application/json",
+          },
+        })
+          .then((response) => response.json)
+          .then((data) => {
+            console.log("Success : " + data);
+            window.location.reload();
+          })
+          .catch((err) => {
+            console.log("Error : " + err);
+            alert(err);
+          });
+
+    },
+
 
     viseInformacija : function(porudzbina) {
       this.$router.push("/kupacPregledPojedinacnePorudzbine/?id=" + porudzbina.id);
