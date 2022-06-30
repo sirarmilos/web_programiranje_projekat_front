@@ -22,12 +22,28 @@
         <input v-model="PodaciZaSlanje.naziv" id="naziv" type="text" name="naziv"/>
         <br/>
 
-        <label for="tip"> Tip: </label>
+        <!--<label for="tip"> Tip: </label>
         <input v-model="PodaciZaSlanje.tip" id="tip" type="text" name="tip"/>
+        <br/>-->
+        <label>Tip:</label>
+        <br/>
+        <input type="radio" id="jelo" value="Jelo" v-model="PodaciZaSlanje.tip" checked="checked"/>
+        <label for="jelo">Jelo</label>
+        <br/>
+        <input type="radio" id="pice" value="Pice" v-model="PodaciZaSlanje.tip" />
+        <label for="pice">Piće</label>
         <br/>
 
-        <label for="kolicina"> Količina: </label>
+        <!--<label for="kolicina"> Količina: </label>
         <input v-model="PodaciZaSlanje.kolicina" id="kolicina" type="text" name="kolicina"/>
+        <br/>-->
+        <label>Količina:</label>
+        <br/>
+        <input type="radio" id="g" value="g" v-model="PodaciZaSlanje.kolicina" checked="checked"/>
+        <label for="g">g</label>
+        <br/>
+        <input type="radio" id="ml" value="ml" v-model="PodaciZaSlanje.kolicina" />
+        <label for="ml">ml</label>
         <br/>
 
         <label for="cena"> Cena: </label>

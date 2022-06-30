@@ -24,9 +24,17 @@
 
         <br/>
 
-        <label for="poljeIme"> Ime: </label>
+        <!--<label for="poljeIme"> Ime: </label>
         <input v-model="korisnik.ime" id="poljeIme" type="text" name="ime"/>
 
+        <br/>-->
+        <label>Pol:</label>
+        <br/>
+        <input type="radio" id="muski" value="muski" v-model="korisnik.pol" />
+        <label for="muski">Muški</label>
+        <br/>
+        <input type="radio" id="zebsju" value="zenski" v-model="korisnik.pol" />
+        <label for="zenski">Ženski</label>
         <br/>
 
         <label for="poljePrezime"> Prezime: </label>
@@ -39,8 +47,8 @@
 
         <br/>
 
-        <label for="pojeDatumRodjenja"> Datum rođenja: </label>
-        <input v-model="korisnik.datumRodjenja" id="poljeDatumRodjenja" type="text" name="datumRodjenja"/>
+        <label for="poljeDatumRodjenja"> Datum rođenja: </label>
+        <input v-model="korisnik.datumRodjenja" id="poljeDatumRodjenja" type="date" name="datumRodjenja"/>
 
         <br/>
 
@@ -72,8 +80,6 @@ export default {
           Accept: "application/json",
           "Content-type": "application/json",
         },
-        //body: JSON.stringify(this.logovanjeSlanje),
-
       })
         .then(response => response.json())
         .then(data => {console.log("Success:", data); this.korisnik = data})

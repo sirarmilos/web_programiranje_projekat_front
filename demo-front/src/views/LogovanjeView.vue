@@ -3,32 +3,24 @@
     <h1> Dobrodošli u aplikaciju! </h1>
     <h2> Da biste započeli korišćenje aplikacije, ulogujte se.</h2>
 
-    <!-- ovde kod form treba i kao action sta vraca, ali to mozda ipak dole u fetchu kad odredjujem ko je taj koji se uloguje-->
+    <label for="poljeKorisnickoIme"> Korisnicko ime: </label>
 
-    <!--<form method="post" action="/">-->
+    <input type="text" v-model='logovanjeSlanje.korisnickoIme'/>
 
-        <label for="poljeKorisnickoIme"> Korisnicko ime: </label>
-       <!--<input ref="poljeIme" id="poljeIme" type="text" name="ime" required="required"/>
---> 
-        <input type="text" v-model='logovanjeSlanje.korisnickoIme'/>
+    <br/>
 
-        <br/>
+    <label for="poljeLozinka"> Lozinka: </label>
 
-        <label for="poljeLozinka"> Lozinka: </label>
-        <!--<input ref="poljeLozinka" id="poljeLozinka" type="password" name="lozinka" required="required"/>
---> 
-        <input type="password" v-model='logovanjeSlanje.lozinka'/>
+    <input type="password" v-model='logovanjeSlanje.lozinka'/>
 
-        <br/>
+    <br/>
 
-        <button v-on:click="ulogujSe()">
-            Ulogujte se
-        </button>
-
-    <!-- </form>-->
+    <button v-on:click="ulogujSe()">
+      Ulogujte se
+    </button>
 
     <p>
-        Ukoliko nemate nalog, posetite registraciju.
+      Ukoliko nemate nalog, posetite registraciju.
     </p>
 
     <button v-on:click="registrujSe()">

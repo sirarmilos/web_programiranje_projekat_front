@@ -31,9 +31,17 @@
 
         <br/>
 
-        <label for="poljePrezime"> Prezime: </label>
+        <!--<label for="poljePrezime"> Prezime: </label>
         <input v-model="korisnik.prezime" id="poljePrezime" type="text" name="prezime"/>
 
+        <br/>-->
+        <label>Pol:</label>
+        <br/>
+        <input type="radio" id="muski" value="muski" v-model="korisnik.pol" />
+        <label for="muski">Muški</label>
+        <br/>
+        <input type="radio" id="zebsju" value="zenski" v-model="korisnik.pol" />
+        <label for="zenski">Ženski</label>
         <br/>
 
         <label for="poljePol"> Pol: </label>
@@ -41,8 +49,8 @@
 
         <br/>
 
-        <label for="pojeDatumRodjenja"> Datum rođenja: </label>
-        <input v-model="korisnik.datumRodjenja" id="poljeDatumRodjenja" type="text" name="datumRodjenja"/>
+        <label for="poljeDatumRodjenja"> Datum rođenja: </label>
+        <input v-model="korisnik.datumRodjenja" id="poljeDatumRodjenja" type="date" name="datumRodjenja"/>
 
         <br/>
 
