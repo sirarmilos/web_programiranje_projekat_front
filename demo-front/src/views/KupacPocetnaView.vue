@@ -60,11 +60,21 @@
 -->
         <br/>
 
-        <label for="pojePrezime"> Datum rođenja: </label>
+        <label for="poljeDatumRodjenja"> Datum rođenja: </label>
         <input v-model="korisnik.datumRodjenja" id="poljeDatumRodjenja" type="text" name="datumRodjenja" required="required" readonly/>
 
         <!--<p> {{korisnik.datumRodjenja}} </p>
 -->
+        <br/>
+
+        <label for="poljeTipKupca"> Tip kupca: </label>
+        <input v-model="korisnik.tipKupca" id="poljeTipKupca" type="text" name="tipKupca" required="required" readonly/>
+
+        <br/>
+
+        <label for="poljeBrojSkupljenihPoena"> Broj skupljenih poena: </label>
+        <input v-model="korisnik.brojSkupljenihPoena" id="poljeBrojSkupljenihPoena" type="text" name="brojSkupljenihPoena" required="required" readonly/>
+
         <br/>
 
     <!--</form>-->
@@ -85,7 +95,7 @@ export default {
   
   mounted: function () {
 
-      fetch('http://localhost:8081/api/korisnik/pregled_podataka/' /*+ localStorage.name*/, {
+      fetch('http://localhost:8081/api/kupac/pregled_podataka' /*+ localStorage.name*/, {
         method: "GET",
         credentials: 'include',
         headers: {
@@ -101,6 +111,7 @@ export default {
         .catch((error) => {
           console.error("Error:", error);
         });
+        
   },
 
  methods: {

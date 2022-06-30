@@ -4,10 +4,11 @@
     <!-- vidi kako na link da vezes onclick metodu, nesto v-bind mozda ne znam-->
     <!-- https://forum.vuejs.org/t/how-to-call-a-function-by-click-on-some-class-in-href-tag/37181 --> 
     <div class="topnav">
-        <a href="/dostavljacPocetna" >Pregled podataka</a>
-        <a href="/dostavljacAzuriranjePodataka">Ažuriranje podataka</a>
-        <a href="/dostavljacRestorani">Restorani</a>
-        <a class="active" href="/dostavljacPorudzbine">Porudžbina</a>
+        <a href="/menadzerPocetna" >Pregled podataka</a>
+        <a href="/menadzerAzuriranjePodataka">Ažuriranje podataka</a>
+        <a href="/menadzerNjegovRestoran">Moj restoran</a>
+        <a href="/menadzerDodavanjeArtikla">Kreiraj novi artikal</a>
+        <a class="active" href="/menadzerPorudzbine">Porudžbina</a>
         <a v-on:click="odlogovanje()">Izloguj se</a>
     </div>
 

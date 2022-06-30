@@ -42,20 +42,50 @@
       </tr>
     </table>
     
-    <button v-on:click="postaniVidljiv()">{{ tekstDugmeta }}</button>
+    <button v-on:click="postaniVidljiv(status)">{{ tekstDugmeta }}</button>
 
 <div v-if="vidljivo">
     <label for="komentar"> Mesto za vas komentar </label>
     <input v-model="pom1" id="komentar"/>
-    <label for="ocena"> Mesto za vasu ocenu </label>
-    <input v-model="pom2" id="ocena"/>
+   <!-- <label for="ocena"> Mesto za vasu ocenu </label>
+    <input v-model="pom2" id="ocena"/>-->
 
    <!-- <button class="dugmePosaljiKomentar" v-on:click="posaljiKomentar()">
       Pošalji komentar
     </button>-->
-    <button v-on:click="proba(status, pom1, pom2)">
+
+    <div>Ocena: {{ izabran }}</div>
+
+    <input type="radio" id="jakoLose" value="JakoLose" v-model="izabran" />
+    <label for="jakoLose">Jako loše</label>
+
+    <br/>
+
+    <input type="radio" id="lose" value="Lose" v-model="izabran" />
+    <label for="lose">Loše</label>
+
+    <br/>
+
+    <input type="radio" id="dobro" value="Dobro" v-model="izabran" />
+    <label for="dobro">Dobro</label>
+
+    <br/>
+
+    <input type="radio" id="veomaDobro" value="VeomaDobro" v-model="izabran" />
+    <label for="veomaDobro">Veoma dobro</label>
+
+    <br/>
+
+    <input type="radio" id="odlicno" value="Odlicno" v-model="izabran" />
+    <label for="odlicno">Odlično</label>
+
+    <br/>
+
+    <button v-on:click="proba(status, pom1, izabran)">
       Proba
     </button>
+
+
   </div>
 </template>
 
@@ -85,6 +115,7 @@ export default {
       pom2: "",
       vidljivo: false,
       tekstDugmeta: "Kliknite za dodavanje komentara",
+      izabran: "",
     };
   },
   mounted: function () {
@@ -96,8 +127,6 @@ export default {
           Accept: "application/json",
           "Content-type": "application/json",
         },
-        //body: JSON.stringify(this.logovanjeSlanje),
-
       })
         .then(response => response.json())
         .then(data => {
@@ -115,7 +144,10 @@ export default {
 
   methods: {
 
-      postaniVidljiv : function() {
+      postaniVidljiv : function(status) {
+
+        if(status === "Dostavljena")
+        {
 
         fetch('http://localhost:8081/api/nadji_restoran_po_id_porudzbini/' + this.$route.query.id , {
         method: "GET",
@@ -147,6 +179,11 @@ export default {
           this.tekstDugmeta = "Kliknite za dodavanje komentara";
           this.vidljivo = false;
           console.log(this.vidljivo);
+        }
+        }
+        else
+        {
+          alert("Vasa porudzbina nije dostavljena. Kada se porudzbina dostavi, onda cete moci dodati komentar.")
         } 
       },
 
