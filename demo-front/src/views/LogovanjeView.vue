@@ -1,21 +1,6 @@
 <template>
 
-
-   <!-- <h1 class="page-header text-center"> Dobrodošli u aplikaciju! </h1>
-
-   <label for="poljeKorisnickoIme"> Korisnicko ime: </label>
-
-    <input type="text" v-model='logovanjeSlanje.korisnickoIme'/>
-
-    <br/>
-
-    <label for="poljeLozinka"> Lozinka: </label>
-
-    <input type="password" v-model='logovanjeSlanje.lozinka'/>
-
-    <br/>-->
-
-  <div class="container boja" style=" margin-top: 11%; width: 30%; min-width: 400px; max-width: 700px; border: 3px solid black;">
+  <div class="container boja" style=" margin-top: 11%; width: 30%; min-width: 400px; max-width: 700px; border: 3px solid black; border-radius: 5%;">
 
   <h1 class="page-header text-center"> Dobrodošli u aplikaciju! </h1>
 
@@ -37,7 +22,7 @@
     </div>
   </div>
 
-  <button v-on:click="ulogujSe()" class="w-25 centriranje margin1 boja2">
+  <button v-on:click="ulogujSe()" class="w-25 centriranje margin1 boja2" style="min-width:120px;">
     Ulogujte se
   </button>
 
@@ -50,33 +35,6 @@
   </button>
 
   </div>
-
-<!--<div class="d-flex align-items-center justify-content-center">
-
-<div class="d-flex align-items-center justify-content-center">
-  
-  <div class="col-md-4">
-    <label for="poljeKorisnickoIme" class="form-label">Korisnicko ime</label>
-    <input v-model='logovanjeSlanje.korisnickoIme' type="text" class="form-control" id="poljeKorisnickoIme" required>
-    <div class="valid-feedback">
-      Looks good!
-    </div>
-    <p>
-      {{porukaGreskeZaKorisnickoIme}}
-    </p>
-  </div>
-  <div class="col-md-4">
-    <label for="poljeLozinka" class="form-label">Lozinka</label>
-    <input v-model='logovanjeSlanje.lozinka' type="password" class="form-control" id="poljeLozinka" required>
-    <div class="valid-feedback">
-      Looks good!
-    </div>
-  </div>
-
-</div>
-
-</div>-->
-
 
 </template>
 
@@ -125,11 +83,11 @@ export default {
           }
           else if(uloga_pomocna2 === "admin")
           {
-            this.$router.push("/adminPocetna");
+            this.$router.push("/adminPrikazSvihKorisnika");
           }
           else if(uloga_pomocna2 === "dostavljac")
           {
-            this.$router.push("/dostavljacPocetna");
+            this.$router.push("/dostavljacPorudzbine");
           }
           else if(uloga_pomocna2 === "menadzer")
           {
@@ -150,7 +108,7 @@ export default {
               console.error("Error:", error);
             });
 
-            this.$router.push("/menadzerPocetna");
+            this.$router.push("/menadzerNjegovRestoran");
           }
         })
         .catch((err) => {

@@ -4,74 +4,103 @@
     <!-- vidi kako na link da vezes onclick metodu, nesto v-bind mozda ne znam-->
     <!-- https://forum.vuejs.org/t/how-to-call-a-function-by-click-on-some-class-in-href-tag/37181 --> 
     <div class="topnav">
-        <a href="/adminPocetna" >Pregled podataka</a>
-        <a href="/adminAzuriranjePodataka">Ažuriranje podataka</a>
-        <a href="/adminKreiranjeNovogDostavljaca">Kreiranje dostavljača</a>
-        <a href="/adminKreiranjeNovogRestoranaIMenadzera">Kreiraj novi restoran i menadžera</a>
         <a href="/adminPrikazSvihKorisnika">Prikaz svih korisnika</a>
-        <a class="active" href="/adminRestorani">Restorani</a>
+        <a class="active"  href="/adminRestorani">Restorani</a>
+        <a href="/adminKreiranjeNovogRestoranaIMenadzera">Kreiraj novi restoran i menadžera</a>
+        <a href="/adminKreiranjeNovogDostavljaca">Kreiranje dostavljača</a>
+        <a href="/adminPocetna" >Pregled podataka</a>
+        <a href="/adminAzuriranjePodataka">Ažuriranje podataka</a>   
         <a v-on:click="odlogovanje()">Izloguj se</a>
     </div>
 
-<!-- PRETRAGA JOS NE RADI, TREBA JE PROMENITI, U REAL TIME DA RADI KADA SE ISKUCA NOVO SLOVO, TAKODJE ADRESA SE NE PRIKAZUJE, VIDI DA LI TREBA NOVI DTO-->
+    <div class="container-fluid w-100 p-3 hv-100" style="background-color: #eee; border: 5px solid white;">
 
-    <p>
-        Parametri za pretragu
-    </p>
+      <div>
+      <h1 class="page-header text-left pt-5 pb-5"> Parametri za pretragu </h1>
 
-    <!-- namesti mozda dogadjaj v-on:change = "..." da radi tu pretragu -->
-    <!-- https://forum.vuejs.org/t/how-to-trigger-an-onchange-event/11081/4 -->
-
-    <!-- https://v2.vuejs.org/v2/cookbook/form-validation.html?redirect=true -->
-    <!-- https://vuejs.org/guide/essentials/forms.html -->
-    <!--<form method="post">-->
-
-        <label for="poljeNazivRestorana"> Naziv restorana: </label>
-        <input v-model="slanje.naziv" v-on:input="pretraga()" id="poljeNazivRestorana" type="text" name="nazivRestorana"/>
-
+        <div class="mb-2 row">
+          <label for="poljeNazivRestorana" class="col-sm-2 col-form-label"> Naziv restorana: </label>
+          <div class="col-sm-4">
+            <input v-model="slanje.naziv" v-on:input="pretraga()" id="poljeNazivRestorana" type="text" class="form-control" name="poljeNazivRestorana" required="required"/>
+          </div>
+        </div>
         <br/>
 
-        <label for="poljeTipRestorana"> Tip restorana: </label>
-        <input v-model="slanje.tip" v-on:input="pretraga()" id="poljeTipRestorana" type="text" name="tipRestorana"/>
-
+        <div class="mb-2 row">
+          <label for="poljeTipRestorana" class="col-sm-2 col-form-label"> Tip restorana: </label>
+          <div class="col-sm-4">
+            <input v-model="slanje.tip" v-on:input="pretraga()" id="poljeTipRestorana" type="text" class="form-control" name="poljeTipRestorana" required="required"/>
+          </div>
+        </div>
         <br/>
 
-        <label for="poljeAdresaRestorana"> Adresa restorana: </label>
-        <input v-model="slanje.adresa" v-on:input="pretraga()" id="poljeAdresaRestorana" type="text" name="adresaRestorana"/>
-
+        <div class="mb-2 row">
+          <label for="poljeAdresaRestorana" class="col-sm-2 col-form-label"> Adresa restorana: </label>
+          <div class="col-sm-4">
+            <input v-model="slanje.adresa" v-on:input="pretraga()" id="poljeAdresaRestorana" type="text" class="form-control" name="poljeAdresaRestorana" required="required"/>
+          </div>
+        </div>
         <br/>
 
-    <!--</form>-->
+      </div>
 
-    <table id="restorani">
+      <div class="table-responsive caption-top">
+        <table class="table table-striped table-hover table-bordered border-secondary"> <!-- vidi da li treba border-secondary ili je bolje bez toga table-borderless-->
 
-        <tr>
-          <th>Naziv restorana</th>
-          <th>Tip restorana</th>
-          <th>Adresa restorana</th>
-          <th>Više informacija</th>
-          <th>Brisanje restorana</th>
-        </tr>
+          <caption style="caption-side: top;"><b>Spisak svih restorana</b></caption>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Naziv restorana</th>
+              <th>Tip restorana</th>
+              <th>Adresa restorana</th>
+              <th>Više informacija</th>
+              <th>Obriši restoran</th>
+            </tr>
+          </thead>
 
-        <tr v-for="restoran in restorani" :key="restoran.id">
-          <td>{{ restoran.naziv }}</td>
-          <td>{{ restoran.tip }}</td>
-          <td>{{ restoran.adresa }}</td>
-          <td>
-            <button class="dugmeViseInformacija" v-on:click="viseInformacija(restoran)">
-              Vise informacija
-            </button>
-          </td>
-          <td>
-            <button class="dugmeObrisiRestoran" v-on:click="obrisiRestoran(restoran)">
-              Obriši restoran
-            </button>
-          </td>
-        </tr>
+          <tbody>
+          <tr v-for="restoran in restorani" :key="restoran.id">
+            <td>{{ restoran.basicBrojac}}</td>
+            <td>{{ restoran.naziv }}</td>
+            <td>{{ restoran.tip }}</td>
+            <td>{{ restoran.adresa }}</td>    
+            <td>
+              <button class="btn btn-outline-secondary col-sm-5 dugmeViseInformacija" v-on:click="viseInformacija(restoran)" style="max-width:150px;">
+                Vise informacija
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-outline-secondary col-sm-5 dugmeViseInformacija" v-on:click="obrisiRestoran(restoran)" style="max-width:150px;">
+                Obriši restoran
+              </button>
+            </td>
+          </tr>
+          </tbody>
 
-    </table>
+        </table>
+      </div>
+    
+    </div>
 
-    <!-- ovde sam stao-->
+    <footer class="page-footer font-small blue pt-4">
+
+      <div class="container-fluid text-center text-md-left">
+
+          <div class="col-md-12 mt-md-0 mt-3">
+
+            <h5 class="text-uppercase">O nama</h5>
+            <p>Dostava za cas je za sekund kod Vas. Brza i jeftina dostava hrane na teritoriji celog Novog Sada.</p>
+
+          </div>
+
+      </div>
+
+      <div class="footer-copyright text-center py-3">© 2022 Copyright:
+        <a href="/"> DostavaZaCas.com </a>
+      </div>
+
+    </footer>
 
 </template>
 

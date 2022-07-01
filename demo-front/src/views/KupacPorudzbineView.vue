@@ -16,7 +16,7 @@
     
       <div class="table-responsive caption-top">
           <table class="table table-striped table-hover table-bordered border-secondary">
-
+            <caption style="caption-side: top;"><b>Spisak svih porudzbina</b></caption>
             <thead>
             <tr>
               <th>DatumVreme</th>

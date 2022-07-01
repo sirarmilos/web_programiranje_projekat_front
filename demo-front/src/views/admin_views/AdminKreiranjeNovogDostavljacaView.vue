@@ -4,40 +4,82 @@
     <!-- vidi kako na link da vezes onclick metodu, nesto v-bind mozda ne znam-->
     <!-- https://forum.vuejs.org/t/how-to-call-a-function-by-click-on-some-class-in-href-tag/37181 --> 
     <div class="topnav">
-        <a href="/adminPocetna" >Pregled podataka</a>
-        <a href="/adminAzuriranjePodataka">Ažuriranje podataka</a>
-        <a class="active" href="/adminKreiranjeNovogDostavljaca">Kreiranje dostavljača</a>
-        <a href="/adminKreiranjeNovogRestoranaIMenadzera">Kreiraj novi restoran i menadžera</a>
         <a href="/adminPrikazSvihKorisnika">Prikaz svih korisnika</a>
         <a href="/adminRestorani">Restorani</a>
+        <a href="/adminKreiranjeNovogRestoranaIMenadzera">Kreiraj novi restoran i menadžera</a>
+        <a class="active" href="/adminKreiranjeNovogDostavljaca">Kreiranje dostavljača</a>
+        <a href="/adminPocetna" >Pregled podataka</a>
+        <a href="/adminAzuriranjePodataka">Ažuriranje podataka</a>   
         <a v-on:click="odlogovanje()">Izloguj se</a>
     </div>
 
-        <p> Unesite podatke o dostavljaču </p>
-        <label for="korisnickoIme"> Korisnicko ime: </label>
-        <input v-model="Dostavljac.korisnickoIme" id="korisnickoIme" type="text" name="korisnickoIme" required="required"/>
+
+    <div class="container-fluid w-100 pt-5 hv-100" style="background-color: #eee; border: 5px solid white;">
+
+      <div>
+        
+        <h2 class="page-header text-left pt-5 pb-5"> Unesite podatke o dostavljaču: </h2>
+
+        <div class="mb-2 row">
+          <label for="korisnickoIme" class="col-sm-2 col-form-label"> Korisnicko ime: </label>
+          <div class="col-sm-4">
+            <input v-model="Dostavljac.korisnickoIme" id="korisnickoIme" type="text" class="form-control" name="korisnickoIme" required="required"/>
+          </div>
+        </div>
         <br/>
 
-        <label for="lozinka"> Lozinika: </label>
-        <input v-model="Dostavljac.lozinka" id="lozinka" type="text" name="lozinka" required="required"/>
+        <div class="mb-2 row">
+          <label for="lozinka" class="col-sm-2 col-form-label"> Lozinka: </label>
+          <div class="col-sm-4">
+            <input v-model="Dostavljac.lozinka" id="lozinka" type="text" class="form-control" name="lozinka" required="required"/>
+          </div>
+        </div>
         <br/>
 
-        <label for="ime"> Ime: </label>
-        <input v-model="Dostavljac.ime" id="ime" type="text" name="ime" required="required"/>
+        <div class="mb-2 row">
+          <label for="ime" class="col-sm-2 col-form-label"> Ime: </label>
+          <div class="col-sm-4">
+            <input v-model="Dostavljac.ime" id="ime" type="text" class="form-control" name="ime" required="required"/>
+          </div>
+        </div>
         <br/>
 
-        <label for="prezime"> Prezime: </label>
-        <input v-model="Dostavljac.prezime" id="prezime" type="text" name="prezime" required="required"/>
+        <div class="mb-2 row">
+          <label for="prezime" class="col-sm-2 col-form-label"> Prezime: </label>
+          <div class="col-sm-4">
+            <input v-model="Dostavljac.prezime" id="prezime" type="text" class="form-control" name="prezime" required="required"/>
+          </div>
+        </div>
         <br/>
 
-        <button v-on:click="dodajNovogDostavljaca()">
-
-            Izvrši dodavanje
-
+        <div class="pb-5">
+        <button class="btn btn-outline-secondary col-sm-4" v-on:click="dodajNovogDostavljaca()" style="max-width:165px;">
+            <b>Izvrši dodavanje</b>
         </button>
+        </div>
 
+      </div>
 
-    <!-- sve podatke prikazi o jednom restoranu, vidi preko Postman-a sve podatke koji dolaze-->
+    </div>
+
+    <footer class="page-footer font-small blue pt-4">
+
+      <div class="container-fluid text-center text-md-left">
+
+          <div class="col-md-12 mt-md-0 mt-3">
+
+            <h5 class="text-uppercase">O nama</h5>
+            <p>Dostava za cas je za sekund kod Vas. Brza i jeftina dostava hrane na teritoriji celog Novog Sada.</p>
+
+          </div>
+
+      </div>
+
+      <div class="footer-copyright text-center py-3">© 2022 Copyright:
+        <a href="/"> DostavaZaCas.com </a>
+      </div>
+
+    </footer>
 
 </template>
 
@@ -94,7 +136,6 @@ export default {
           Accept: "application/json",
           "Content-type": "application/json",
         },
-        //body: JSON.stringify(this.korisnik),
       })
         .then((response) => response.json)
         .then((data) => {

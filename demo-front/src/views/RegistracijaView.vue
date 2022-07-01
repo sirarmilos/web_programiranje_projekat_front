@@ -1,34 +1,6 @@
 <template>
 
-    <!--<h2> Nemate nalog? Napravite ga, brzo i jednostavno!.</h2>
-
-    ovde kod form treba i kao action sta vraca, ali to mozda ipak dole u fetchu kad odredjujem ko je taj koji se uloguje
-
-        <label for="poljeKorisnickoIme"> Korisničko ime: </label>
-        <input v-model='registracijaSlanje.korisnickoIme' id="poljeKorisnickoIme" type="text" name="korisnickoIme" required="required"/>
-
-        <br/>
-
-        <label for="poljeLozinka"> Lozinka: </label>
-        <input v-model='registracijaSlanje.lozinka' id="poljeLozinka" type="password" name="lozinka" required="required"/>
-
-        <br/>
-
-        <label for="poljeIme"> Ime: </label>
-        <input v-model='registracijaSlanje.ime' id="poljeIme" type="text" name="ime" required="required"/>
-
-        <br/>
-
-        <label for="poljePrezime"> Prezime: </label>
-        <input v-model='registracijaSlanje.prezime' id="poljePrezime" type="text" name="prezime" required="required"/>
-
-        <br/>
-
-        <button v-on:click="izvrsiRegistraciju()">
-            Registrujte se
-        </button>-->
-
-  <div class="container boja" style=" margin-top: 8%; width: 30%; min-width: 400px; max-width: 700px; border: 3px solid black;">
+  <div class="container boja" style=" margin-top: 8%; width: 30%; min-width: 400px; max-width: 700px; border: 3px solid black; border-radius: 5%;">
 
     <h1 class="page-header text-center"> Nemate nalog? Napravite ga, brzo i jednostavno. </h1>
 
