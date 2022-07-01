@@ -4,89 +4,144 @@
     <!-- vidi kako na link da vezes onclick metodu, nesto v-bind mozda ne znam-->
     <!-- https://forum.vuejs.org/t/how-to-call-a-function-by-click-on-some-class-in-href-tag/37181 --> 
     <div class="topnav">
-        <a href="/kupacPocetna" >Pregled podataka</a>
-        <a href="/kupacAzuriranjePodataka">Ažuriranje podataka</a>
         <a href="/kupacRestorani">Restorani</a>
         <a class="active" href="/kupacPorudzbine">Porudžbina</a>
+        <a href="/kupackreiranjePorudzbine">Korpa</a>
+        <a href="/kupacPocetna" >Pregled podataka</a>
+        <a href="/kupacAzuriranjePodataka">Ažuriranje podataka</a>
         <a v-on:click="odlogovanje()">Izloguj se</a>
     </div>
 
-    <!-- kao za tu porudzbinu pregled svih artikala u toj porudzbini i svega toga-->
-
-    <label for="datumVreme"> Datum vreme: </label>
-    <input v-model="datumVreme" id="datumVreme" type="text" name="datumVreme" required="required" readonly/>
-    <br/>
-
-    <label for="cena"> Cena: </label>
-    <input v-model="ukupnaCena" id="cena" type="text" name="cena" required="required" readonly/>
-    <br/>
-
-    <label for="status"> Status: </label>
-    <input v-model="status" id="status" type="text" name="status" required="required" readonly/>
+    <div class="container-fluid w-100 pt-5 hv-100" style="background-color: #eee; border: 5px solid white;">
     
-    <br/>
+      <div>
 
-    <table>
-      <tr>
-        <th>Naziv</th>
-        <th>Cena</th>
-        <th>Opis</th>
-        <th>Kolicina</th>
-      </tr>
+        <div class="mb-2 row">
+            <label for="datumVreme" class="col-sm-2 col-form-label"> Datum vreme: </label>
+            <div class="col-sm-4">
+              <input v-model="datumVreme" id="datumVreme" type="text" class="form-control" name="datumVreme" required="required" readonly/>
+            </div>
+        </div>
+        <br/>
+
+        <div class="mb-2 row">
+            <label for="cena" class="col-sm-2 col-form-label"> Cena: </label>
+            <div class="col-sm-4">
+              <input v-model="ukupnaCena" id="cena" type="text" class="form-control" name="cena" required="required" readonly/>
+            </div>
+        </div>
+        <br/>
+
+        <div class="mb-2 row">
+            <label for="status" class="col-sm-2 col-form-label"> Status: </label>
+            <div class="col-sm-4">
+              <input v-model="status" id="status" type="text" class="form-control" name="status" required="required" readonly/>
+            </div>
+        </div>
+        <br/>
+    
+      </div>
+    
+      <div class="table-responsive caption-top">
+        <table class="table table-striped table-hover table-bordered border-secondary">
+          
+          <thead>
+          <tr>
+            <th>Naziv</th>
+            <th>Cena</th>
+            <th>Opis</th>
+            <th>Kolicina</th>
+          </tr>
+          </thead>
+          
+          <tbody>
+          <tr v-for="noviArtikal in listaNovihArtikala" :key="listaNovihArtikala.id"><!--noviArtikal.id-->
+            <td>{{ noviArtikal.naziv }}</td>
+            <td>{{ noviArtikal.cena }}</td>
+            <td>{{ noviArtikal.opis }}</td>
+            <td>{{ noviArtikal.kolicina }}</td>
+          </tr>
+          </tbody>
+
+        </table>
+      </div>
+
       
-      <tr v-for="noviArtikal in listaNovihArtikala" :key="listaNovihArtikala.id"><!--noviArtikal.id-->
-        <td>{{ noviArtikal.naziv }}</td>
-        <td>{{ noviArtikal.cena }}</td>
-        <td>{{ noviArtikal.opis }}</td>
-        <td>{{ noviArtikal.kolicina }}</td>
-      </tr>
-    </table>
-    
-    <button v-on:click="postaniVidljiv(status)">{{ tekstDugmeta }}</button>
+      <button class="btn btn-outline-secondary col-sm-5 mt-2 mb-3" v-on:click="postaniVidljiv(status)" style="max-width:300px;"><b>{{ tekstDugmeta }}</b></button>
 
-<div v-if="vidljivo">
-    <label for="komentar"> Mesto za vas komentar </label>
-    <input v-model="pom1" id="komentar"/>
-   <!-- <label for="ocena"> Mesto za vasu ocenu </label>
-    <input v-model="pom2" id="ocena"/>-->
+      <div class="mt-4" v-if="vidljivo">
 
-   <!-- <button class="dugmePosaljiKomentar" v-on:click="posaljiKomentar()">
-      Pošalji komentar
-    </button>-->
+        <div class="col-sm-6">
+          <label for="komentar" class="form-label">Mesto za Vas komentar</label>
+          <textarea v-model="pom1" class="form-control" id="komentar" rows="4"></textarea>
+        </div>
 
-    <div>Ocena: {{ izabran }}</div>
+        <br/>
 
-    <input type="radio" id="jakoLose" value="JakoLose" v-model="izabran" />
-    <label for="jakoLose">Jako loše</label>
+        <div class="mb-2 row">
+          <label for="poljeOcena" class="col-sm-2 col-form-label"> Ocena: </label>
+          <br/>
+          <div class="col-sm-4">
 
-    <br/>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" id="jakoLose" value="JakoLose" v-model="izabran" />
+              <label class="form-check-label" for="jakoLose">Jako loše</label>
 
-    <input type="radio" id="lose" value="Lose" v-model="izabran" />
-    <label for="lose">Loše</label>
+              <br/>
 
-    <br/>
+              <input class="form-check-input" type="radio" id="lose" value="Lose" v-model="izabran" />
+              <label class="form-check-label" for="lose">Loše</label>
 
-    <input type="radio" id="dobro" value="Dobro" v-model="izabran" />
-    <label for="dobro">Dobro</label>
+              <br/>
 
-    <br/>
+              <input class="form-check-input" type="radio" id="dobro" value="Dobro" v-model="izabran" />
+              <label class="form-check-label" for="dobro">Dobro</label>
 
-    <input type="radio" id="veomaDobro" value="VeomaDobro" v-model="izabran" />
-    <label for="veomaDobro">Veoma dobro</label>
+              <br/>
 
-    <br/>
+              <input class="form-check-input" type="radio" id="veomaDobro" value="VeomaDobro" v-model="izabran" />
+              <label class="form-check-label" for="veomaDobro">Veoma dobro</label>
 
-    <input type="radio" id="odlicno" value="Odlicno" v-model="izabran" />
-    <label for="odlicno">Odlično</label>
+              <br/>
 
-    <br/>
+              <input class="form-check-input" type="radio" id="odlicno" value="Odlicno" v-model="izabran" />
+              <label class="form-check-label" for="odlicno">Odlično</label>
 
-    <button v-on:click="proba(status, pom1, izabran)">
-      Proba
-    </button>
+              <br/>
+            </div>
 
+          </div>
+        </div>
+        
+        <div class="pb-5">
+        <button class="btn btn-outline-secondary col-sm-5" v-on:click="proba(status, pom1, izabran)" style="max-width:300px;">
+          <b>Posaljite komentar</b>
+        </button>
+        </div>
 
-  </div>
+      </div>
+
+    </div>
+
+    <footer class="page-footer font-small blue pt-4">
+
+      <div class="container-fluid text-center text-md-left">
+
+          <div class="col-md-12 mt-md-0 mt-3">
+
+            <h5 class="text-uppercase">O nama</h5>
+            <p>Dostava za cas je za sekund kod Vas. Brza i jeftina dostava hrane na teritoriji celog Novog Sada.</p>
+
+          </div>
+
+      </div>
+
+      <div class="footer-copyright text-center py-3">© 2022 Copyright:
+        <a href="/"> DostavaZaCas.com </a>
+      </div>
+
+    </footer>
+
 </template>
 
 <script>
@@ -112,7 +167,6 @@ export default {
         restoran_id: "",
       },
       pom1: "",
-      pom2: "",
       vidljivo: false,
       tekstDugmeta: "Kliknite za dodavanje komentara",
       izabran: "",
@@ -187,34 +241,14 @@ export default {
         } 
       },
 
-      /*posaljiKomentar : function() {
-      fetch('http://localhost:8081/api/nadji_restoran_po_id_porudzbini/' + this.$route.query.id , {
-        method: "GET",
-        credentials: 'include',
-        headers: {
-          Accept: "application/json",
-          "Content-type": "application/json",
-        },
-      })
-        .then(response => response.json())
-        .then(data => {
-          //console.log("Success:", data);
-          this.slanje.restoran_id = data;
-          })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-
-    },*/
-
-    proba : function(status, pom1, pom2)
+    proba : function(status, pom1, izabran)
     {
 
        if(status == "Dostavljena")
       {
         //this.slanje.restoran_id = 2;//;//porudzbina.restoranId;
         this.slanje.korisnickoIme = localStorage.name//"deki1976";//porudzbina.kupacKorisnickoIme;
-        this.slanje.ocena = pom2;//"Lose";
+        this.slanje.ocena = izabran;//"Lose";
         this.slanje.tekstKomentara = pom1;//"SUPER";
         //console.log(this.slanje.restoran_id);
 
@@ -245,13 +279,6 @@ export default {
 
     },
 
-
-
-
-
-
-
-
     odlogovanje : function () {
       fetch("http://localhost:8081/api/odlogovanje", {
         method: "POST",
@@ -260,7 +287,6 @@ export default {
           Accept: "application/json",
           "Content-type": "application/json",
         },
-        //body: JSON.stringify(this.korisnik),
       })
         .then((response) => response.json)
         .then((data) => {
@@ -283,31 +309,5 @@ export default {
 
 <style>
 
-.topnav {
-  background-color: #333;
-  overflow: hidden;
-}
-
-/* Style the links inside the navigation bar */
-.topnav a {
-  float: left;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
-}
-
-/* Change the color of links on hover */
-.topnav a:hover {
-  background-color: #ddd;
-  color: black;
-}
-
-/* Add a color to the active/current link */
-.topnav a.active {
-  background-color: #04AA6D;
-  color: white;
-}
 
 </style>
