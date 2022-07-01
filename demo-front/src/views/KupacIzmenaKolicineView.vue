@@ -1,15 +1,4 @@
 <template>
-
-    <!-- template sa w3schools-a, za navbar -->
-    <!-- vidi kako na link da vezes onclick metodu, nesto v-bind mozda ne znam-->
-    <!-- https://forum.vuejs.org/t/how-to-call-a-function-by-click-on-some-class-in-href-tag/37181 --> 
-    <div class="topnav">
-        <a href="/kupacPocetna" >Pregled podataka</a>
-        <a href="/kupacAzuriranjePodataka">Ažuriranje podataka</a>
-        <a href="/kupacRestorani">Restorani</a>
-        <a class="active" href="/kupacPorudzbine">Porudžbina</a>
-        <a v-on:click="odlogovanje()">Izloguj se</a>
-    </div>
     
     <table id="pregled">
 
@@ -29,59 +18,27 @@
           </tr>
   
      </table>
-      
-    <p>Ukupna cena porudzbine iznosi: {{this.PregledPorudzbine.ukupnaCena}}<br>
-    Cena sa popustom iznosi: {{this.PregledPorudzbine.cena_sa_popustom}}
-    </p>
-    <button v-on:click="kreiraj_porudzbinu()">NARUCI</button>
-    
-
-    <!-- napravi neku kao korpu gde mogu da se dodaju artikli, i brisu i na kraju se napravi porudzbina kad se klikne ovo dugme ispod, kao korpa neka-->
-
-    <!-- ispod ima dugme koje kad se klikne napravi se ta porudzbina-->
-
 </template>
 
 <script>
 
 export default {
-  name: "KupacKreiranjePorudzbineView",
+  name: "KupacIzmenaKolicineView",
 
   data: function(){
     return{
-      PregledPorudzbine:{
-
-      },
-      
+        id:"",
+        naziv:"",
+        kolicina:"",
     };
   },
   mounted: function () {
-
-    
-
-      fetch('http://localhost:8081/api/porudzbina/pregledPorudzbine', {
-        method: "GET",
-        credentials: 'include',
-        headers: {
-          Accept: "application/json",
-          "Content-type": "application/json",
-        },
-        //body: JSON.stringify(this.logovanjeSlanje),
-
-      })
-        .then(response => response.json())
-        .then(data => {console.log("Success:", data); this.PregledPorudzbine = data})
-
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+        this.id = this.$route.query.id;
+        this.naziv = this.$route.query.naziv;
+        this.kolicina = this.$route.query.kolicina;
   },
 
-
   methods: {
-        izmeni_kolicinu : function(artikal){
-          this.$router.push("/kupacIzmenaKolicine?id=" + artikal);
-        },
       
         odlogovanje : function () {
       fetch("http://localhost:8081/api/odlogovanje", {
