@@ -4,60 +4,65 @@
     <!-- vidi kako na link da vezes onclick metodu, nesto v-bind mozda ne znam-->
     <!-- https://forum.vuejs.org/t/how-to-call-a-function-by-click-on-some-class-in-href-tag/37181 --> 
     <div class="topnav">
-        <a href="/kupacPocetna" >Pregled podataka</a>
-        <a href="/kupacAzuriranjePodataka">Ažuriranje podataka</a>
         <a href="/kupacRestorani">Restorani</a>
         <a class="active" href="/kupacPorudzbine">Porudžbina</a>
+        <a href="/kupackreiranjePorudzbine">Korpa</a>
+        <a href="/kupacPocetna" >Pregled podataka</a>
+        <a href="/kupacAzuriranjePodataka">Ažuriranje podataka</a>
         <a v-on:click="odlogovanje()">Izloguj se</a>
     </div>
 
-    <p>Pregled porudzbina</p>
+    <div class="container-fluid w-100 pt-5 hv-100" style="background-color: #eee; border: 5px solid white;">
+    
+      <div class="table-responsive caption-top">
+          <table class="table table-striped table-hover table-bordered border-secondary">
 
-    <table id="listaPorudzbina">
+            <thead>
+            <tr>
+              <th>DatumVreme</th>
+              <th>Cena</th>
+              <th>Status</th>
+              <th>Vise informacija</th>
+            </tr>
+            </thead>
 
-        <tr>
-          <!--<th>Id</th>-->
-          <th>DatumVreme</th>
-          <th>Cena</th>
-          <th>Status</th>
-          <th>Vise informacija</th>
-         <!-- <th>Mesto za vas komentar</th>
-          <th>Mesto za vasu ocenu</th>
-          <th>Pošalji komentar</th>-->
-        </tr>
+            <tbody>
 
-        <tr v-for="porudzbina in listaPorudzbina" :key="listaPorudzbina.id">
-          <!--<td>{{ porudzbina.id }}</td>-->
-          <td>{{ porudzbina.datumVreme }}</td>
-          <td>{{ porudzbina.cena }}</td>
-          <td>{{ porudzbina.status }}</td>
-          <td>
-            <button class="dugmeViseInformacija" v-on:click="viseInformacija(porudzbina)">
-              Vise informacija
-            </button>
-          </td>
-         <!-- <td>
-              <input v-model="pom1"/>
-          </td>
-          <td>
-              <input v-model="pom2"/>
-          </td>
-          <td>
-            <button class="dugmePosaljiKomentar" v-on:click="posaljiKomentar(porudzbina)">
-              Pošalji komentar
-            </button>
-            <button v-on:click="proba(porudzbina, pom1, pom2)">
-              Proba
-            </button>
-          </td>-->
-        </tr>
+            <tr v-for="porudzbina in listaPorudzbina" :key="listaPorudzbina.id">
+              <td>{{ porudzbina.datumVreme }}</td>
+              <td>{{ porudzbina.cena }}</td>
+              <td>{{ porudzbina.status }}</td>
+              <td>
+                <button class="btn btn-outline-secondary col-sm-5 dugmeViseInformacija" v-on:click="viseInformacija(porudzbina)" style="max-width:150px;">
+                 <b> Vise informacija </b>
+                </button>
+              </td>
+            </tr>
+            </tbody>
 
-    </table>
-        <!-- napraviti tabelu kada se ucita stranica da se ucitaju u nju sve porudzbine od tog kupca koji je ulogovan-->
-        <!-- pored svake stavke u tabeli da ima kao dugme pregled porudzbine, gde nas vodi na stranicu KupacPorudzbinaPrikazView, gde mozemo detaljnije da vidimo samo tu porudzbinu-->
+          </table>
+      </div>
+    
+    </div>
 
+    <footer class="page-footer font-small blue pt-4">
 
-    <!-- ispod ima dugme koje je kao kreiraj novu porudzbinu, gde nas vodi na novu stranicu KupacPorudzbinaKreiranjeView, gde moze korisnik da kreira novu porudzbinu, dodaje proizvode u nju ili brise pre samog kreiranja-->
+      <div class="container-fluid text-center text-md-left">
+
+          <div class="col-md-12 mt-md-0 mt-3">
+
+            <h5 class="text-uppercase">O nama</h5>
+            <p>Dostava za cas je za sekund kod Vas. Brza i jeftina dostava hrane na teritoriji celog Novog Sada.</p>
+
+          </div>
+
+      </div>
+
+      <div class="footer-copyright text-center py-3">© 2022 Copyright:
+        <a href="/"> DostavaZaCas.com </a>
+      </div>
+
+    </footer>
 
 </template>
 
@@ -76,14 +81,6 @@ export default {
         kupacKorisnickoIme: "",
         restoranId: "",
       },
-      /*slanje: {
-        ocena: "",
-        tekstKomentara: "",
-        korisnickoIme: "",
-        restoran_id: "",
-      },
-      pom1: "",
-      pom2: "",*/
     };
   },
   mounted: function () {
@@ -95,8 +92,6 @@ export default {
           Accept: "application/json",
           "Content-type": "application/json",
         },
-        //body: JSON.stringify(this.logovanjeSlanje),
-
       })
         .then(response => response.json())
         .then(data => {console.log("Success:", data); this.listaPorudzbina = data})
@@ -180,7 +175,6 @@ export default {
           Accept: "application/json",
           "Content-type": "application/json",
         },
-        //body: JSON.stringify(this.korisnik),
       })
         .then((response) => response.json)
         .then((data) => {
@@ -203,31 +197,5 @@ export default {
 
 <style>
 
-.topnav {
-  background-color: #333;
-  overflow: hidden;
-}
-
-/* Style the links inside the navigation bar */
-.topnav a {
-  float: left;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
-}
-
-/* Change the color of links on hover */
-.topnav a:hover {
-  background-color: #ddd;
-  color: black;
-}
-
-/* Add a color to the active/current link */
-.topnav a.active {
-  background-color: #04AA6D;
-  color: white;
-}
 
 </style>

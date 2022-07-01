@@ -1,9 +1,9 @@
 <template>
 
-    <h1> Dobrodošli u aplikaciju! </h1>
-    <h2> Da biste započeli korišćenje aplikacije, ulogujte se.</h2>
 
-    <label for="poljeKorisnickoIme"> Korisnicko ime: </label>
+   <!-- <h1 class="page-header text-center"> Dobrodošli u aplikaciju! </h1>
+
+   <label for="poljeKorisnickoIme"> Korisnicko ime: </label>
 
     <input type="text" v-model='logovanjeSlanje.korisnickoIme'/>
 
@@ -13,19 +13,70 @@
 
     <input type="password" v-model='logovanjeSlanje.lozinka'/>
 
-    <br/>
+    <br/>-->
 
-    <button v-on:click="ulogujSe()">
-      Ulogujte se
-    </button>
+  <div class="container boja" style=" margin-top: 11%; width: 30%; min-width: 400px; max-width: 700px; border: 3px solid black;">
 
+  <h1 class="page-header text-center"> Dobrodošli u aplikaciju! </h1>
+
+  <div class="col-md-12 text-center" style="margin-top: 10%;">
+    <label for="poljeKorisnickoIme" class="form-label">Korisnicko ime</label>
+    <input v-model='logovanjeSlanje.korisnickoIme' type="text" class="form-control w-50 centriranje" id="poljeKorisnickoIme" required>
+    <div class="valid-feedback">
+      Looks good!
+    </div>
     <p>
-      Ukoliko nemate nalog, posetite registraciju.
+      {{porukaGreskeZaKorisnickoIme}}
     </p>
+  </div>
+  <div class="col-md-12 text-center">
+    <label for="poljeLozinka" class="form-label">Lozinka</label>
+    <input v-model='logovanjeSlanje.lozinka' type="password" class="form-control w-50 centriranje" id="poljeLozinka" required>
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
 
-    <button v-on:click="registrujSe()">
-        Registracija
-    </button>
+  <button v-on:click="ulogujSe()" class="w-25 centriranje margin1 boja2">
+    Ulogujte se
+  </button>
+
+  <p class="text-center margin2">
+    Ukoliko nemate nalog, posetite registraciju.
+  </p>
+
+  <button v-on:click="registrujSe()" class="w-25 centriranje mb-4 boja2">
+    Registracija
+  </button>
+
+  </div>
+
+<!--<div class="d-flex align-items-center justify-content-center">
+
+<div class="d-flex align-items-center justify-content-center">
+  
+  <div class="col-md-4">
+    <label for="poljeKorisnickoIme" class="form-label">Korisnicko ime</label>
+    <input v-model='logovanjeSlanje.korisnickoIme' type="text" class="form-control" id="poljeKorisnickoIme" required>
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+    <p>
+      {{porukaGreskeZaKorisnickoIme}}
+    </p>
+  </div>
+  <div class="col-md-4">
+    <label for="poljeLozinka" class="form-label">Lozinka</label>
+    <input v-model='logovanjeSlanje.lozinka' type="password" class="form-control" id="poljeLozinka" required>
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+
+</div>
+
+</div>-->
+
 
 </template>
 
@@ -42,6 +93,7 @@ export default {
         korisnickoIme: "",
         lozinka: "",
       },
+      porukaGreskeZaKorisnickoIme : "",
     };
   },
   methods: {
@@ -69,7 +121,7 @@ export default {
           if(uloga_pomocna2 === "kupac")
           {
             localStorage.name = this.logovanjeSlanje.korisnickoIme;
-            this.$router.push("/kupacPocetna");
+            this.$router.push("kupacRestorani");//("/kupacPocetna");
           }
           else if(uloga_pomocna2 === "admin")
           {
@@ -102,6 +154,7 @@ export default {
           }
         })
         .catch((err) => {
+         // if()
           console.log(err);
           //console.log(err.response.status);
           //console.log(err.request.response);
@@ -117,4 +170,25 @@ export default {
 
 <style>
 
+.centriranje{
+  display: block;
+  margin: 0 auto;
+}
+
+.margin1{
+  margin-top: 5%;
+}
+
+.margin2{
+  margin-top: 10%;
+}
+
+.boja{
+  background-color: #42b883;
+}
+
+.boja2{
+  background-color: #35495e;
+  color: white;
+}
 </style>

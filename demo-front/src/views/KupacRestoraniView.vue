@@ -4,66 +4,97 @@
     <!-- vidi kako na link da vezes onclick metodu, nesto v-bind mozda ne znam-->
     <!-- https://forum.vuejs.org/t/how-to-call-a-function-by-click-on-some-class-in-href-tag/37181 --> 
     <div class="topnav">
-        <a href="/kupacPocetna" >Pregled podataka</a>
-        <a href="/kupacAzuriranjePodataka">Ažuriranje podataka</a>
         <a class="active" href="/kupacRestorani">Restorani</a>
         <a href="/kupacPorudzbine">Porudžbina</a>
+        <a href="/kupackreiranjePorudzbine">Korpa</a>
+        <a href="/kupacPocetna" >Pregled podataka</a>
+        <a href="/kupacAzuriranjePodataka">Ažuriranje podataka</a>
         <a v-on:click="odlogovanje()">Izloguj se</a>
     </div>
 
-<!-- PRETRAGA JOS NE RADI, TREBA JE PROMENITI, U REAL TIME DA RADI KADA SE ISKUCA NOVO SLOVO, TAKODJE ADRESA SE NE PRIKAZUJE, VIDI DA LI TREBA NOVI DTO-->
 
-    <p>
-        Parametri za pretragu
-    </p>
+    <div class="container-fluid w-100 p-3 hv-100" style="background-color: #eee; border: 5px solid white;">
 
-    <!-- namesti mozda dogadjaj v-on:change = "..." da radi tu pretragu -->
-    <!-- https://forum.vuejs.org/t/how-to-trigger-an-onchange-event/11081/4 -->
+      <div>
+      <h1 class="page-header text-left pt-5 pb-5"> Parametri za pretragu </h1>
 
-    <!-- https://v2.vuejs.org/v2/cookbook/form-validation.html?redirect=true -->
-    <!-- https://vuejs.org/guide/essentials/forms.html -->
-    <!--<form method="post">-->
-
-        <label for="poljeNazivRestorana"> Naziv restorana: </label>
-        <input v-model="slanje.naziv" v-on:input="pretraga()" id="poljeNazivRestorana" type="text" name="nazivRestorana"/>
-
+        <div class="mb-2 row">
+          <label for="poljeNazivRestorana" class="col-sm-2 col-form-label"> Naziv restorana: </label>
+          <div class="col-sm-4">
+            <input v-model="slanje.naziv" v-on:input="pretraga()" id="poljeNazivRestorana" type="text" class="form-control" name="poljeNazivRestorana" required="required"/>
+          </div>
+        </div>
         <br/>
 
-        <label for="poljeTipRestorana"> Tip restorana: </label>
-        <input v-model="slanje.tip" v-on:input="pretraga()" id="poljeTipRestorana" type="text" name="tipRestorana"/>
-
+        <div class="mb-2 row">
+          <label for="poljeTipRestorana" class="col-sm-2 col-form-label"> Tip restorana: </label>
+          <div class="col-sm-4">
+            <input v-model="slanje.tip" v-on:input="pretraga()" id="poljeTipRestorana" type="text" class="form-control" name="poljeTipRestorana" required="required"/>
+          </div>
+        </div>
         <br/>
 
-        <label for="poljeAdresaRestorana"> Adresa restorana: </label>
-        <input v-model="slanje.adresa" v-on:input="pretraga()" id="poljeAdresaRestorana" type="text" name="adresaRestorana"/>
-
+        <div class="mb-2 row">
+          <label for="poljeAdresaRestorana" class="col-sm-2 col-form-label"> Adresa restorana: </label>
+          <div class="col-sm-4">
+            <input v-model="slanje.adresa" v-on:input="pretraga()" id="poljeAdresaRestorana" type="text" class="form-control" name="poljeAdresaRestorana" required="required"/>
+          </div>
+        </div>
         <br/>
 
-    <!--</form>-->
+      </div>
 
-    <table id="restorani">
+      <div class="table-responsive caption-top">
+        <table class="table table-striped table-hover table-bordered border-secondary"> <!-- vidi da li treba border-secondary ili je bolje bez toga table-borderless-->
 
-        <tr>
-          <th>Naziv restorana</th>
-          <th>Tip restorana</th>
-          <th>Adresa restorana</th>
-          <th>Više informacija</th>
-        </tr>
+          <caption style="caption-side: top;"><b>Spisak svih restorana</b></caption>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Naziv restorana</th>
+              <th>Tip restorana</th>
+              <th>Adresa restorana</th>
+              <th>Više informacija</th>
+            </tr>
+          </thead>
 
-        <tr v-for="restoran in restorani" :key="restoran.id">
-          <td>{{ restoran.naziv }}</td>
-          <td>{{ restoran.tip }}</td>
-          <td>{{ restoran.adresa }}</td>
-          <td>
-            <button class="dugmeViseInformacija" v-on:click="viseInformacija(restoran)">
-              Vise informacija
-            </button>
-          </td>
-        </tr>
+          <tbody>
+          <tr v-for="restoran in restorani" :key="restoran.id">
+            <td>{{ restoran.basicBrojac}}</td>
+            <td>{{ restoran.naziv }}</td>
+            <td>{{ restoran.tip }}</td>
+            <td>{{ restoran.adresa }}</td>
+            <td>
+              <button class="btn btn-outline-secondary col-sm-5 dugmeViseInformacija" v-on:click="viseInformacija(restoran)" style="max-width:150px;">
+                Vise informacija
+              </button>
+            </td>
+          </tr>
+          </tbody>
 
-    </table>
+        </table>
+      </div>
+    
+    </div>
 
-    <!-- ovde sam stao-->
+    <footer class="page-footer font-small blue pt-4">
+
+      <div class="container-fluid text-center text-md-left">
+
+          <div class="col-md-12 mt-md-0 mt-3">
+
+            <h5 class="text-uppercase">O nama</h5>
+            <p>Dostava za cas je za sekund kod Vas. Brza i jeftina dostava hrane na teritoriji celog Novog Sada.</p>
+
+          </div>
+
+      </div>
+
+      <div class="footer-copyright text-center py-3">© 2022 Copyright:
+        <a href="/"> DostavaZaCas.com </a>
+      </div>
+
+    </footer>
 
 </template>
 
@@ -83,21 +114,8 @@ export default {
       }
     };
   },
+
   mounted: function () {
-
-    //if(localStorage.name === "kkkk")
-    //{
-    //primer axios poziva
-    /*axios
-      .get("http://localhost:8081/api/korisnik/pregled_podataka")
-      .then((res) => {
-        
-        this.korisnik = res.data;
-
-      })
-      .catch((err) =>{
-        //console.log(err)
-      })*/
 
       fetch('http://localhost:8081/api/restoran/prikaz_restorana' /*+ localStorage.name*/, {
         method: "GET",
@@ -106,15 +124,12 @@ export default {
           Accept: "application/json",
           "Content-type": "application/json",
         },
-        //body: JSON.stringify(this.logovanjeSlanje),
-
       })
         .then(response => response.json())
         .then(data => {console.log("Success:", data); this.restorani = data})
         .catch((error) => {
           console.error("Error:", error);
         });
-  //}
   },
 
   methods: {
@@ -175,7 +190,6 @@ export default {
           Accept: "application/json",
           "Content-type": "application/json",
         },
-        //body: JSON.stringify(this.korisnik),
       })
         .then((response) => response.json)
         .then((data) => {
@@ -189,27 +203,8 @@ export default {
         });
 
       }
-
-/*deleteEmployee: function (id) {
-      fetch("http://localhost:8081/api/employees/" + id, {
-        method: "PUT",
-        credentials: 'include',
-        headers: {
-          Accept: "application/json",
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(this.korisnik),
-      }).then((res) => {
-        if (res.ok) {
-          window.location.reload();
-        }
-      });
-    },*/
-
-
-
+      
   },
-
 
 };
 
@@ -217,31 +212,20 @@ export default {
 
 <style>
 
-.topnav {
-  background-color: #333;
-  overflow: hidden;
+table
+{
+    counter-reset: rowNumber;
 }
 
-/* Style the links inside the navigation bar */
-.topnav a {
-  float: left;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
+table tr > td:first-child
+{
+    counter-increment: rowNumber;
 }
 
-/* Change the color of links on hover */
-.topnav a:hover {
-  background-color: #ddd;
-  color: black;
+table tr td:first-child::before
+{
+    content: counter(rowNumber);
+    min-width: 1em;
+    margin-right: 0.5em;
 }
-
-/* Add a color to the active/current link */
-.topnav a.active {
-  background-color: #04AA6D;
-  color: white;
-}
-
 </style>
