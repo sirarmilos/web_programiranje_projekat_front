@@ -26,7 +26,6 @@ import AdminKreiranjeNovogDostavljacaView from '../views/admin_views/AdminKreira
 import DostavljacPocetnaView from '../views/dostavljac_views/DostavljacPocetnaView.vue'
 import DostavljacAzuriranjePodatakaView from '../views/dostavljac_views/DostavljacAzuriranjePodatakaView.vue'
 import DostavljacRestoraniView from '../views/dostavljac_views/DostavljacRestoraniView.vue'
-import DostavljacDetaljanPrikazRestoranaView from '../views/dostavljac_views/DostavljacDetaljanPrikazRestoranaView.vue'
 import DostavljacNjegovPrikazPorudzbinaView from '../views/dostavljac_views/DostavljacNjegovPrikazPorudzbinaView.vue'
 
 import MenadzerPocetnaView from '../views/menadzer_views/MenadzerPocetnaView.vue'
@@ -161,12 +160,6 @@ const routes = [
     path: '/dostavljacRestorani',
     name: 'dostavljacRestorani',
     component: DostavljacRestoraniView
-  },
-
-  {
-    path: '/dostavljacDetaljanPrikazRestorana',
-    name: 'dostavljacDetaljanPrikazRestorana',
-    component: DostavljacDetaljanPrikazRestoranaView
   },
 
   {

@@ -205,7 +205,7 @@ export default {
   float: left;
   color: #f2f2f2;
   text-align: center;
-  padding: 20px 5%;
+  padding: 20px 2.5%; /*5%*/
   text-decoration: none;
   font-size: 20px;
 }

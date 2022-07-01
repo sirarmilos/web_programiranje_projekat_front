@@ -4,48 +4,71 @@
     <!-- vidi kako na link da vezes onclick metodu, nesto v-bind mozda ne znam-->
     <!-- https://forum.vuejs.org/t/how-to-call-a-function-by-click-on-some-class-in-href-tag/37181 --> 
     <div class="topnav">
+        <a class="active" href="/dostavljacPorudzbine">Porudžbina</a>
+        <a href="/dostavljacRestorani">Restorani</a>
         <a href="/dostavljacPocetna" >Pregled podataka</a>
         <a href="/dostavljacAzuriranjePodataka">Ažuriranje podataka</a>
-        <a href="/dostavljacRestorani">Restorani</a>
-        <a class="active" href="/dostavljacPorudzbine">Porudžbina</a>
         <a v-on:click="odlogovanje()">Izloguj se</a>
     </div>
 
-    <p>Pregled porudzbina</p>
 
-    <table id="listaPorudzbina">
+    <div class="container-fluid w-100 pt-5 hv-100" style="background-color: #eee; border: 5px solid white;">
+        
+          <div class="table-responsive caption-top">
+              <table class="table table-striped table-hover table-bordered border-secondary">
+                <caption style="caption-side: top;"><b>Spisak svih porudzbina</b></caption>
+                <thead>
+                <tr>
+                  <th>DatumVreme</th>
+                  <th>Cena</th>
+                  <th>Status</th>
+                  <th>U transportu</th>
+                  <th>Dostavljen</th>
+                </tr>
+                </thead>
 
-        <tr>
-          <th>DatumVreme</th>
-          <th>Cena</th>
-          <th>Status</th>
-          <th>U transportu</th>
-          <th>Dostavljen</th>
-        </tr>
+                <tbody>
 
-        <tr v-for="porudzbina in listaPorudzbina" :key="listaPorudzbina.id">
-          <td>{{ porudzbina.datumVreme }}</td>
-          <td>{{ porudzbina.cena }}</td>
-          <td>{{ porudzbina.status }}</td>
-          <td>
-            <button v-on:click="dugmeTransport(porudzbina.id)">
-              U transportu
-            </button>
-          </td>
-          <td>
-            <button v-on:click="dugmeDostavljena(porudzbina.id)">
-              Dostavljena
-            </button>
-          </td>
-        </tr>
+                <tr v-for="porudzbina in listaPorudzbina" :key="listaPorudzbina.id">
+                  <td>{{ porudzbina.datumVreme }}</td>
+                  <td>{{ porudzbina.cena }}</td>
+                  <td>{{ porudzbina.status }}</td>
+                  <td>
+                    <button class="btn btn-outline-secondary col-sm-5 dugmeViseInformacija" v-on:click="dugmeTransport(porudzbina.id)" style="max-width:150px;">
+                    <b> U transportu </b>
+                    </button>
+                  </td>
+                  <td>
+                    <button class="btn btn-outline-secondary col-sm-5 dugmeViseInformacija" v-on:click="dugmeDostavljena(porudzbina.id)" style="max-width:150px;">
+                    <b> Dostavljen </b>
+                    </button>
+                  </td>
+                </tr>
+                </tbody>
 
-    </table>
+              </table>
+          </div>
+        
+        </div>
 
-        <!-- napraviti tabelu kada se ucita stranica da se ucitaju u nju sve porudzbine od tog kupca koji je ulogovan-->
-        <!-- pored svake stavke u tabeli da ima kao dugme pregled porudzbine, gde nas vodi na stranicu KupacPorudzbinaPrikazView, gde mozemo detaljnije da vidimo samo tu porudzbinu-->
+        <footer class="page-footer font-small blue pt-4">
 
+          <div class="container-fluid text-center text-md-left">
 
-    <!-- ispod ima dugme koje je kao kreiraj novu porudzbinu, gde nas vodi na novu stranicu KupacPorudzbinaKreiranjeView, gde moze korisnik da kreira novu porudzbinu, dodaje proizvode u nju ili brise pre samog kreiranja-->
+              <div class="col-md-12 mt-md-0 mt-3">
+
+                <h5 class="text-uppercase">O nama</h5>
+                <p>Dostava za cas je za sekund kod Vas. Brza i jeftina dostava hrane na teritoriji celog Novog Sada.</p>
+
+              </div>
+
+          </div>
+
+          <div class="footer-copyright text-center py-3">© 2022 Copyright:
+            <a href="/"> DostavaZaCas.com </a>
+          </div>
+
+        </footer>
 
 </template>
 
@@ -57,17 +80,12 @@ export default {
   data: function () {
     return {
       listaPorudzbina:{
-        /*datumVreme: "",
-        cena: "",
-        status: "",*/
       },
     };
   },
   mounted: function () {
 
-      // !!!!!!!!!!!!!
-//?????????? mislim da ovde ne treba ovaj, nego novi end point, jer je ovo samo za kupca
-      fetch('http://localhost:8081/api/porudzbina/dobaviZaDostavljaca' /*+ localStorage.name*/, {
+      fetch('http://localhost:8081/api/porudzbina/dobaviZaDostavljaca', {
         method: "GET",
         credentials: 'include',
         headers: {
@@ -83,7 +101,6 @@ export default {
         .catch((error) => {
           console.error("Error:", error);
         });
-  //}
   },
 
   methods: {
@@ -107,7 +124,6 @@ export default {
             console.log("Error : " + err);
             alert(err);
           });
-
 
     },
 
@@ -133,7 +149,6 @@ export default {
 
     },
 
-
     viseInformacija : function(porudzbina) {
       this.$router.push("/kupacPregledPojedinacnePorudzbine/?id=" + porudzbina.id);
     },
@@ -146,7 +161,6 @@ export default {
           Accept: "application/json",
           "Content-type": "application/json",
         },
-        //body: JSON.stringify(this.korisnik),
       })
         .then((response) => response.json)
         .then((data) => {
