@@ -6,10 +6,10 @@
     <div class="topnav">
         <a href="/kupacRestorani">Restorani</a>
         <a href="/kupacPorudzbine">Porudžbina</a>
-        <a href="/kupackreiranjePorudzbine"><font-awesome-icon icon="fa-solid fa-cart-shopping" /></a>
         <a class="active" href="/kupacPocetna" >Pregled podataka</a>
         <a href="/kupacAzuriranjePodataka">Ažuriranje podataka</a>
-        <a v-on:click="odlogovanje()">Izloguj se</a>
+        <a v-on:click="odlogovanje()" style="color:white;">Izloguj se</a>
+        <a href="/kupackreiranjePorudzbine"><font-awesome-icon icon="fa-solid fa-cart-shopping" /></a>
     </div>
 
     <div class="container-fluid w-100 p-3 hv-100" style="background-color: #eee; border: 5px solid white;">
@@ -198,6 +198,7 @@ export default {
   background-color: #35495e;
   overflow: hidden;
   border: 5px solid white;
+  border-radius:15px;
 }
 
 /* Style the links inside the navigation bar */

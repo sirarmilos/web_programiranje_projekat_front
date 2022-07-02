@@ -6,10 +6,10 @@
     <div class="topnav">
         <a href="/kupacRestorani">Restorani</a>
         <a class="active" href="/kupacPorudzbine">Porudžbina</a>
-        <a href="/kupackreiranjePorudzbine">Korpa</a>
         <a href="/kupacPocetna" >Pregled podataka</a>
         <a href="/kupacAzuriranjePodataka">Ažuriranje podataka</a>
-        <a v-on:click="odlogovanje()">Izloguj se</a>
+        <a v-on:click="odlogovanje()" style="color:white;">Izloguj se</a>
+        <a href="/kupackreiranjePorudzbine"><font-awesome-icon icon="fa-solid fa-cart-shopping" /></a>
     </div>
 
     <div class="container-fluid w-100 pt-5 hv-100" style="background-color: #eee; border: 5px solid white;">

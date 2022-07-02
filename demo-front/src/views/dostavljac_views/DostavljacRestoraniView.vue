@@ -8,7 +8,7 @@
         <a class="active" href="/dostavljacRestorani">Restorani</a>
         <a href="/dostavljacPocetna" >Pregled podataka</a>
         <a href="/dostavljacAzuriranjePodataka">Ažuriranje podataka</a>
-        <a v-on:click="odlogovanje()">Izloguj se</a>
+        <a v-on:click="odlogovanje()" style="color:white;">Izloguj se</a>
     </div>
 
     <div class="container-fluid w-100 p-3 hv-100" style="background-color: #eee; border: 5px solid white;">
@@ -42,12 +42,12 @@
 
           </div>
 
-          <div class="table-responsive caption-top">
+          <div class="table-responsive caption-top col-md-10" style="margin: 0 auto; display:block;">
             <table class="table table-striped table-hover table-bordered border-secondary">
 
               <caption style="caption-side: top;"><b>Spisak svih restorana</b></caption>
               <thead>
-                <tr>
+                <tr class="text-center">
                   <th>#</th>
                   <th>Naziv restorana</th>
                   <th>Tip restorana</th>
@@ -58,7 +58,7 @@
               </thead>
 
               <tbody>
-              <tr v-for="restoran in restorani" :key="restoran.id">
+              <tr class="text-center" v-for="restoran in restorani" :key="restoran.id">
                 <td>{{ restoran.basicBrojac}}</td>
                 <td>{{ restoran.naziv }}</td>
                 <td>{{ restoran.tip }}</td>

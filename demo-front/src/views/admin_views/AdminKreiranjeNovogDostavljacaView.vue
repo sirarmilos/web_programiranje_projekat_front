@@ -10,7 +10,7 @@
         <a class="active" href="/adminKreiranjeNovogDostavljaca">Kreiranje dostavljača</a>
         <a href="/adminPocetna" >Pregled podataka</a>
         <a href="/adminAzuriranjePodataka">Ažuriranje podataka</a>   
-        <a v-on:click="odlogovanje()">Izloguj se</a>
+        <a v-on:click="odlogovanje()" style="color:white;">Izloguj se</a>
     </div>
 
 
