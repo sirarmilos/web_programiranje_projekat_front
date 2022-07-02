@@ -10,7 +10,7 @@
         <a href="/adminKreiranjeNovogDostavljaca">Kreiranje dostavljača</a>
         <a href="/adminPocetna" >Pregled podataka</a>
         <a class="active" href="/adminAzuriranjePodataka">Ažuriranje podataka</a>   
-        <a v-on:click="odlogovanje()">Izloguj se</a>
+        <a v-on:click="odlogovanje()" style="color:white;">Izloguj se</a>
     </div>
 
     <div class="container-fluid w-100 p-3 hv-100" style="background-color: #eee; border: 5px solid white;">

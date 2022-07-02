@@ -6,19 +6,20 @@
     <div class="topnav">
         <a href="/kupacRestorani">Restorani</a>
         <a class="active" href="/kupacPorudzbine">Porudžbina</a>
-        <a href="/kupackreiranjePorudzbine">Korpa</a>
         <a href="/kupacPocetna" >Pregled podataka</a>
         <a href="/kupacAzuriranjePodataka">Ažuriranje podataka</a>
-        <a v-on:click="odlogovanje()">Izloguj se</a>
+        <a v-on:click="odlogovanje()" style="color:white;" >Izloguj se</a>
+        <a href="/kupackreiranjePorudzbine"><font-awesome-icon icon="fa-solid fa-cart-shopping" /></a>
     </div>
 
-    <div class="container-fluid w-100 pt-5 hv-100" style="background-color: #eee; border: 5px solid white;">
+    <div class="container-fluid w-100 pt-5 hv-100 pb-4" style="background-color: #eee; border: 5px solid white;">
     
-      <div class="table-responsive caption-top">
+      <div class="table-responsive caption-top col-md-10" style="margin: 0 auto; display:block;">
           <table class="table table-striped table-hover table-bordered border-secondary">
             <caption style="caption-side: top;"><b>Spisak svih porudzbina</b></caption>
             <thead>
-            <tr>
+            <tr class="text-center">
+              <th>#</th>
               <th>DatumVreme</th>
               <th>Cena</th>
               <th>Status</th>
@@ -28,12 +29,13 @@
 
             <tbody>
 
-            <tr v-for="porudzbina in listaPorudzbina" :key="listaPorudzbina.id">
+            <tr class="text-center" v-for="porudzbina in listaPorudzbina" :key="listaPorudzbina.id">
+              <td>{{ porudzbina.Basic }}</td>
               <td>{{ porudzbina.datumVreme }}</td>
               <td>{{ porudzbina.cena }}</td>
               <td>{{ porudzbina.status }}</td>
               <td>
-                <button class="btn btn-outline-secondary col-sm-5 dugmeViseInformacija" v-on:click="viseInformacija(porudzbina)" style="max-width:150px;">
+                <button class="btn btn-outline-secondary col-sm-5 dugmeViseInformacija" v-on:click="viseInformacija(porudzbina)" style="max-width:150px; margin: 0 auto; display:block;">
                  <b> Vise informacija </b>
                 </button>
               </td>
@@ -83,6 +85,7 @@ export default {
       },
     };
   },
+  
   mounted: function () {
 
       fetch('http://localhost:8081/api/porudzbina/dobaviSve' /*+ localStorage.name*/, {
@@ -94,7 +97,35 @@ export default {
         },
       })
         .then(response => response.json())
-        .then(data => {console.log("Success:", data); this.listaPorudzbina = data})
+        .then(data => {
+          this.listaPorudzbina = data;
+          for(var i = 0; i < this.listaPorudzbina.length; i++)
+          {
+            console.log("poz");
+            if(this.listaPorudzbina[i].status === "Obrada")
+            {
+              this.listaPorudzbina[i].status = "Obrada";
+            }
+            if(this.listaPorudzbina[i].status === "UPripremi")
+            {
+              this.listaPorudzbina[i].status = "U pripremi";
+            }
+            if(this.listaPorudzbina[i].status === "CekaDostavljaca")
+            {
+              this.listaPorudzbina[i].status = "Ceka dostavljaca";
+            }
+            if(this.listaPorudzbina[i].status === "UTransportu")
+            {
+              this.listaPorudzbina[i].status = "U transportu";
+            }
+            if(this.listaPorudzbina[i].status === "Dostavljena")
+            {
+              this.listaPorudzbina[i].status = "Dostavljena";
+            }
+            
+          }
+          
+          })
         .catch((error) => {
           console.error("Error:", error);
         });

@@ -9,7 +9,7 @@
         <a href="/menadzerPorudzbine">Porudžbina</a>
         <a href="/menadzerPocetna" >Pregled podataka</a>
         <a href="/menadzerAzuriranjePodataka">Ažuriranje podataka</a>
-        <a v-on:click="odlogovanje()">Izloguj se</a>
+        <a v-on:click="odlogovanje()" style="color:white;">Izloguj se</a>
     </div>
 
 
@@ -33,10 +33,10 @@
           <div class="col-sm-4">
 
             <div class="form-check">
-              <input class="form-check-input" type="radio" id="jelo" value="jelo" v-model="PodaciZaSlanje.tip" />
+              <input class="form-check-input" type="radio" id="jelo" value="Jelo" v-model="PodaciZaSlanje.tip" />
               <label class="form-check-label" for="jelo">Jelo</label>
               <br/>
-              <input class="form-check-input" type="radio" id="pice" value="pice" v-model="PodaciZaSlanje.tip" />
+              <input class="form-check-input" type="radio" id="pice" value="Pice" v-model="PodaciZaSlanje.tip" />
               <label class="form-check-label" for="pice">Piće</label>
               <br/>
             </div>
@@ -69,7 +69,7 @@
           </div>
         </div>
 
-        <div class="mb-3 row">
+        <div class="mb-5 row">
           <label for="poljeOpis" class="col-sm-2 col-form-label"> Opis: </label>
           <div class="col-sm-4">
             <input v-model="PodaciZaSlanje.opis" id="poljeOpis" type="text" class="form-control" name="poljeOpis" required="required"/>
@@ -78,7 +78,7 @@
 
         <div class="pb-5">
         <button class="btn btn-outline-secondary col-sm-4" v-on:click="izvrsiAzuriranje()" style="max-width:165px;">
-            Potvrda ažuriranja
+            <b>Potvrda ažuriranja</b>
         </button>
         </div>
 

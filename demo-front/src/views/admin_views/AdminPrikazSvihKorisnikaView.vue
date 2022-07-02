@@ -10,7 +10,7 @@
         <a href="/adminKreiranjeNovogDostavljaca">Kreiranje dostavljača</a>
         <a href="/adminPocetna" >Pregled podataka</a>
         <a href="/adminAzuriranjePodataka">Ažuriranje podataka</a>   
-        <a v-on:click="odlogovanje()">Izloguj se</a>
+        <a v-on:click="odlogovanje()" style="color:white;">Izloguj se</a>
     </div>
 
     <div class="container-fluid w-100 p-3 hv-100" style="background-color: #eee; border: 5px solid white;">
@@ -44,12 +44,12 @@
 
       </div>
 
-      <div class="table-responsive caption-top">
+      <div class="table-responsive caption-top col-md-10" style="margin: 0 auto; display:block;">
         <table class="table table-striped table-hover table-bordered border-secondary"> <!-- vidi da li treba border-secondary ili je bolje bez toga table-borderless-->
         
           <caption style="caption-side: top;"><b>Spisak svih korisnika</b></caption>
           <thead>
-            <tr>
+            <tr class="text-center">
               <th>#</th>
               <th>Korisničko ime</th>
               <th>Ime</th>
@@ -62,8 +62,8 @@
           </thead>
 
           <tbody>
-            <tr v-for="korisnik in korisnici" :key="korisnik.id">
-              <td>{{korisnik.basic}}</td> <!--bilo sta da bi ispisao kao redne brojeve te sto se generisu bezveze-->
+            <tr class="text-center" v-for="korisnik in korisnici" :key="korisnik.id">
+              <td>{{ korisnik.basic }}</td> <!--bilo sta da bi ispisao kao redne brojeve te sto se generisu bezveze-->
               <td>{{ korisnik.korisnickoIme }}</td>
               <td>{{ korisnik.lozinka }}</td>
               <td>{{ korisnik.ime }}</td>

@@ -10,7 +10,7 @@
         <a href="/adminKreiranjeNovogDostavljaca">Kreiranje dostavljača</a>
         <a href="/adminPocetna" >Pregled podataka</a>
         <a href="/adminAzuriranjePodataka">Ažuriranje podataka</a>   
-        <a v-on:click="odlogovanje()">Izloguj se</a>
+        <a v-on:click="odlogovanje()" style="color:white;">Izloguj se</a>
     </div>
 
     <div class="container-fluid w-100 p-3 hv-100" style="background-color: #eee; border: 5px solid white;">
@@ -44,12 +44,12 @@
 
       </div>
 
-      <div class="table-responsive caption-top">
+      <div class="table-responsive caption-top col-md-10" style="margin: 0 auto; display:block;">
         <table class="table table-striped table-hover table-bordered border-secondary"> <!-- vidi da li treba border-secondary ili je bolje bez toga table-borderless-->
 
           <caption style="caption-side: top;"><b>Spisak svih restorana</b></caption>
           <thead>
-            <tr>
+            <tr class="text-center">
               <th>#</th>
               <th>Naziv restorana</th>
               <th>Tip restorana</th>
@@ -60,19 +60,19 @@
           </thead>
 
           <tbody>
-          <tr v-for="restoran in restorani" :key="restoran.id">
+          <tr class="text-center" v-for="restoran in restorani" :key="restoran.id">
             <td>{{ restoran.basicBrojac}}</td>
             <td>{{ restoran.naziv }}</td>
             <td>{{ restoran.tip }}</td>
             <td>{{ restoran.adresa }}</td>    
             <td>
-              <button class="btn btn-outline-secondary col-sm-5 dugmeViseInformacija" v-on:click="viseInformacija(restoran)" style="max-width:150px;">
-                Vise informacija
+              <button class="btn btn-outline-secondary col-sm-5 dugmeViseInformacija" v-on:click="viseInformacija(restoran)" style="min-width:150px; max-width:150px;">
+                <b>Vise informacija</b>
               </button>
             </td>
             <td>
-              <button class="btn btn-outline-secondary col-sm-5 dugmeViseInformacija" v-on:click="obrisiRestoran(restoran)" style="max-width:150px;">
-                Obriši restoran
+              <button class="btn btn-outline-secondary col-sm-5 dugmeViseInformacija" v-on:click="obrisiRestoran(restoran)" style="min-width:140px; max-width:150px;">
+                <b>Obriši restoran</b>
               </button>
             </td>
           </tr>
