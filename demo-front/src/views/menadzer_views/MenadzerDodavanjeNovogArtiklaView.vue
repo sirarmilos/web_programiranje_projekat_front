@@ -35,11 +35,11 @@
                   </div>
                   <br/>
                   <div class="form-group">
-                      <input type="text" v-model="PodaciZaSlanje.kolicina" class="form-control">
+                      <input type="text" v-model="PodaciZaSlanje.cena" class="form-control">
                   </div>
                   <br/>
                   <div class="form-group">
-                      <input type="text" v-model="PodaciZaSlanje.cena" class="form-control">
+                      <input type="text" v-model="PodaciZaSlanje.kolicina" class="form-control">
                   </div>
                   <br/>
                   <div class="form-group">
@@ -56,7 +56,7 @@
 
 
 
-        <form th:action="@{/api/menadzer/dodavanje_novog_artikla}"
+     <!--   <form th:action="@{/api/menadzer/dodavanje_novog_artikla}"
           th:object="${PodaciZaSlanje}" method="post"
           enctype="multipart/form-data"
           >
@@ -70,7 +70,7 @@
           <input type="submit" value="Submit">
 
         </form>
-
+-->
         <div class="mb-3 row">
           <label for="poljeNaziv" class="col-sm-2 col-form-label"> Naziv: </label>
           <div class="col-sm-4">
@@ -187,8 +187,9 @@ export default {
           // upload file
           const formData = new FormData()
           formData.set('image', this.FILE, this.FILE.name)
-          formData.set("PodaciZaSlanje", this.PodaciZaSlanje)
-          /*formData.append('naziv', this.PodaciZaSlanje.naziv)
+          formData.set("json", JSON.stringify(this.PodaciZaSlanje))
+
+         /* formData.append('naziv', this.PodaciZaSlanje.naziv)
           formData.append('tip', this.PodaciZaSlanje.tip)
           formData.append('kolicina', this.PodaciZaSlanje.kolicina)
           formData.append('cena', this.PodaciZaSlanje.cena)
