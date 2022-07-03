@@ -73,23 +73,20 @@
         </div>
         <br/>-->
 
-        <div class="mb-2 row ps-3">
-        <div class="card p-3">
-            <div class="d-flex justify-content-between align-items-center">
-                <h5 class="review-count">Prosečna ocena:</h5>
-                <div class="ratings">
+        <div class="mb-2 row">
+          <label for="prosecnaOcena" class="col-sm-2 col-form-label"> Prosečna ocena: </label>
+          <div class="col-sm-4">
+            <input v-model="PrikaziIzabraniRestoranDto.prosecnaOcena" id="prosecnaOcena" type="text" class="form-control" name="prosecnaOcena" required="required" readonly/>
+          </div>
+          <div class="ratings col-sm-4">
                     <i id = "z1" class="fa fa-star"></i>
                     <i id = "z2" class="fa fa-star"></i>
                     <i id = "z3" class="fa fa-star"></i>
                     <i id = "z4" class="fa fa-star"></i>
                     <i id = "z5" class="fa fa-star"></i>
-                </div>
-                <div class="col-sm-4">
-                  <input v-model="PrikaziIzabraniRestoranDto.prosecnaOcena" id="prosecnaOcena" type="text" class="form-control" name="prosecnaOcena" required="required" readonly/>
-                </div>
-            </div>
+          </div>
         </div>
-        </div>
+        <br/>
 
         <h1 class="page-header text-left pt-5 pb-5"> Asortiman artikala u ovom restorana: </h1>
 
@@ -152,15 +149,6 @@
 
                 <div class="d-flex justify-content-between align-items-center mb-4">
                   <h4 class="text-dark mb-0">Lista komentara ostalih korisnika</h4>
-                  <div class="card">
-                    <div class="card-body p-2 d-flex align-items-center">
-                      <h6 class="text-primary fw-bold small mb-0 me-1">Comments "ON"</h6>
-                      <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked />
-                        <label class="form-check-label" for="flexSwitchCheckChecked"></label>
-                      </div>
-                    </div>
-                  </div>
                 </div>
 
                 <div class="card mb-3">
@@ -185,7 +173,6 @@
             </div>
           </div>
         </section>
-
 
 
         <!--<div class="table-responsive caption-top">

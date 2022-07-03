@@ -73,30 +73,29 @@
         </div>
         <br/>-->
 
-        <div class="mb-2 row ps-3">
-        <div class="card p-3">
-            <div class="d-flex justify-content-between align-items-center">
-                <h5 class="review-count">Prosečna ocena:</h5>
-                <div class="ratings">
+        <div class="mb-2 row">
+          <label for="prosecnaOcena" class="col-sm-2 col-form-label"> Prosečna ocena: </label>
+          <div class="col-sm-4">
+            <input v-model="PrikaziIzabraniRestoranDto.prosecnaOcena" id="prosecnaOcena" type="text" class="form-control" name="prosecnaOcena" required="required" readonly/>
+          </div>
+          <div class="ratings col-sm-4">
                     <i id = "z1" class="fa fa-star"></i>
                     <i id = "z2" class="fa fa-star"></i>
                     <i id = "z3" class="fa fa-star"></i>
                     <i id = "z4" class="fa fa-star"></i>
                     <i id = "z5" class="fa fa-star"></i>
-                </div>
-                <div class="col-sm-4">
-                  <input v-model="PrikaziIzabraniRestoranDto.prosecnaOcena" id="prosecnaOcena" type="text" class="form-control" name="prosecnaOcena" required="required" readonly/>
-                </div>
-            </div>
+          </div>
         </div>
+        <br/>
+
+        <div class="mb-2 row pt-5 pb-5 ps-3">
+          <label class="col-sm-8 col-form-label"><h2> Asortiman artikala u ovom restorana </h2></label>
+          <label for="kolicina" class="col-sm-1 col-form-label"> <b> Unesite kolicinu </b> </label>
+          <div class="col-sm-2">
+            <input v-model="kolicina_artikla" id="kolicina" class="form-control"/>
+          </div>
         </div>
-
-
-
-        <h1 class="page-header text-left pt-5 pb-5"> Asortiman artikala u ovom restorana: </h1>
-
         <!-- sada ovde trebaju da idu artikli i slike, ali posto ih nema, za sad ce ici samo tabela -->
-
 
         <div class="row row-cols-1 row-cols-md-3 g-4">
 
@@ -121,12 +120,6 @@
           </div>
 
         </div>
-
-        <br/>
-        <div class="col-md-4" style="float:right; display:block;">
-          <input v-model="kolicina_artikla" style="float:right; margin-right: 30%;"/>
-        </div>
-        <br/>
 
         <!--
         <div class="table-responsive caption-top col-md-10" style="margin: 0 auto; display:block;">
@@ -196,15 +189,6 @@
 
                 <div class="d-flex justify-content-between align-items-center mb-4">
                   <h4 class="text-dark mb-0">Lista komentara ostalih korisnika</h4>
-                  <div class="card">
-                    <div class="card-body p-2 d-flex align-items-center">
-                      <h6 class="text-primary fw-bold small mb-0 me-1">Comments "ON"</h6>
-                      <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked />
-                        <label class="form-check-label" for="flexSwitchCheckChecked"></label>
-                      </div>
-                    </div>
-                  </div>
                 </div>
 
                 <div class="card mb-3">

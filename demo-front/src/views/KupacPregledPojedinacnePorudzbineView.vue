@@ -42,11 +42,12 @@
     
       </div>
     
-      <div class="table-responsive caption-top">
+      <div class="table-responsive caption-top col-md-10" style="margin: 0 auto; display:block;">
         <table class="table table-striped table-hover table-bordered border-secondary">
           
           <thead>
-          <tr>
+          <tr class="text-center">
+            <th>#</th>
             <th>Naziv</th>
             <th>Cena</th>
             <th>Opis</th>
@@ -55,7 +56,8 @@
           </thead>
           
           <tbody>
-          <tr v-for="noviArtikal in listaNovihArtikala" :key="listaNovihArtikala.id"><!--noviArtikal.id-->
+          <tr class="text-center" v-for="noviArtikal in listaNovihArtikala" :key="listaNovihArtikala.id"><!--noviArtikal.id-->
+            <td>{{ noviArtikal.Basic }}</td>
             <td>{{ noviArtikal.naziv }}</td>
             <td>{{ noviArtikal.cena }}</td>
             <td>{{ noviArtikal.opis }}</td>
@@ -66,9 +68,9 @@
         </table>
       </div>
 
-      
-      <button class="btn btn-outline-secondary col-sm-5 mt-2 mb-3" v-on:click="postaniVidljiv(status)" style="max-width:300px;"><b>{{ tekstDugmeta }}</b></button>
-
+      <div class="col-md-12 text-center" style="margin: 0 auto; display: block;">
+        <button class="btn btn-outline-secondary col-sm-5 mt-5 mb-5" v-on:click="postaniVidljiv(status)" style="max-width:300px;"><b>{{ tekstDugmeta }}</b></button>
+      </div>
       <div class="mt-4" v-if="vidljivo">
 
         <div class="col-sm-6">
@@ -188,12 +190,31 @@ export default {
           this.listaNovihArtikala = data;
           this.datumVreme = data[0].datumVreme;
           this.ukupnaCena= data[0].ukupnaCena;
-          this.status = data[0].status;
+
+            if(data[0].status === "Obrada")
+            {
+              this.status = "Obrada";
+            }
+            if(data[0].status === "UPripremi")
+            {
+              thisstatus = "U pripremi";
+            }
+            if(data[0].status === "CekaDostavljaca")
+            {
+              this.status= "Ceka dostavljaca";
+            }
+            if(data[0].status === "UTransportu")
+            {
+              this.status = "U transportu";
+            }
+            if(data[0].status === "Dostavljena")
+            {
+              this.status = "Dostavljena";
+            }
           })
         .catch((error) => {
           console.error("Error:", error);
         });
-
   },
 
   methods: {
@@ -213,7 +234,6 @@ export default {
       })
         .then(response => response.json())
         .then(data => {
-          //console.log("Success:", data);
           this.slanje.restoran_id = data;
           console.log(this.slanje.restoran_id);
           })

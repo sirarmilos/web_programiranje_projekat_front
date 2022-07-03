@@ -1,8 +1,5 @@
 <template>
 
-    <!-- template sa w3schools-a, za navbar -->
-    <!-- vidi kako na link da vezes onclick metodu, nesto v-bind mozda ne znam-->
-    <!-- https://forum.vuejs.org/t/how-to-call-a-function-by-click-on-some-class-in-href-tag/37181 --> 
     <div class="topnav">
         <a class="active" href="/kupacRestorani">Restorani</a>
         <a href="/kupacPorudzbine">Porudžbina</a>
@@ -11,7 +8,6 @@
         <a v-on:click="odlogovanje()" style="color:white;">Izloguj se</a>
         <a href="/kupackreiranjePorudzbine"><font-awesome-icon icon="fa-solid fa-cart-shopping" /></a>
     </div>
-
 
     <div class="container-fluid w-100 p-3 hv-100" style="background-color: #eee; border: 5px solid white;">
 
@@ -42,10 +38,27 @@
         </div>
         <br/>
 
+          <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+            <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+            </symbol>
+          </svg>
+
+          <div id="prozorGreski" hidden>
+
+            <div class="alert alert-danger d-flex align-items-center w-25 centriranje" role="alert" style="max-width:260px; min-width:260px">
+            <svg class="bi flex-shrink-0 me-2 text-center" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+              <div>
+                {{porukaGreske}}
+              </div>
+            </div>
+
+          </div>
+
       </div>
 
       <div class="table-responsive caption-top col-md-10" style="margin: 0 auto; display:block;">
-        <table class="table table-striped table-hover table-bordered border-secondary"> <!-- vidi da li treba border-secondary ili je bolje bez toga table-borderless-->
+        <table id="tabela1" class="table table-striped table-hover table-bordered border-secondary"> <!-- vidi da li treba border-secondary ili je bolje bez toga table-borderless-->
 
           <caption style="caption-side: top;"><b>Spisak svih restorana</b></caption>
           <thead>
@@ -59,13 +72,13 @@
           </thead>
 
           <tbody>
-          <tr v-for="restoran in restorani" :key="restoran.id" >
-            <td>{{ restoran.basicBrojac}}</td>
+          <tr class="text-center" v-for="restoran in restorani" :key="restoran.id" >
+            <td>{{ restoran.Basic }}</td>
             <td>{{ restoran.naziv }}</td>
             <td>{{ restoran.tip }}</td>
             <td>{{ restoran.adresa }}</td>
             <td>
-              <button class="btn btn-outline-secondary col-sm-5 dugmeViseInformacija" v-on:click="viseInformacija(restoran)" style="max-width:150px;margin: 0 auto; display:block;">
+              <button class="btn btn-outline-secondary col-sm-5 dugmeViseInformacija" v-on:click="viseInformacija(restoran)" style="min-width:150px; max-width:150px;margin: 0 auto; display:block;">
                 <b>Više informacija</b>
               </button>
             </td>
@@ -111,7 +124,8 @@ export default {
         naziv: "",
         tip: "",
         adresa: "",
-      }
+      },
+      porukaGreske : "",
     };
   },
 
@@ -140,7 +154,7 @@ export default {
 
     pretraga : function() {
 
-      fetch("http://localhost:8081/api/restoran/pretraga" /*+ this.slanje*/, {
+      fetch("http://localhost:8081/api/restoran/pretraga", {
         method: "POST",
         credentials: 'include',
         headers: {
@@ -151,30 +165,16 @@ export default {
       }).then(response => response.json())
         .then(data => 
         {
-          console.log("Success:", data);
-          console.log(JSON.stringify(data));
+          document.getElementById("prozorGreski").hidden = true;
+          document.getElementById("tabela1").hidden = false;
+          if(data.Restorani === "Ne postoji trazeni restoran.") {
+            document.getElementById("tabela1").hidden = true;
+            this.porukaGreske = "Trazeni restoran ne postoji";
+            document.getElementById("prozorGreski").hidden = false;
+          }
 
           this.restorani = data;
 
-          //var proizvodi = JSON.stringify(data);
-          //var proizvodi = [{naziv, tip}];
-         /* var p = JSON.stringify(data).split('}');
-          var proizvodi = new Array(p[0],p[1]); // lista proizvoda
-          //this.restorani = JSON.stringify(data);
-          var pomocna = {};
-          console.log(proizvodi);
-          console.log(proizvodi[0]);
-          for(var i = 1; i < 2; i++)
-          {
-            //console.log(pomocna); // naziv:proizvodi[i].naziv
-            //console.log(pomocna);
-            //pomocna.naziv = proizvodi[naziv];
-            //pomocna[1] = {tip: proizvodi[id : i].naziv, adresa:"c"};
-            //this.restorani.push({naziv:"a", tip:"b", adresa:"c"});
-          }
-          this.restorani = pomocna;*/
-          //this.restorani = [{naziv:"a", tip:"b", adresa:"c"}];
-          //proizvodi.push(data.)
           })
         .catch((error) => {
           console.error("Error:", error);
@@ -228,4 +228,5 @@ table tr td:first-child::before
     min-width: 1em;
     margin-right: 0.5em;
 }
+
 </style>
