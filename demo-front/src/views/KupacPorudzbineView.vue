@@ -14,8 +14,25 @@
 
     <div class="container-fluid w-100 pt-5 hv-100 pb-4" style="background-color: #eee; border: 5px solid white;">
     
+          <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+            <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+            </symbol>
+          </svg>
+
+          <div id="prozorGreski" hidden>
+
+            <div class="alert alert-danger d-flex align-items-center w-25 centriranje" role="alert" style=" min-width:360px; max-width:360px;">
+            <svg class="bi flex-shrink-0 me-2 text-center" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+              <div>
+                {{porukaGreske}}
+              </div>
+            </div>
+
+          </div>
+
       <div class="table-responsive caption-top col-md-10" style="margin: 0 auto; display:block;">
-          <table class="table table-striped table-hover table-bordered border-secondary">
+          <table id="tabela1" class="table table-striped table-hover table-bordered border-secondary">
             <caption style="caption-side: top;"><b>Spisak svih porudzbina</b></caption>
             <thead>
             <tr class="text-center">
@@ -69,7 +86,7 @@
 </template>
 
 <script>
-
+import axios from "axios";
 export default {
   name: "KupacPorudzbineView",
 
@@ -83,12 +100,62 @@ export default {
         kupacKorisnickoIme: "",
         restoranId: "",
       },
+      porukaGreske: "",
     };
   },
   
   mounted: function () {
 
-      fetch('http://localhost:8081/api/porudzbina/dobaviSve' /*+ localStorage.name*/, {
+      axios
+      .get("http://localhost:8081/api/porudzbina/dobaviSve",
+      {
+        withCredentials: true
+      })
+      .then((res) => {
+        if(res.data[0] === undefined)
+        {
+          document.getElementById("prozorGreski").hidden = false;
+          document.getElementById("tabela1").hidden = true;
+          this.porukaGreske = "Nemate jos nijednu kreiranu porudzbinu";
+        }
+        else
+        {
+          document.getElementById("prozorGreski").hidden = true;
+          document.getElementById("tabela1").hidden = false;
+          this.listaPorudzbina = res.data;
+          for(var i = 0; i < this.listaPorudzbina.length; i++)
+          {
+            if(this.listaPorudzbina[i].status === "Obrada")
+            {
+              this.listaPorudzbina[i].status = "Obrada";
+            }
+            if(this.listaPorudzbina[i].status === "UPripremi")
+            {
+              this.listaPorudzbina[i].status = "U pripremi";
+            }
+            if(this.listaPorudzbina[i].status === "CekaDostavljaca")
+            {
+              this.listaPorudzbina[i].status = "Ceka dostavljaca";
+            }
+            if(this.listaPorudzbina[i].status === "UTransportu")
+            {
+              this.listaPorudzbina[i].status = "U transportu";
+            }
+            if(this.listaPorudzbina[i].status === "Dostavljena")
+            {
+              this.listaPorudzbina[i].status = "Dostavljena";
+            }
+            
+          }
+        }
+      })
+      .catch((err) =>{
+        console.log(err)
+      })
+
+
+
+  /*    fetch('http://localhost:8081/api/porudzbina/dobaviSve', {
         method: "GET",
         credentials: 'include',
         headers: {
@@ -128,71 +195,10 @@ export default {
           })
         .catch((error) => {
           console.error("Error:", error);
-        });
+        });*/
   },
 
   methods: {
-
-    /*posaljiKomentar : function(porudzbina) {
-
-      fetch('http://localhost:8081/api/nadji_restoran_po_id_porudzbini/' + porudzbina.id , {
-        method: "GET",
-        credentials: 'include',
-        headers: {
-          Accept: "application/json",
-          "Content-type": "application/json",
-        },
-      })
-        .then(response => response.json())
-        .then(data => {
-          //console.log("Success:", data);
-          this.slanje.restoran_id = data;
-          })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-
-    },
-
-    proba : function(porudzbina, pom1, pom2)
-    {
-
-       if(porudzbina.status == "Dostavljena")
-      {
-        //this.slanje.restoran_id = 2;//;//porudzbina.restoranId;
-        this.slanje.korisnickoIme = localStorage.name//"deki1976";//porudzbina.kupacKorisnickoIme;
-        this.slanje.ocena = pom2;//"Lose";
-        this.slanje.tekstKomentara = pom1;//"SUPER";
-        //console.log(this.slanje.restoran_id);
-
-        fetch("http://localhost:8081/api/dodavanje_komentara", {
-        method: "POST",
-        credentials: 'include',
-        headers: {
-          Accept: "application/json",
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(this.slanje),
-      })
-        .then((response) => response.json)
-        .then((data) => {
-          console.log("Success : " + data);
-          //console.log(this.slanje);
-        })
-        .catch((err) => {
-          console.log("Error : " + err);
-          alert(err);
-        });
-
-      }
-      else
-      {
-        alert("Ne mozete da posaljete komentar zato sto vasa porudzbina nije dostavljena.");
-      }
-
-
-
-    },*/
 
     viseInformacija : function(porudzbina) {
       this.$router.push("/kupacPregledPojedinacnePorudzbine/?id=" + porudzbina.id);

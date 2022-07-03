@@ -1,8 +1,5 @@
 <template>
 
-    <!-- template sa w3schools-a, za navbar -->
-    <!-- vidi kako na link da vezes onclick metodu, nesto v-bind mozda ne znam-->
-    <!-- https://forum.vuejs.org/t/how-to-call-a-function-by-click-on-some-class-in-href-tag/37181 --> 
     <div class="topnav">
         <a href="/adminPrikazSvihKorisnika">Prikaz svih korisnika</a>
         <a href="/adminRestorani">Restorani</a>
@@ -96,6 +93,7 @@ export default {
         ime: "",
         prezime: "",
       },
+      porukaGreske : "",
     };
   },
 
@@ -112,7 +110,14 @@ export default {
         },
         body: JSON.stringify(this.Dostavljac),
       })
-        .then((response) => response.json)
+        //.then((response) => response.json)
+        .then(function(response){
+          if (!response.ok) {
+            console.log(response)
+            throw Error(response);
+        }
+        return response.json();
+        })
         .then((data) => {
           console.log(this.Dostavljac);
           console.log("Success : " + data);
@@ -121,7 +126,7 @@ export default {
           this.$router.push("/adminPrikazSvihKorisnika");
         })
         .catch((err) => {
-          console.log(response);
+         // console.log(response);
           console.log("Error : " + err);
           alert(err);
         });
