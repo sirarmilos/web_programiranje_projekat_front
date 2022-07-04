@@ -54,23 +54,6 @@
           </div>    
         </div>
 
-
-
-        <form th:action="@{/api/menadzer/dodavanje_novog_artikla}"
-          th:object="${PodaciZaSlanje}" method="post"
-          enctype="multipart/form-data"
-          >
-          <div>
-          
-          <label>Photos: </label>
-          <input type="image" name="image" accept="image/png, image/jpeg" />
-          
-          </div>
-
-          <input type="submit" value="Submit">
-
-        </form>
-
         <div class="mb-3 row">
           <label for="poljeNaziv" class="col-sm-2 col-form-label"> Naziv: </label>
           <div class="col-sm-4">
@@ -152,7 +135,7 @@
       </div>
 
       <div class="footer-copyright text-center py-3">© 2022 Copyright:
-        <a href="/"> DostavaZaCas.com </a>
+        <a href="/dostavaZaCasMenadzer"> DostavaZaCas.com </a>
       </div>
 
     </footer>

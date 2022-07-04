@@ -1,8 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import EmployeesView from '../views/EmployeesView.vue'
-import EmployeeView from '../views/EmployeeView.vue'
-import AddEmployeeView from '../views/AddEmployeeView.vue'
 
 import LogovanjeView from '../views/LogovanjeView.vue'
 import RegistracijaView from '../views/RegistracijaView.vue'
@@ -13,6 +9,11 @@ import KupacDetaljanPrikazRestoranaView from '../views/KupacDetaljanPrikazRestor
 import KupacPorudzbineView from '../views/KupacPorudzbineView.vue'
 import KupacKreiranjePorudzbineView from '../views/KupacKreiranjePorudzbineView.vue'
 import KupacPregledPojedinacnePorudzbineView from '../views/KupacPregledPojedinacnePorudzbineView.vue'
+
+import ONamaView from '../views/ONamaView.vue'
+import ONamaMView from '../views/menadzer_views/ONamaMView.vue'
+import ONamaDView from '../views/dostavljac_views/ONamaDView.vue'
+import ONamaAView from '../views/admin_views/ONamaAView.vue'
 
 import AdminPocetnaView from '../views/admin_views/AdminPocetnaView.vue'
 import AdminAzuriranjePodatakaView from '../views/admin_views/AdminAzuriranjePodatakaView.vue'
@@ -88,6 +89,30 @@ const routes = [
     path: '/kupacPregledPojedinacnePorudzbine',
     name: 'kupacPregledPojedinacnePorudzbine',
     component: KupacPregledPojedinacnePorudzbineView
+  },
+
+  {
+    path: '/dostavaZaCas',
+    name: 'dostavaZaCas',
+    component: ONamaView
+  },
+
+  {
+    path: '/dostavaZaCasMenadzer',
+    name: 'dostavaZaCasMenadzer',
+    component: ONamaMView
+  },
+
+  {
+    path: '/dostavaZaCasDostavljac',
+    name: 'dostavaZaCasDostavljac',
+    component: ONamaDView
+  },
+
+  {
+    path: '/dostavaZaCasAdmin',
+    name: 'dostavaZaCasAdmin',
+    component: ONamaAView
   },
 
   //
@@ -200,26 +225,6 @@ const routes = [
 
   //
 
-  {
-    path: '/',
-    name: 'home',
-    component: HomeView
-  },
-  {
-    path: '/employees',
-    name: 'employees',
-    component: EmployeesView
-  },
-  {
-    path: '/employee',
-    name: 'employee',
-    component: EmployeeView
-  },
-  {
-    path: '/add-employee',
-    name: 'add-employee',
-    component: AddEmployeeView
-  }
 ]
 
 const router = createRouter({

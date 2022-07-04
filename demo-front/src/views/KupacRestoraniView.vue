@@ -104,7 +104,7 @@
       </div>
 
       <div class="footer-copyright text-center py-3">© 2022 Copyright:
-        <a href="/"> DostavaZaCas.com </a>
+        <a href="/dostavaZaCas"> DostavaZaCas.com </a>
       </div>
 
     </footer>

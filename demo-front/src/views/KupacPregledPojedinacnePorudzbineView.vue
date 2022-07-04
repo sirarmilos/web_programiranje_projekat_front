@@ -148,7 +148,7 @@
       </div>
 
       <div class="footer-copyright text-center py-3">© 2022 Copyright:
-        <a href="/"> DostavaZaCas.com </a>
+        <a href="/dostavaZaCas"> DostavaZaCas.com </a>
       </div>
 
     </footer>
@@ -196,6 +196,7 @@ export default {
       })
         .then(response => response.json())
         .then(data => {
+          console.log(data);
           this.listaNovihArtikala = data;
           this.datumVreme = data[0].datumVreme;
           this.ukupnaCena= data[0].ukupnaCena;
