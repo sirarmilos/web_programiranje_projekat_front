@@ -2,7 +2,7 @@
 
   <div class="container boja" style="margin-top: 4%; width: 30%; min-width: 400px; max-width: 700px; border: 3px solid black; border-radius: 5%;">
 
-  <div class="col-md-12 pt-4">
+  <div class="col-md-12 pt-4" v-on:click="oNamaPrikazi()">
     <img alt="Dostava za čas" class="img-fluid img-thumbnail" src="../assets/logo.png" style="max-height:200px; margin: auto; display: block;">
   </div>
 
@@ -65,6 +65,10 @@ export default {
     };
   },
   methods: {
+
+    oNamaPrikazi : function() {
+      this.$router.push("/dostavaZaCasNeReg");
+    },
 
     registrujSe: function() {
       this.$router.push("/registracija");

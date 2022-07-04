@@ -22,48 +22,17 @@
         <div>
           <div class="container">
               <form @submit.prevent="onSubmit" enctype="multipart/form-data">
-                  <div class="form-group">
-                      <input type="file" @change="onFileUpload($event)">
-                  </div>
-                  <br/>
-                  <div class="form-group">
-                      <input type="text" v-model="PodaciZaSlanje.naziv" class="form-control">
-                  </div>
-                  <br/>
-                  <div class="form-group">
-                      <input type="text" v-model="PodaciZaSlanje.tip" class="form-control">
-                  </div>
-                  <br/>
-                  <div class="form-group">
-                      <input type="text" v-model="PodaciZaSlanje.cena" class="form-control">
-                  </div>
-                  <br/>
-                  <div class="form-group">
-                      <input type="text" v-model="PodaciZaSlanje.kolicina" class="form-control">
-                  </div>
-                  <br/>
-                  <div class="form-group">
-                      <input type="text" v-model="PodaciZaSlanje.opis" class="form-control">
-                  </div>
-                  <br/>
-                  <div class="form-group">
-                      <button class="btn btn-primary btn-block btn-lg" type="submit">Upload File</button>
-                  </div>
-                  <br/>
-              </form>
-          </div>    
-        </div>
 
-        <div class="mb-3 row">
-          <label for="poljeNaziv" class="col-sm-2 col-form-label"> Naziv: </label>
-          <div class="col-sm-4">
-            <input v-model="PodaciZaSlanje.naziv" id="poljeNaziv" type="text" class="form-control" name="poljeNaziv" required="required"/>
-          </div>
-        </div>
+                  <div class="mb-3 row">
+                    <label for="poljeNaziv" class="col-sm-2 col-form-label"> Naziv: </label>
+                    <div class="col-sm-4">
+                      <input v-model="PodaciZaSlanje.naziv" id="poljeNaziv" type="text" class="form-control" name="poljeNaziv" required="required"/>
+                    </div>
+                  </div>
 
-        <br/>
+                  <br/>
 
-        <div class="mb-2 row">
+                          <div class="mb-2 row">
           <label for="poljeTip" class="col-sm-2 col-form-label"> Tip: </label>
           <div class="col-sm-4">
 
@@ -107,15 +76,27 @@
         <div class="mb-3 row">
           <label for="poljeOpis" class="col-sm-2 col-form-label"> Opis: </label>
           <div class="col-sm-4">
-            <input v-model="PodaciZaSlanje.opis" id="poljeOpis" type="text" class="form-control" name="poljeOpis" required="required"/>
+            <input v-model="PodaciZaSlanje.opis" id="poljeOpis" type="text" class="form-control" name="poljeOpis"/>
           </div>
         </div>
 
-        <div class="pt-5 pb-5">
-        <button class="btn btn-outline-secondary col-sm-4" v-on:click="izvrsiDodavanje()" style="max-width:165px;">
-            <b>Dodaj novi artikal</b>
-        </button>
+                  <br/>
+
+                        <div class="form-group">
+          <input type="file" @change="onFileUpload($event)" required="required">
         </div>
+
+        <div class="pt-5 pb-5 form-group">
+          <button class="btn btn-outline-secondary col-sm-4" type="submit" style="max-width:165px;">
+              <b>Dodaj novi artikal</b>
+          </button>
+        </div>
+
+              </form>
+          </div>    
+        </div>
+
+
 
       </div>
     
@@ -164,7 +145,7 @@ export default {
 
     onFileUpload (event) {
           this.FILE = event.target.files[0] // 
-          console.log(this.FILE)
+          //console.log(this.FILE)
         },
         onSubmit() {
           // upload file
@@ -177,14 +158,14 @@ export default {
           formData.append('kolicina', this.PodaciZaSlanje.kolicina)
           formData.append('cena', this.PodaciZaSlanje.cena)
           formData.append('opis', this.PodaciZaSlanje.opis)*/
-          console.log(formData);
+          //console.log(formData);
           axios.post('http://localhost:8081/api/menadzer/dodavanje_novog_artikla', formData, {
             headers: {
             "Content-Type": "multipart/form-data",
           },
             withCredentials: true
           }).then((res) => {
-            console.log(res)
+            this.$router.push("/menadzerNjegovRestoran");
           })
         }, 
 

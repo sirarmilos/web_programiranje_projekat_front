@@ -14,6 +14,7 @@ import ONamaView from '../views/ONamaView.vue'
 import ONamaMView from '../views/menadzer_views/ONamaMView.vue'
 import ONamaDView from '../views/dostavljac_views/ONamaDView.vue'
 import ONamaAView from '../views/admin_views/ONamaAView.vue'
+import ONamaNeRegView from '../views/ONamaNeRegView.vue'
 
 import AdminPocetnaView from '../views/admin_views/AdminPocetnaView.vue'
 import AdminAzuriranjePodatakaView from '../views/admin_views/AdminAzuriranjePodatakaView.vue'
@@ -113,6 +114,12 @@ const routes = [
     path: '/dostavaZaCasAdmin',
     name: 'dostavaZaCasAdmin',
     component: ONamaAView
+  },
+
+  {
+    path: '/dostavaZaCasNeReg',
+    name: 'dostavaZaCasNeReg',
+    component: ONamaNeRegView
   },
 
   //
