@@ -1,8 +1,5 @@
 <template>
 
-    <!-- template sa w3schools-a, za navbar -->
-    <!-- vidi kako na link da vezes onclick metodu, nesto v-bind mozda ne znam-->
-    <!-- https://forum.vuejs.org/t/how-to-call-a-function-by-click-on-some-class-in-href-tag/37181 --> 
     <div class="topnav">
         <a href="/adminPrikazSvihKorisnika">Prikaz svih korisnika</a>
         <a href="/adminRestorani">Restorani</a>
@@ -101,6 +98,23 @@
         </button>
         </div>
 
+          <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+            <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+            </symbol>
+          </svg>
+
+          <div id="prozorGreski" class="pb-5" hidden>
+
+            <div class="alert alert-danger d-flex align-items-center w-100 centriranje" role="alert" style="max-width:400px; min-width:400px">
+            <svg class="bi flex-shrink-0 me-2 text-center" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+              <div>
+                {{porukaGreske}}
+              </div>
+            </div>
+
+          </div>
+
       </div>
 
     </div>
@@ -127,7 +141,7 @@
 </template>
 
 <script>
-
+import axios from "axios"
 export default {
   name: "AdminKreiranjeNovogRestoranaIMenadzeraView",
 
@@ -144,6 +158,7 @@ export default {
           geografskaDuzina: "",
           geografskaSirina: "",
       },
+      porukaGreske : "",
     };
   },
 
@@ -151,7 +166,52 @@ export default {
 
     dodajNoviRestoranINjegovogMenadzera : function(){
 
-      fetch("http://localhost:8081/api/admin/kreiraj_restoran", {
+        axios
+        .post("http://localhost:8081/api/admin/kreiraj_restoran", this.PodaciZaSlanje,
+        {
+          withCredentials: true
+        })
+        .then((res) => {
+          document.getElementById("prozorGreski").hidden = true;
+          this.$router.push("/adminPrikazSvihKorisnika");
+        })
+        .catch((err) => {
+          if(isNaN(this.PodaciZaSlanje.geografskaDuzina) && isNaN(this.PodaciZaSlanje.geografskaSirina))
+          {
+            this.porukaGreske = "Geografska duzina i geografska sirina moraju biti brojevi";
+            document.getElementById("prozorGreski").hidden = false;
+            setTimeout(() => {
+              document.getElementById("prozorGreski").hidden = true;
+            }, 4500);
+          }
+          else if(isNaN(this.PodaciZaSlanje.geografskaDuzina))
+          {
+            this.porukaGreske = "Geografska duzina mora da bude broj";
+            document.getElementById("prozorGreski").hidden = false;
+            setTimeout(() => {
+              document.getElementById("prozorGreski").hidden = true;
+            }, 4500);
+          }
+          else if(isNaN(this.PodaciZaSlanje.geografskaSirina))
+          {
+            this.porukaGreske = "Geografska sirina mora da bude broj";
+            document.getElementById("prozorGreski").hidden = false;
+            setTimeout(() => {
+              document.getElementById("prozorGreski").hidden = true;
+            }, 4500);
+          }
+          else
+          {
+            this.porukaGreske = err.request.response;
+            document.getElementById("prozorGreski").hidden = false;
+            setTimeout(() => {
+              document.getElementById("prozorGreski").hidden = true;
+            }, 4500);
+          }
+        });
+
+
+      /*fetch("http://localhost:8081/api/admin/kreiraj_restoran", {
         method: "POST",
         credentials: 'include',
         headers: {
@@ -172,7 +232,7 @@ export default {
           console.log(response);
           console.log("Error : " + err);
           alert(err);
-        });
+        });*/
 
     },
 
@@ -187,13 +247,10 @@ export default {
       })
         .then((response) => response.json)
         .then((data) => {
-          console.log("Success : " + data);
-          this.$ses;
           this.$router.push("/");
         })
         .catch((err) => {
           console.log("Error : " + err);
-          alert(err);
         });
 
       },

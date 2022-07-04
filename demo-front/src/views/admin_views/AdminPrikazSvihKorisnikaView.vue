@@ -145,7 +145,9 @@ export default {
         },
       })
         .then(response => response.json())
-        .then(data => {console.log("Success:", data); this.korisnici = data})
+        .then(data => {
+          this.korisnici = data;
+          })
         .catch((error) => {
           console.error("Error:", error);
         });
@@ -168,8 +170,8 @@ export default {
         {
           document.getElementById("prozorGreski").hidden = true;
           document.getElementById("tabela1").hidden = false;
-          console.log(data.Korisnici);
-          if(data.Korisnici === "Ne postoji trazeni korisnik.") {
+          if(data.Korisnici === "Ne postoji trazeni korisnik.")
+          {
             document.getElementById("tabela1").hidden = true;
             this.porukaGreske = "Trazeni korisnik ne postoji";
             document.getElementById("prozorGreski").hidden = false;
@@ -195,12 +197,10 @@ export default {
       })
         .then((response) => response.json)
         .then((data) => {
-          console.log("Success : " + data);
           this.$router.push("/");
         })
         .catch((err) => {
           console.log("Error : " + err);
-          alert(err);
         });
 
       }

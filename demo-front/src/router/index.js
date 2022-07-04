@@ -13,7 +13,6 @@ import KupacDetaljanPrikazRestoranaView from '../views/KupacDetaljanPrikazRestor
 import KupacPorudzbineView from '../views/KupacPorudzbineView.vue'
 import KupacKreiranjePorudzbineView from '../views/KupacKreiranjePorudzbineView.vue'
 import KupacPregledPojedinacnePorudzbineView from '../views/KupacPregledPojedinacnePorudzbineView.vue'
-import KupacIzmenaKolicineView from '../views/KupacIzmenaKolicineView.vue'
 
 import AdminPocetnaView from '../views/admin_views/AdminPocetnaView.vue'
 import AdminAzuriranjePodatakaView from '../views/admin_views/AdminAzuriranjePodatakaView.vue'
@@ -90,13 +89,6 @@ const routes = [
     name: 'kupacPregledPojedinacnePorudzbine',
     component: KupacPregledPojedinacnePorudzbineView
   },
-
-  {
-    path: '/kupacIzmenaKolicine',
-    name: 'kupacIzmenaKolicine',
-    component: KupacIzmenaKolicineView
-  },
-
 
   //
 
