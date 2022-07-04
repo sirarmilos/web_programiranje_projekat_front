@@ -1,8 +1,5 @@
 <template>
 
-    <!-- template sa w3schools-a, za navbar -->
-    <!-- vidi kako na link da vezes onclick metodu, nesto v-bind mozda ne znam-->
-    <!-- https://forum.vuejs.org/t/how-to-call-a-function-by-click-on-some-class-in-href-tag/37181 --> 
     <div class="topnav">
         <a href="/kupacRestorani">Restorani</a>
         <a class="active" href="/kupacPorudzbine">Porudžbina</a>
@@ -42,7 +39,7 @@
     
       </div>
     
-      <div class="table-responsive caption-top col-md-10" style="margin: 0 auto; display:block;">
+      <div class="table-responsive caption-top col-md-8 pt-5" style="margin: 0 auto; display:block;">
         <table class="table table-striped table-hover table-bordered border-secondary">
           
           <thead>
@@ -69,57 +66,69 @@
       </div>
 
       <div class="col-md-12 text-center" style="margin: 0 auto; display: block;">
-        <button class="btn btn-outline-secondary col-sm-5 mt-5 mb-5" v-on:click="postaniVidljiv(status)" style="max-width:300px;"><b>{{ tekstDugmeta }}</b></button>
+        <button id="dugmePostaniVidljiv" class="btn btn-outline-secondary col-sm-5 mt-5 mb-5" v-on:click="postaniVidljiv(status)" style="max-width:300px;"><b>{{ tekstDugmeta }}</b></button>
       </div>
-      <div class="mt-4" v-if="vidljivo">
 
-        <div class="col-sm-6">
-          <label for="komentar" class="form-label">Mesto za Vas komentar</label>
-          <textarea v-model="pom1" class="form-control" id="komentar" rows="4"></textarea>
+        <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+          <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+          </symbol>
+        </svg>
+
+        <div id="prozorGreski" class="pb-3" hidden>
+
+          <div class="alert alert-danger d-flex align-items-center w-50 centriranje" role="alert" style="min-width:700px; max-width:700px;">
+          <svg class="bi flex-shrink-0 me-2 text-center" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+            <div>
+              {{porukaGreske}}
+            </div>
+          </div>
+
         </div>
 
-        <br/>
+      <div class="mt-5 mb-5 w-50" v-if="vidljivo" style="margin: 0 auto; display: block; border: 2px solid white;">
+        <div class="panel">
+          <div class="panel-body p-2" >
+            <textarea class="form-control" rows="5" placeholder="Napisite svoje misljenje o ovoj porudzbini" v-model="pom1"></textarea>
+            <label for="poljeOcena" class="col-sm-2 col-form-label pt-4" style="margin: 0 auto; display: block;"> <h4>Ocena</h4> </label>
+            <br/>
+            <div class="col-sm-4" style="margin: 0 auto; display: block;">
 
-        <div class="mb-2 row">
-          <label for="poljeOcena" class="col-sm-2 col-form-label"> Ocena: </label>
-          <br/>
-          <div class="col-sm-4">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" id="jakoLose" value="JakoLose" v-model="izabran" />
+                <label class="form-check-label pb-1" for="jakoLose">Jako loše</label>
 
-            <div class="form-check">
-              <input class="form-check-input" type="radio" id="jakoLose" value="JakoLose" v-model="izabran" />
-              <label class="form-check-label" for="jakoLose">Jako loše</label>
+                <br/>
 
-              <br/>
+                <input class="form-check-input" type="radio" id="lose" value="Lose" v-model="izabran" />
+                <label class="form-check-label pb-1" for="lose">Loše</label>
 
-              <input class="form-check-input" type="radio" id="lose" value="Lose" v-model="izabran" />
-              <label class="form-check-label" for="lose">Loše</label>
+                <br/>
 
-              <br/>
+                <input class="form-check-input" type="radio" id="dobro" value="Dobro" v-model="izabran" checked/>
+                <label class="form-check-label pb-1" for="dobro">Dobro</label>
 
-              <input class="form-check-input" type="radio" id="dobro" value="Dobro" v-model="izabran" />
-              <label class="form-check-label" for="dobro">Dobro</label>
+                <br/>
 
-              <br/>
+                <input class="form-check-input" type="radio" id="veomaDobro" value="VeomaDobro" v-model="izabran" />
+                <label class="form-check-label pb-1" for="veomaDobro">Veoma dobro</label>
 
-              <input class="form-check-input" type="radio" id="veomaDobro" value="VeomaDobro" v-model="izabran" />
-              <label class="form-check-label" for="veomaDobro">Veoma dobro</label>
+                <br/>
 
-              <br/>
+                <input class="form-check-input" type="radio" id="odlicno" value="Odlicno" v-model="izabran" />
+                <label class="form-check-label pb-1" for="odlicno">Odlično</label>
 
-              <input class="form-check-input" type="radio" id="odlicno" value="Odlicno" v-model="izabran" />
-              <label class="form-check-label" for="odlicno">Odlično</label>
-
-              <br/>
-            </div>
+                <br/>
+              </div>
 
           </div>
+          
+          <div class="mar-top clearfix pt-4 pb-2">
+            <button class="btn btn-outline-secondary col-sm-2" v-on:click="posaljiP(status, pom1, izabran)" style="min-width:200px; max-width:200px; margin: 0 auto; display: block;"><i class="fa fa-pencil fa-fw"></i> <b>Posaljite komentar</b> </button>
+          </div>
+
         </div>
-        
-        <div class="pb-5">
-        <button class="btn btn-outline-secondary col-sm-5" v-on:click="proba(status, pom1, izabran)" style="max-width:300px;">
-          <b>Posaljite komentar</b>
-        </button>
-        </div>
+      </div>
 
       </div>
 
@@ -147,7 +156,7 @@
 </template>
 
 <script>
-
+import axios from "axios";
 export default {
   name: "KupacPregledPojedinacnePorudzbineView",
 
@@ -172,11 +181,12 @@ export default {
       vidljivo: false,
       tekstDugmeta: "Kliknite za dodavanje komentara",
       izabran: "",
+      porukaGreske : "",
     };
   },
   mounted: function () {
 
-      fetch('http://localhost:8081/api/porudzbina/dobavi_porudzbinu/' + this.$route.query.id/*+ localStorage.name*/, {
+      fetch('http://localhost:8081/api/porudzbina/dobavi_porudzbinu/' + this.$route.query.id, {
         method: "GET",
         credentials: 'include',
         headers: {
@@ -186,7 +196,6 @@ export default {
       })
         .then(response => response.json())
         .then(data => {
-          console.log("Success:", data);
           this.listaNovihArtikala = data;
           this.datumVreme = data[0].datumVreme;
           this.ukupnaCena= data[0].ukupnaCena;
@@ -221,7 +230,28 @@ export default {
 
       postaniVidljiv : function(status) {
 
-        if(status === "Dostavljena")
+        axios
+        .get("http://localhost:8081/api/nadji_restoran_po_id_porudzbini/" + this.$route.query.id,
+        {
+          withCredentials: true
+        })
+        .then((res) => {
+          this.slanje.restoran_id = res.data;
+          document.getElementById("prozorGreski").hidden = true;
+          document.getElementById("dugmePostaniVidljiv").hidden = true;
+          this.vidljivo = true;
+
+        })
+        .catch((err) =>{
+          this.porukaGreske = err.request.response;
+          document.getElementById("prozorGreski").hidden = false;
+          setTimeout(() => {
+            document.getElementById("prozorGreski").hidden = true;
+          }, 1500);
+
+        })
+
+        /*if(status === "Dostavljena")
         {
 
         fetch('http://localhost:8081/api/nadji_restoran_po_id_porudzbini/' + this.$route.query.id , {
@@ -258,13 +288,29 @@ export default {
         else
         {
           alert("Vasa porudzbina nije dostavljena. Kada se porudzbina dostavi, onda cete moci dodati komentar.")
-        } 
+        }*/ 
       },
 
-    proba : function(status, pom1, izabran)
+    posaljiP : function(status, pom1, izabran)
     {
+        this.slanje.korisnickoIme = localStorage.name;
+        this.slanje.ocena = izabran;
+        this.slanje.tekstKomentara = pom1;
+      axios
+        .post("http://localhost:8081/api/dodavanje_komentara", this.slanje,
+                {
+          withCredentials: true
+        })
+        .then((res) => {
+          alert(res.data);
+          this.$router.push("/kupacPorudzbine");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
 
-       if(status == "Dostavljena")
+
+/*       if(status == "Dostavljena")
       {
         //this.slanje.restoran_id = 2;//;//porudzbina.restoranId;
         this.slanje.korisnickoIme = localStorage.name//"deki1976";//porudzbina.kupacKorisnickoIme;
@@ -295,7 +341,7 @@ export default {
       else
       {
         alert("Ne mozete da posaljete komentar zato sto vasa porudzbina nije dostavljena.");
-      }
+      }*/
 
     },
 
@@ -310,13 +356,10 @@ export default {
       })
         .then((response) => response.json)
         .then((data) => {
-          console.log("Success : " + data);
-          this.$ses;
           this.$router.push("/");
         })
         .catch((err) => {
           console.log("Error : " + err);
-          alert(err);
         });
 
       }

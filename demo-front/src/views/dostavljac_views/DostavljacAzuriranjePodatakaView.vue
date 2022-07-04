@@ -1,14 +1,11 @@
 <template>
 
-    <!-- template sa w3schools-a, za navbar -->
-    <!-- vidi kako na link da vezes onclick metodu, nesto v-bind mozda ne znam-->
-    <!-- https://forum.vuejs.org/t/how-to-call-a-function-by-click-on-some-class-in-href-tag/37181 --> 
     <div class="topnav">
         <a href="/dostavljacPorudzbine">Porudžbina</a>
         <a href="/dostavljacRestorani">Restorani</a>
         <a href="/dostavljacPocetna" >Pregled podataka</a>
         <a class="active" href="/dostavljacAzuriranjePodataka">Ažuriranje podataka</a>
-        <a v-on:click="odlogovanje()">Izloguj se</a>
+        <a v-on:click="odlogovanje()" style="color:white;">Izloguj se</a>
     </div>
 
     <div class="container-fluid w-100 p-3 hv-100" style="background-color: #eee; border: 5px solid white;">
@@ -141,7 +138,9 @@ export default {
         },
       })
         .then(response => response.json())
-        .then(data => {console.log("Success:", data); this.korisnik = data})
+        .then(data => {
+          this.korisnik = data;
+          })
         .catch((error) => {
           console.error("Error:", error);
         });
@@ -213,13 +212,10 @@ export default {
       })
         .then((response) => response.json)
         .then((data) => {
-          console.log("Success : " + data);
-          this.$ses;
           this.$router.push("/");
         })
         .catch((err) => {
           console.log("Error : " + err);
-          alert(err);
         });
 
       }

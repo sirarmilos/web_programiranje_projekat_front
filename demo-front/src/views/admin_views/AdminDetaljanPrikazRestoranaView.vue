@@ -1,8 +1,5 @@
 <template>
-
-    <!-- template sa w3schools-a, za navbar -->
-    <!-- vidi kako na link da vezes onclick metodu, nesto v-bind mozda ne znam-->
-    <!-- https://forum.vuejs.org/t/how-to-call-a-function-by-click-on-some-class-in-href-tag/37181 --> 
+ 
     <div class="topnav">
         <a href="/adminPrikazSvihKorisnika">Prikaz svih korisnika</a>
         <a class="active"  href="/adminRestorani">Restorani</a>
@@ -17,7 +14,7 @@
 
       <div>
 
-        <div class="mb-2 row">
+        <div class="mb-2 row ps-3">
           <label for="restoranNaziv" class="col-sm-2 col-form-label"> Naziv restorana: </label>
           <div class="col-sm-4">
             <input v-model="PrikaziIzabraniRestoranDto.restoran.naziv" id="restoranNaziv" type="text" class="form-control" name="restoranNaziv" required="required" readonly/>
@@ -25,7 +22,7 @@
         </div>
         <br/>
 
-        <div class="mb-2 row">
+        <div class="mb-2 row ps-3">
           <label for="restoranTip" class="col-sm-2 col-form-label"> Tip restorana: </label>
           <div class="col-sm-4">
             <input v-model="PrikaziIzabraniRestoranDto.restoran.tip" id="restoranTip" type="text" class="form-control" name="restoranTip" required="required" readonly/>
@@ -33,7 +30,7 @@
         </div>
         <br/>
 
-        <div class="mb-2 row">
+        <div class="mb-2 row ps-3">
           <label for="adresaNaziv" class="col-sm-2 col-form-label"> Adresa restorana: </label>
           <div class="col-sm-4">
             <input v-model="PrikaziIzabraniRestoranDto.lokacija.adresa" id="adresaNaziv" type="text" class="form-control" name="adresaNaziv" required="required" readonly/>
@@ -41,7 +38,7 @@
         </div>
         <br/>
 
-        <div class="mb-2 row">
+        <div class="mb-2 row ps-3">
           <label for="adresaGDuzina" class="col-sm-2 col-form-label"> Adresa restorana - geografskaDuzina: </label>
           <div class="col-sm-4">
             <input v-model="PrikaziIzabraniRestoranDto.lokacija.geografskaDuzina" id="adresaGDuzina" type="text" class="form-control" name="adresaGDuzina" required="required" readonly/>
@@ -49,7 +46,7 @@
         </div>
         <br/>
 
-        <div class="mb-2 row">
+        <div class="mb-2 row ps-3">
           <label for="adresaGSirina" class="col-sm-2 col-form-label"> Adresa restorana - geografskaSirina: </label>
           <div class="col-sm-4">
             <input v-model="PrikaziIzabraniRestoranDto.lokacija.geografskaSirina" id="adresaGSirina" type="text" class="form-control" name="adresaGSirina" required="required" readonly/>
@@ -57,7 +54,7 @@
         </div>
         <br/>
 
-        <div class="mb-2 row">
+        <div class="mb-2 row ps-3">
           <label for="status" class="col-sm-2 col-form-label"> Status: </label>
           <div class="col-sm-4">
             <input v-model="PrikaziIzabraniRestoranDto.status" id="status" type="text" class="form-control" name="status" required="required" readonly/>
@@ -65,15 +62,7 @@
         </div>
         <br/>
 
-        <!--<div class="mb-2 row">
-          <label for="prosecnaOcena" class="col-sm-2 col-form-label"> Prosecna ocena: </label>
-          <div class="col-sm-4">
-            <input v-model="PrikaziIzabraniRestoranDto.prosecnaOcena" id="prosecnaOcena" type="text" class="form-control" name="prosecnaOcena" required="required" readonly/>
-          </div>
-        </div>
-        <br/>-->
-
-        <div class="mb-2 row">
+        <div class="mb-2 row ps-3">
           <label for="prosecnaOcena" class="col-sm-2 col-form-label"> Prosečna ocena: </label>
           <div class="col-sm-4">
             <input v-model="PrikaziIzabraniRestoranDto.prosecnaOcena" id="prosecnaOcena" type="text" class="form-control" name="prosecnaOcena" required="required" readonly/>
@@ -88,9 +77,13 @@
         </div>
         <br/>
 
-        <h1 class="page-header text-left pt-5 pb-5"> Asortiman artikala u ovom restorana: </h1>
+        <div id="ovoJeAkoNije" hidden>
+          <h1>{{poruka}}</h1>
+        </div>
 
-        <!-- sada ovde trebaju da idu artikli i slike, ali posto ih nema, za sad ce ici samo tabela -->
+        <div id="ovoJeRestoran">
+
+        <h1 class="page-header text-left pt-5 pb-5"> Asortiman artikala u ovom restorana: </h1>
 
        <div class="row row-cols-1 row-cols-md-3 g-4">
 
@@ -112,35 +105,7 @@
 
         </div>
         
-
-
-      <!--  <div class="table-responsive caption-top">
-          <table class="table table-striped table-hover table-bordered border-secondary">
-            <caption style="caption-side: top;"><b>Spisak svih artikala iz restorana</b></caption>
-
-            <thead>
-            <tr>
-              <th>Naziv artikla</th>
-              <th>Cena artikla</th>
-              <th>Kolicina</th>
-              <th>Tip</th>
-              <th>Opis</th>
-            </tr>
-            </thead>
-
-            <tbody>
-            <tr v-for="artikal in PrikaziIzabraniRestoranDto.listaArtikala" :key="artikal.id">
-              <td>{{ artikal.naziv }}</td>
-              <td>{{ artikal.cena }}</td>
-              <td>{{ artikal.kolicina }}</td>
-              <td>{{ artikal.tip }}</td>
-              <td>{{ artikal.opis }}</td>
-            </tr>
-            </tbody>
-
-          </table>
-
-        </div>-->
+      </div>
 
         <section style="background-color: #f7f6f6;">
           <div class="container my-5 py-5 text-dark">
@@ -150,6 +115,30 @@
                 <div class="d-flex justify-content-between align-items-center mb-4">
                   <h4 class="text-dark mb-0">Lista komentara ostalih korisnika</h4>
                 </div>
+
+                <!--<div class="card">
+
+                <div class="col-md-12 row" v-for="komentar in PrikaziIzabraniRestoranDto.listaKomentara" :key="komentar.id">
+
+                  <div class="col-md-2 text-center">
+                    <i class="fa fa-user-circle" aria-hidden="true"></i>
+                  </div>
+                  
+                  <div class="col-md-2">
+                    {{komentar.korisnickoIme}}
+                  </div>
+
+                  <div class="col-md-6">
+                    {{ komentar.tekstKomentara }}
+                  </div>
+
+                  <div class="col-md-2">
+                    {{ komentar.ocena }}
+                  </div>
+
+                </div>
+
+                </div>-->
 
                 <div class="card mb-3">
                   <div class="card-body" v-for="komentar in PrikaziIzabraniRestoranDto.listaKomentara" :key="komentar.id">
@@ -173,31 +162,6 @@
             </div>
           </div>
         </section>
-
-
-        <!--<div class="table-responsive caption-top">
-          <table class="table table-striped table-hover table-bordered border-secondary">
-
-            <thead>
-            <tr>
-              <th>#</th>
-              <th>Komentator</th>
-              <th>Ocena</th>
-              <th>Tekst komentara</th>
-            </tr>
-            </thead>
-
-            <tbody>
-            <tr v-for="komentar in PrikaziIzabraniRestoranDto.listaKomentara" :key="komentar.id">
-              <td>{{ komentar.basic }}</td>
-              <td>{{ komentar.korisnickoIme }}</td>
-              <td>{{ komentar.ocena }}</td>
-              <td>{{ komentar.tekstKomentara }}</td>
-            </tr>
-            </tbody>
-
-          </table>
-        </div>-->
 
       </div>
 
@@ -253,6 +217,7 @@ export default {
           tekstKomentara: "",
         },
       },
+      poruka: "",
     };
   },
   mounted: function () {
@@ -267,8 +232,14 @@ export default {
       })
         .then(response => response.json())
         .then(data => {
-          console.log("Success:", data);
           this.PrikaziIzabraniRestoranDto = data;
+
+          if(this.PrikaziIzabraniRestoranDto.listaArtikala == "")
+          {
+            this.poruka = "Ovaj restoran nema artikle";
+            document.getElementById("ovoJeRestoran").hidden = true;
+            document.getElementById("ovoJeAkoNije").hidden = false;
+          }
 
           if(this.PrikaziIzabraniRestoranDto.status === "RADI")
           {
@@ -281,27 +252,27 @@ export default {
           
           if(this.PrikaziIzabraniRestoranDto.prosecnaOcena === "Nema nijedne ocene za ovaj restoran")
           {
-
+            this.PrikaziIzabraniRestoranDto.prosecnaOcena = "Nema nijedne ocene za ovaj restoran";
           }
-          if(this.PrikaziIzabraniRestoranDto.prosecnaOcena === "JakoLose")
+          if(this.PrikaziIzabraniRestoranDto.prosecnaOcena == "Jako lose")
           {
             document.getElementById("z1").classList.add("rating-color");
             this.PrikaziIzabraniRestoranDto.prosecnaOcena = "Jako lose"
           }
-          if(this.PrikaziIzabraniRestoranDto.prosecnaOcena === "Lose")
+          if(this.PrikaziIzabraniRestoranDto.prosecnaOcena == "Lose")
           {
             document.getElementById("z1").classList.add("rating-color");
             document.getElementById("z2").classList.add("rating-color");
             this.PrikaziIzabraniRestoranDto.prosecnaOcena = "Lose"
           }
-          if(this.PrikaziIzabraniRestoranDto.prosecnaOcena === "Dobro")
+          if(this.PrikaziIzabraniRestoranDto.prosecnaOcena == "Dobro")
           {
             document.getElementById("z1").classList.add("rating-color");
             document.getElementById("z2").classList.add("rating-color");
             document.getElementById("z3").classList.add("rating-color");
             this.PrikaziIzabraniRestoranDto.prosecnaOcena = "Dobro"
           }
-          if(this.PrikaziIzabraniRestoranDto.prosecnaOcena === "VeomaDobro")
+          if(this.PrikaziIzabraniRestoranDto.prosecnaOcena == "Veoma dobro")
           {
             document.getElementById("z1").classList.add("rating-color");
             document.getElementById("z2").classList.add("rating-color");
@@ -309,7 +280,7 @@ export default {
             document.getElementById("z4").classList.add("rating-color");
             this.PrikaziIzabraniRestoranDto.prosecnaOcena = "Veoma dobro"
           }
-          if(this.PrikaziIzabraniRestoranDto.prosecnaOcena === "Odlicno")
+          if(this.PrikaziIzabraniRestoranDto.prosecnaOcena == "Odlicno")
           {
             document.getElementById("z1").classList.add("rating-color");
             document.getElementById("z2").classList.add("rating-color");
@@ -318,7 +289,6 @@ export default {
             document.getElementById("z5").classList.add("rating-color");
             this.PrikaziIzabraniRestoranDto.prosecnaOcena = "Odlicno"
           }
-          
           })
         .catch((error) => {
           console.error("Error:", error);
@@ -338,13 +308,10 @@ export default {
       })
         .then((response) => response.json)
         .then((data) => {
-          console.log("Success : " + data);
-          this.$ses;
           this.$router.push("/");
         })
         .catch((err) => {
           console.log("Error : " + err);
-          alert(err);
         });
 
       },
