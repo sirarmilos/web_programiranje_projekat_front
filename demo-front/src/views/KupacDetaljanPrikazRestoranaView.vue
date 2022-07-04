@@ -1,8 +1,5 @@
 <template>
 
-    <!-- template sa w3schools-a, za navbar -->
-    <!-- vidi kako na link da vezes onclick metodu, nesto v-bind mozda ne znam-->
-    <!-- https://forum.vuejs.org/t/how-to-call-a-function-by-click-on-some-class-in-href-tag/37181 --> 
     <div class="topnav">
         <a class="active" href="/kupacRestorani">Restorani</a>
         <a href="/kupacPorudzbine">Porudžbina</a>
@@ -65,15 +62,7 @@
         </div>
         <br/>
 
-        <!--<div class="mb-2 row ps-3">
-          <label for="prosecnaOcena" class="col-sm-2 col-form-label"> Prosečna ocena: </label>
-          <div class="col-sm-4">
-            <input v-model="PrikaziIzabraniRestoranDto.prosecnaOcena" id="prosecnaOcena" type="text" class="form-control" name="prosecnaOcena" required="required" readonly/>
-          </div>
-        </div>
-        <br/>-->
-
-        <div class="mb-2 row">
+        <div class="mb-2 row ps-3">
           <label for="prosecnaOcena" class="col-sm-2 col-form-label"> Prosečna ocena: </label>
           <div class="col-sm-4">
             <input v-model="PrikaziIzabraniRestoranDto.prosecnaOcena" id="prosecnaOcena" type="text" class="form-control" name="prosecnaOcena" required="required" readonly/>
@@ -88,14 +77,15 @@
         </div>
         <br/>
 
+        <div id="ovoJeAkoNije" hidden>
+          <h1>{{poruka}}</h1>
+        </div>
+
+        <div id="ovoJeRestoran">
+
         <div class="mb-2 row pt-5 pb-5 ps-3">
           <label class="col-sm-8 col-form-label"><h2> Asortiman artikala u ovom restorana </h2></label>
-          <label for="kolicina" class="col-sm-1 col-form-label"> <b> Unesite kolicinu </b> </label>
-          <div class="col-sm-2">
-            <input v-model="kolicina_artikla" id="kolicina" class="form-control"/>
-          </div>
         </div>
-        <!-- sada ovde trebaju da idu artikli i slike, ali posto ih nema, za sad ce ici samo tabela -->
 
         <div class="row row-cols-1 row-cols-md-3 g-4">
 
@@ -111,76 +101,55 @@
                 <li class="list-group-item">Količina: {{ artikal.kolicina }}</li>
                 <li class="list-group-item">Tip: {{ artikal.tip }}</li>
                 <li class="list-group-item">Cena: {{ artikal.cena }}</li>
+
+                <li class="list-group-item"><input v-bind:id="artikal.id" class="form-control w-50" type="number" placeholder="Unesite kolicinu"/></li>
               </ul>
 
+              <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                </symbol>
+                <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                </symbol>
+                <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                </symbol>
+              </svg>
+
+                <div v-bind:id="jedinstveno(artikal.id)"  hidden>
+
+                  <div class="alert alert-danger d-flex align-items-center w-75 ms-3 mt-2" role="alert" style="min-width:260px;">
+                  <svg class="bi flex-shrink-0 me-2 text-center" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                    <div>
+                      {{porukaGreske}}
+                    </div>
+                  </div>
+
+                </div>
+
+                <div v-bind:id="jedinstveno2(artikal.id)" hidden>
+
+                  <div class="alert alert-success d-flex align-items-center  w-75 ms-3 mt-2" role="alert" style="min-width:260px;">
+                  <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                    <div>
+                      {{porukaPotvrde}}
+                    </div>
+                  </div>
+
+                </div>
+
               <div class="card-body">
-                <a class="btn btn-outline-secondary col-sm-5" v-on:click="dodajArtikalUKorpu(artikal.id,kolicina_artikla)" style="max-width:150px; margin: 0 auto; display:block;"><b>Dodaj</b></a>
+                <a class="btn btn-outline-secondary col-sm-5" v-on:click="dodajArtikalUKorpu(artikal, artikal.id, kolicina_artikla)" style="max-width:150px;"><b>Dodaj</b></a>
               </div>
             </div>
           </div>
 
         </div>
 
-        <!--
-        <div class="table-responsive caption-top col-md-10" style="margin: 0 auto; display:block;">
-          <table class="table table-striped table-hover table-bordered border-secondary">
-            <caption style="caption-side: top;"><b>Spisak svih artikala iz restorana</b></caption>
+        </div>
 
-            <thead>
-            <tr class="text-center">
-              <th>#</th>
-              <th>Naziv artikla</th>
-              <th>Cena artikla</th>
-              <th>Kolicina</th>
-              <th>Tip</th>
-              <th>Opis</th>
-              <th>Dodaj artikal u korpu</th>
-            </tr>
-            </thead>
 
-            <tbody>
-            <tr v-for="artikal in PrikaziIzabraniRestoranDto.listaArtikala" :key="artikal.id" class="text-center">
-              <td>{{ artikal.Basic }}</td>
-              <td>{{ artikal.naziv }}</td>
-              <td>{{ artikal.cena }}</td>
-              <td>{{ artikal.kolicina }}</td>
-              <td>{{ artikal.tip }}</td>
-              <td>{{ artikal.opis }}</td>
-              <td>
-                <button class="btn btn-outline-secondary col-sm-5" v-on:click="dodajArtikalUKorpu(artikal.id,kolicina_artikla)" style="max-width:150px; margin: 0 auto; display:block;">
-                  <b>Dodaj</b>
-                </button>
-              </td>
-            </tr>
-            </tbody>
-
-          </table>
-
-        </div>-->
-
-        <!--<div class="table-responsive caption-top col-md-10" style="margin: 0 auto; display:block; padding-top: 5%; padding-bottom: 5%;">
-          <table class="table table-striped table-hover table-bordered border-secondary">
-
-            <thead>
-            <tr class="text-center">
-              <th>#</th>
-              <th>Komentator</th>
-              <th>Ocena</th>
-              <th>Tekst komentara</th>
-            </tr>
-            </thead>
-
-            <tbody>
-            <tr v-for="komentar in PrikaziIzabraniRestoranDto.listaKomentara" :key="komentar.id" class="text-center">
-              <td>{{ komentar.Basic }}</td>
-              <td>{{ komentar.korisnickoIme }}</td>
-              <td>{{ komentar.ocena }}</td>
-              <td>{{ komentar.tekstKomentara }}</td>
-            </tr>
-            </tbody>
-
-          </table>
-        </div>-->
 
         <section style="background-color: #f7f6f6;">
           <div class="container my-5 py-5 text-dark">
@@ -190,6 +159,30 @@
                 <div class="d-flex justify-content-between align-items-center mb-4">
                   <h4 class="text-dark mb-0">Lista komentara ostalih korisnika</h4>
                 </div>
+
+                <!--<div class="card">
+
+                <div class="col-md-12 row" v-for="komentar in PrikaziIzabraniRestoranDto.listaKomentara" :key="komentar.id">
+
+                  <div class="col-md-2 text-center">
+                    <i class="fa fa-user-circle" aria-hidden="true"></i>
+                  </div>
+                  
+                  <div class="col-md-2">
+                    {{komentar.korisnickoIme}}
+                  </div>
+
+                  <div class="col-md-6">
+                    {{ komentar.tekstKomentara }}
+                  </div>
+
+                  <div class="col-md-2">
+                    {{ komentar.ocena }}
+                  </div>
+
+                </div>
+
+                </div>-->
 
                 <div class="card mb-3">
                   <div class="card-body" v-for="komentar in PrikaziIzabraniRestoranDto.listaKomentara" :key="komentar.id">
@@ -232,7 +225,7 @@
       </div>
 
       <div class="footer-copyright text-center py-3">© 2022 Copyright:
-        <a href="/"> DostavaZaCas.com </a>
+        <a href="/dostavaZaCas"> DostavaZaCas.com </a>
       </div>
 
     </footer>
@@ -240,7 +233,7 @@
 </template>
 
 <script>
-
+import axios from "axios"
 export default {
   name: "KupacDetaljanPrikazRestoranaView",
 
@@ -269,12 +262,16 @@ export default {
           ocena: "",
           tekstKomentara: "",
         },
+        prosecnaOcena: "",
       },
       Slanje:{
         id:"",
         kolicina:"",
       },
       kolicina_artikla:"0",
+      porukaGreske : "",
+      porukaPotvrde: "",
+      poruka: "",
     };
   },
 
@@ -290,8 +287,14 @@ export default {
       })
         .then(response => response.json())
         .then(data => {
-          console.log("Success:", data);
           this.PrikaziIzabraniRestoranDto = data;
+
+          if(this.PrikaziIzabraniRestoranDto.listaArtikala == "")
+          {
+            this.poruka = "Ovaj restoran nema artikle";
+            document.getElementById("ovoJeRestoran").hidden = true;
+            document.getElementById("ovoJeAkoNije").hidden = false;
+          }
           
           if(this.PrikaziIzabraniRestoranDto.status === "RADI")
           {
@@ -301,30 +304,29 @@ export default {
           {
             this.PrikaziIzabraniRestoranDto.status = "Restoran trenutno ne radi"
           }
-          
           if(this.PrikaziIzabraniRestoranDto.prosecnaOcena === "Nema nijedne ocene za ovaj restoran")
           {
-
+            this.PrikaziIzabraniRestoranDto.prosecnaOcena = "Nema nijedne ocene za ovaj restoran";
           }
-          if(this.PrikaziIzabraniRestoranDto.prosecnaOcena === "JakoLose")
+          if(this.PrikaziIzabraniRestoranDto.prosecnaOcena == "Jako lose")
           {
             document.getElementById("z1").classList.add("rating-color");
             this.PrikaziIzabraniRestoranDto.prosecnaOcena = "Jako lose"
           }
-          if(this.PrikaziIzabraniRestoranDto.prosecnaOcena === "Lose")
+          if(this.PrikaziIzabraniRestoranDto.prosecnaOcena == "Lose")
           {
             document.getElementById("z1").classList.add("rating-color");
             document.getElementById("z2").classList.add("rating-color");
             this.PrikaziIzabraniRestoranDto.prosecnaOcena = "Lose"
           }
-          if(this.PrikaziIzabraniRestoranDto.prosecnaOcena === "Dobro")
+          if(this.PrikaziIzabraniRestoranDto.prosecnaOcena == "Dobro")
           {
             document.getElementById("z1").classList.add("rating-color");
             document.getElementById("z2").classList.add("rating-color");
             document.getElementById("z3").classList.add("rating-color");
             this.PrikaziIzabraniRestoranDto.prosecnaOcena = "Dobro"
           }
-          if(this.PrikaziIzabraniRestoranDto.prosecnaOcena === "VeomaDobro")
+          if(this.PrikaziIzabraniRestoranDto.prosecnaOcena == "Veoma dobro")
           {
             document.getElementById("z1").classList.add("rating-color");
             document.getElementById("z2").classList.add("rating-color");
@@ -332,7 +334,7 @@ export default {
             document.getElementById("z4").classList.add("rating-color");
             this.PrikaziIzabraniRestoranDto.prosecnaOcena = "Veoma dobro"
           }
-          if(this.PrikaziIzabraniRestoranDto.prosecnaOcena === "Odlicno")
+          if(this.PrikaziIzabraniRestoranDto.prosecnaOcena == "Odlicno")
           {
             document.getElementById("z1").classList.add("rating-color");
             document.getElementById("z2").classList.add("rating-color");
@@ -360,17 +362,54 @@ export default {
       })
         .then((response) => response.json)
         .then((data) => {
-          console.log("Success : " + data);
-          this.$ses;
           this.$router.push("/");
         })
         .catch((err) => {
           console.log("Error : " + err);
-          alert(err);
         });
       },
 
-    dodajArtikalUKorpu : function(id,kolicina) {
+    jedinstveno : function(id) {
+      return id+1000;
+    },
+
+    jedinstveno2 : function(id) {
+      return id+10000000;
+    },
+
+    dodajArtikalUKorpu : function(artikal, id, kolicina) {
+        localStorage.cuvanje = this.$route.query.id;
+        this.Slanje.id = id;
+        this.Slanje.kolicina = document.getElementById(id).value;
+      axios
+        .post("http://localhost:8081/api/porudzbina/dodajArtikal", this.Slanje,
+        {
+          withCredentials: true
+        }).then((res) => {
+          document.getElementById(this.jedinstveno(id)).hidden = true;
+          document.getElementById(id).value = "";
+          document.getElementById(this.jedinstveno2(id)).hidden = false;
+          this.porukaPotvrde = "Uspesno ste ubacili " + this.Slanje.kolicina + " komada " + artikal.naziv + " u svoju korpu.";
+          setTimeout(() => {
+            document.getElementById(this.jedinstveno2(id)).hidden = true;
+          }, 2500);
+          
+        })
+        .catch((err) => {
+          document.getElementById(this.jedinstveno2(id)).hidden = true;
+          this.porukaGreske = err.request.response;
+          document.getElementById(id).value = "";
+          document.getElementById(id).focus();
+          document.getElementById(id).porukaGreske = this.porukaGreske;
+          document.getElementById(this.jedinstveno(id)).hidden = false;
+          setTimeout(() => {
+            document.getElementById(this.jedinstveno(id)).hidden = true;
+          }, 2500);
+        });   
+    },
+    
+
+  /*  dodajArtikalUKorpu : function(id,kolicina) {
         localStorage.cuvanje = this.$route.query.id;
         this.Slanje.id = id;
         this.Slanje.kolicina = Math.floor(kolicina);
@@ -399,7 +438,7 @@ export default {
         .catch((err) => {
           alert(err);
         });
-      }
+      }*/
   }
 
 };

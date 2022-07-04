@@ -104,7 +104,7 @@
       </div>
 
       <div class="footer-copyright text-center py-3">© 2022 Copyright:
-        <a href="/"> DostavaZaCas.com </a>
+        <a href="/dostavaZaCas"> DostavaZaCas.com </a>
       </div>
 
     </footer>
@@ -131,7 +131,7 @@ export default {
 
   mounted: function () {
 
-      fetch('http://localhost:8081/api/restoran/prikaz_restorana' /*+ localStorage.name*/, {
+      fetch('http://localhost:8081/api/restoran/prikaz_restorana', {
         method: "GET",
         credentials: 'include',
         headers: {
@@ -140,7 +140,9 @@ export default {
         },
       })
         .then(response => response.json())
-        .then(data => {console.log("Success:", data); this.restorani = data})
+        .then(data => { 
+          this.restorani = data;
+          })
         .catch((error) => {
           console.error("Error:", error);
         });
@@ -167,7 +169,9 @@ export default {
         {
           document.getElementById("prozorGreski").hidden = true;
           document.getElementById("tabela1").hidden = false;
-          if(data.Restorani === "Ne postoji trazeni restoran.") {
+
+          if(data.Restorani === "Ne postoji trazeni restoran.")
+          {
             document.getElementById("tabela1").hidden = true;
             this.porukaGreske = "Trazeni restoran ne postoji";
             document.getElementById("prozorGreski").hidden = false;
@@ -193,13 +197,10 @@ export default {
       })
         .then((response) => response.json)
         .then((data) => {
-          console.log("Success : " + data);
-          this.$ses;
           this.$router.push("/");
         })
         .catch((err) => {
           console.log("Error : " + err);
-          alert(err);
         });
 
       }

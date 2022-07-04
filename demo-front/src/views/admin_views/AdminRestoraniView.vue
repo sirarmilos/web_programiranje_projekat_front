@@ -1,8 +1,5 @@
 <template>
 
-    <!-- template sa w3schools-a, za navbar -->
-    <!-- vidi kako na link da vezes onclick metodu, nesto v-bind mozda ne znam-->
-    <!-- https://forum.vuejs.org/t/how-to-call-a-function-by-click-on-some-class-in-href-tag/37181 --> 
     <div class="topnav">
         <a href="/adminPrikazSvihKorisnika">Prikaz svih korisnika</a>
         <a class="active"  href="/adminRestorani">Restorani</a>
@@ -114,7 +111,7 @@
       </div>
 
       <div class="footer-copyright text-center py-3">© 2022 Copyright:
-        <a href="/"> DostavaZaCas.com </a>
+        <a href="/dostavaZaCasAdmin"> DostavaZaCas.com </a>
       </div>
 
     </footer>
@@ -141,7 +138,7 @@ export default {
 
   mounted: function () {
 
-      fetch('http://localhost:8081/api/restoran/prikaz_restorana' /*+ localStorage.name*/, {
+      fetch('http://localhost:8081/api/restoran/prikaz_restorana', {
         method: "GET",
         credentials: 'include',
         headers: {
@@ -150,7 +147,9 @@ export default {
         },
       })
         .then(response => response.json())
-        .then(data => {console.log("Success:", data); this.restorani = data})
+        .then(data => {
+          this.restorani = data;
+          })
         .catch((error) => {
           console.error("Error:", error);
         });
@@ -196,7 +195,8 @@ export default {
         {
           document.getElementById("prozorGreski").hidden = true;
           document.getElementById("tabela1").hidden = false;
-          if(data.Restorani === "Ne postoji trazeni restoran.") {
+          if(data.Restorani === "Ne postoji trazeni restoran.")
+          {
             document.getElementById("tabela1").hidden = true;
             this.porukaGreske = "Trazeni restoran ne postoji";
             document.getElementById("prozorGreski").hidden = false;
@@ -218,16 +218,13 @@ export default {
           Accept: "application/json",
           "Content-type": "application/json",
         },
-        //body: JSON.stringify(this.korisnik),
       })
         .then((response) => response.json)
         .then((data) => {
-          console.log("Success : " + data);
           this.$router.push("/");
         })
         .catch((err) => {
           console.log("Error : " + err);
-          alert(err);
         });
 
       }

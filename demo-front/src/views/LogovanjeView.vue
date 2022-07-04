@@ -53,8 +53,7 @@ import axios from "axios"
 axios.defaults.withCredentials = true;
 export default {
     name: "LogovanjeView",
-
-  
+    
   data: function () {
     return {
       logovanjeSlanje: {
@@ -68,9 +67,7 @@ export default {
   methods: {
 
     registrujSe: function() {
-
       this.$router.push("/registracija");
-
     },
 
     ulogujSe: function () {
@@ -81,8 +78,6 @@ export default {
           withCredentials: true
         })
         .then((res) => {
-          console.log(res);
-
           var uloga_pomocna = JSON.stringify(res.data.uloga);
           var uloga_pomocna1 = uloga_pomocna.replace('"', '');
           var uloga_pomocna2 = uloga_pomocna1.replace('"', '');

@@ -1,8 +1,5 @@
 <template>
-
-    <!-- template sa w3schools-a, za navbar -->
-    <!-- vidi kako na link da vezes onclick metodu, nesto v-bind mozda ne znam-->
-    <!-- https://forum.vuejs.org/t/how-to-call-a-function-by-click-on-some-class-in-href-tag/37181 --> 
+ 
     <div class="topnav">
         <a href="/kupacRestorani">Restorani</a>
         <a class="active" href="/kupacPorudzbine">Porudžbina</a>
@@ -20,7 +17,7 @@
             </symbol>
           </svg>
 
-          <div id="prozorGreski" hidden>
+          <div id="prozorGreski" class="pt-3 pb-3" hidden>
 
             <div class="alert alert-danger d-flex align-items-center w-25 centriranje" role="alert" style=" min-width:360px; max-width:360px;">
             <svg class="bi flex-shrink-0 me-2 text-center" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
@@ -52,7 +49,7 @@
               <td>{{ porudzbina.cena }}</td>
               <td>{{ porudzbina.status }}</td>
               <td>
-                <button class="btn btn-outline-secondary col-sm-5 dugmeViseInformacija" v-on:click="viseInformacija(porudzbina)" style="max-width:150px; margin: 0 auto; display:block;">
+                <button class="btn btn-outline-secondary col-sm-5 dugmeViseInformacija" v-on:click="viseInformacija(porudzbina)" style="min-width:150px; max-width:150px; margin: 0 auto; display:block;">
                  <b> Vise informacija </b>
                 </button>
               </td>
@@ -78,7 +75,7 @@
       </div>
 
       <div class="footer-copyright text-center py-3">© 2022 Copyright:
-        <a href="/"> DostavaZaCas.com </a>
+        <a href="/dostavaZaCas"> DostavaZaCas.com </a>
       </div>
 
     </footer>
@@ -153,8 +150,6 @@ export default {
         console.log(err)
       })
 
-
-
   /*    fetch('http://localhost:8081/api/porudzbina/dobaviSve', {
         method: "GET",
         credentials: 'include',
@@ -168,7 +163,6 @@ export default {
           this.listaPorudzbina = data;
           for(var i = 0; i < this.listaPorudzbina.length; i++)
           {
-            console.log("poz");
             if(this.listaPorudzbina[i].status === "Obrada")
             {
               this.listaPorudzbina[i].status = "Obrada";
@@ -215,13 +209,10 @@ export default {
       })
         .then((response) => response.json)
         .then((data) => {
-          console.log("Success : " + data);
-          this.$ses;
           this.$router.push("/");
         })
         .catch((err) => {
           console.log("Error : " + err);
-          alert(err);
         });
 
       }
