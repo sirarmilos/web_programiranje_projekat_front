@@ -78,8 +78,6 @@ export default {
           withCredentials: true
         })
         .then((res) => {
-          console.log(res);
-
           var uloga_pomocna = JSON.stringify(res.data.uloga);
           var uloga_pomocna1 = uloga_pomocna.replace('"', '');
           var uloga_pomocna2 = uloga_pomocna1.replace('"', '');
