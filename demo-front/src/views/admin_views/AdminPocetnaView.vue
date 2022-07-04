@@ -1,12 +1,13 @@
 <template>
- 
+
     <div class="topnav">
-        <a href="/kupacRestorani">Restorani</a>
-        <a href="/kupacPorudzbine">Porudžbina</a>
-        <a class="active" href="/kupacPocetna" >Pregled podataka</a>
-        <a href="/kupacAzuriranjePodataka">Ažuriranje podataka</a>
+        <a href="/adminPrikazSvihKorisnika">Prikaz svih korisnika</a>
+        <a href="/adminRestorani">Restorani</a>
+        <a href="/adminKreiranjeNovogRestoranaIMenadzera">Kreiraj novi restoran i menadžera</a>
+        <a href="/adminKreiranjeNovogDostavljaca">Kreiranje dostavljača</a>
+        <a class="active" href="/adminPocetna" >Pregled podataka</a>
+        <a href="/adminAzuriranjePodataka">Ažuriranje podataka</a>   
         <a v-on:click="odlogovanje()" style="color:white;">Izloguj se</a>
-        <a href="/kupackreiranjePorudzbine"><font-awesome-icon icon="fa-solid fa-cart-shopping" /></a>
     </div>
 
     <div class="container-fluid w-100 p-3 hv-100" style="background-color: #eee; border: 5px solid white;">
@@ -69,24 +70,6 @@
 
         <br/>
 
-        <div class="mb-2 row">
-          <label for="poljeTipKupca" class="col-sm-2 col-form-label"> Tip kupca: </label>
-          <div class="col-sm-4">
-            <input v-model="korisnik.tipKupca" id="poljeTipKupca" type="text" class="form-control" name="poljeTipKupca" required="required" readonly/>
-          </div>
-        </div>
-
-        <br/>
-
-        <div class="mb-2 row">
-          <label for="poljeBrojSkupljenihPoena" class="col-sm-2 col-form-label"> Broj sakupljenih poena: </label>
-          <div class="col-sm-4">
-            <input v-model="korisnik.brojSkupljenihPoena" id="poljeBrojSkupljenihPoena" type="text" class="form-control" name="poljeBrojSkupljenihPoena" required="required" readonly/>
-          </div>
-        </div>
-
-        <br/>
-
       </div>
     
     </div>
@@ -105,7 +88,7 @@
       </div>
 
       <div class="footer-copyright text-center py-3">© 2022 Copyright:
-        <a href="/dostavaZaCas"> DostavaZaCas.com </a>
+        <a href="/dostavaZaCasAdmin"> DostavaZaCas.com </a>
       </div>
 
     </footer>
@@ -115,7 +98,7 @@
 <script>
 
 export default {
-  name: "KupacPocetnaView",
+  name: "AdminPocetnaView",
 
   data: function () {
     return {
@@ -123,10 +106,9 @@ export default {
       tekstDugmeta: "Prikaži lozinku",
     };
   },
-  
   mounted: function () {
 
-      fetch('http://localhost:8081/api/kupac/pregled_podataka', {
+      fetch('http://localhost:8081/api/korisnik/pregled_podataka/', {
         method: "GET",
         credentials: 'include',
         headers: {
@@ -137,11 +119,10 @@ export default {
         .then(response => response.json())
         .then(data => {
           this.korisnik = data;
-        })
+          })
         .catch((error) => {
           console.error("Error:", error);
         });
-        
   },
 
  methods: {
@@ -150,17 +131,19 @@ export default {
       var vrednost = document.getElementById("poljeLozinka");
       if(vrednost.type === "password")
       {
+        //document.getElementById("poljeLozinka").setAttribute("type", "text");
         vrednost.setAttribute("type", "text");
         this.tekstDugmeta = "Sakrij lozinku";
       }
       else
       {
+        //document.getElementById("poljeLozinka").setAttribute("type", "password");
         vrednost.setAttribute("type", "password");
         this.tekstDugmeta = "Prikaži lozinku";
       }
     },
 
-    odlogovanje : function () {
+        odlogovanje : function () {
       fetch("http://localhost:8081/api/odlogovanje", {
         method: "POST",
         credentials: 'include',
@@ -186,34 +169,5 @@ export default {
 </script>
 
 <style>
-
-.topnav {
-  background-color: #35495e;
-  overflow: hidden;
-  border: 5px solid white;
-  border-radius:15px;
-}
-
-/* Style the links inside the navigation bar */
-.topnav a {
-  float: left;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 20px 2.5%; /*5%*/
-  text-decoration: none;
-  font-size: 20px;
-}
-
-/* Change the color of links on hover */
-.topnav a:hover {
-  background-color: #ddd;
-  color: black;
-}
-
-/* Add a color to the active/current link */
-.topnav a.active {
-  background-color: #42b883; /*#42b883*/
-  color: white;
-}
 
 </style>

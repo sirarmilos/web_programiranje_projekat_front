@@ -1,12 +1,13 @@
 <template>
- 
+
     <div class="topnav">
-        <a href="/kupacRestorani">Restorani</a>
-        <a href="/kupacPorudzbine">Porudžbina</a>
-        <a href="/kupacPocetna" >Pregled podataka</a>
-        <a class="active" href="/kupacAzuriranjePodataka">Ažuriranje podataka</a>
+        <a href="/adminPrikazSvihKorisnika">Prikaz svih korisnika</a>
+        <a href="/adminRestorani">Restorani</a>
+        <a href="/adminKreiranjeNovogRestoranaIMenadzera">Kreiraj novi restoran i menadžera</a>
+        <a href="/adminKreiranjeNovogDostavljaca">Kreiranje dostavljača</a>
+        <a href="/adminPocetna" >Pregled podataka</a>
+        <a class="active" href="/adminAzuriranjePodataka">Ažuriranje podataka</a>   
         <a v-on:click="odlogovanje()" style="color:white;">Izloguj se</a>
-        <a href="/kupackreiranjePorudzbine"><font-awesome-icon icon="fa-solid fa-cart-shopping" /></a>
     </div>
 
     <div class="container-fluid w-100 p-3 hv-100" style="background-color: #eee; border: 5px solid white;">
@@ -91,6 +92,7 @@
 
           </div>
 
+
       </div>
     
     </div>
@@ -109,7 +111,7 @@
       </div>
 
       <div class="footer-copyright text-center py-3">© 2022 Copyright:
-        <a href="/dostavaZaCas"> DostavaZaCas.com </a>
+        <a href="/dostavaZaCasAdmin"> DostavaZaCas.com </a>
       </div>
 
     </footer>
@@ -119,7 +121,7 @@
 <script>
 import axios from "axios"
 export default {
-  name: "KupacAzuriranjePodatakaView",
+  name: "AdminAzuriranjePodatakaView",
 
   data: function () {
     return {
@@ -128,7 +130,6 @@ export default {
       porukaGreske : "",
     };
   },
-
   mounted: function () {
 
       fetch('http://localhost:8081/api/korisnik/pregled_podataka/', {
@@ -154,11 +155,13 @@ export default {
       var vrednost = document.getElementById("poljeLozinka");
       if(vrednost.type === "password")
       {
+        //document.getElementById("poljeLozinka").setAttribute("type", "text");
         vrednost.setAttribute("type", "text");
         this.tekstDugmeta = "Sakrij lozinku";
       }
       else
       {
+        //document.getElementById("poljeLozinka").setAttribute("type", "password");
         vrednost.setAttribute("type", "password");
         this.tekstDugmeta = "Prikaži lozinku";
       }
@@ -172,40 +175,33 @@ export default {
           withCredentials: true
         })
         .then((res) => {
-          this.$router.push("/kupacPocetna");
+          this.$router.push("/adminPocetna");
         })
         .catch((err) => {
+
           this.porukaGreske = err.request.response;
           document.getElementById("prozorGreski").hidden = false;
         });
 
 
-      /*if(this.korisnik.lozinka == "" || this.korisnik.ime == "" || this.korisnik.prezime == "")
-      {
-        alert("Greska! Lozinka je obavezan podatak.");
-      }
-      else
-      {*/
-     /*   fetch("http://localhost:8081/api/korisnik/azuriranje_podataka", {
-          method: "PUT",
-          credentials: 'include',
-          headers: {
-            Accept: "application/json",
-            "Content-type": "application/json",
-          },
-          body: JSON.stringify(this.korisnik),
+     /* fetch("http://localhost:8081/api/korisnik/azuriranje_podataka", {
+        method: "PUT",
+        credentials: 'include',
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(this.korisnik),
+      })
+        .then((response) => response.json)
+        .then((data) => {
+          console.log("Success : " + data);
+          this.$router.push("/adminPocetna");
         })
-          .then((response) => response.json)
-          .then((data) => {
-            console.log("Success : " + data);
-            alert("Uspesno ste ažurirali svoje podatke.");
-            this.$router.push("/kupacPocetna");
-          })
-          .catch((err) => {
-            console.log("Error : " + err);
-            alert(err);
-          });
-      //}*/
+        .catch((err) => {
+          console.log("Error : " + err);
+          alert(err);
+        });*/
     },
 
     odlogovanje : function () {
@@ -228,11 +224,12 @@ export default {
       }
 
   },
- 
+  
 };
 
 </script>
 
 <style>
+
 
 </style>

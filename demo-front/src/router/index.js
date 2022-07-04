@@ -1,8 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import EmployeesView from '../views/EmployeesView.vue'
-import EmployeeView from '../views/EmployeeView.vue'
-import AddEmployeeView from '../views/AddEmployeeView.vue'
 
 import LogovanjeView from '../views/LogovanjeView.vue'
 import RegistracijaView from '../views/RegistracijaView.vue'
@@ -13,6 +9,32 @@ import KupacDetaljanPrikazRestoranaView from '../views/KupacDetaljanPrikazRestor
 import KupacPorudzbineView from '../views/KupacPorudzbineView.vue'
 import KupacKreiranjePorudzbineView from '../views/KupacKreiranjePorudzbineView.vue'
 import KupacPregledPojedinacnePorudzbineView from '../views/KupacPregledPojedinacnePorudzbineView.vue'
+
+import ONamaView from '../views/ONamaView.vue'
+import ONamaMView from '../views/menadzer_views/ONamaMView.vue'
+import ONamaDView from '../views/dostavljac_views/ONamaDView.vue'
+import ONamaAView from '../views/admin_views/ONamaAView.vue'
+import ONamaNeRegView from '../views/ONamaNeRegView.vue'
+
+import AdminPocetnaView from '../views/admin_views/AdminPocetnaView.vue'
+import AdminAzuriranjePodatakaView from '../views/admin_views/AdminAzuriranjePodatakaView.vue'
+import AdminRestoraniView from '../views/admin_views/AdminRestoraniView.vue'
+import AdminDetaljanPrikazRestoranaView from '../views/admin_views/AdminDetaljanPrikazRestoranaView.vue'
+import AdminKreiranjeNovogRestoranaIMenadzeraView from '../views/admin_views/AdminKreiranjeNovogRestoranaIMenadzeraView.vue'
+import AdminPrikazSvihKorisnikaView from '../views/admin_views/AdminPrikazSvihKorisnikaView.vue'
+import AdminKreiranjeNovogDostavljacaView from '../views/admin_views/AdminKreiranjeNovogDostavljacaView.vue'
+
+import DostavljacPocetnaView from '../views/dostavljac_views/DostavljacPocetnaView.vue'
+import DostavljacAzuriranjePodatakaView from '../views/dostavljac_views/DostavljacAzuriranjePodatakaView.vue'
+import DostavljacRestoraniView from '../views/dostavljac_views/DostavljacRestoraniView.vue'
+import DostavljacNjegovPrikazPorudzbinaView from '../views/dostavljac_views/DostavljacNjegovPrikazPorudzbinaView.vue'
+
+import MenadzerPocetnaView from '../views/menadzer_views/MenadzerPocetnaView.vue'
+import MenadzerAzuriranjePodatakaView from '../views/menadzer_views/MenadzerAzuriranjePodatakaView.vue'
+import MenadzerUvidUSvojRestoranView from '../views/menadzer_views/MenadzerUvidUSvojRestoranView.vue'
+import MenadzerAzuriranjeArtiklaView from '../views/menadzer_views/MenadzerAzuriranjeArtiklaView.vue'
+import MenadzerDodavanjeNovogArtiklaView from '../views/menadzer_views/MenadzerDodavanjeNovogArtiklaView.vue'
+import MenadzerPorudzbineView from '../views/menadzer_views/MenadzerPorudzbineView.vue'
 
 const routes = [
 
@@ -71,25 +93,145 @@ const routes = [
   },
 
   {
-    path: '/',
-    name: 'home',
-    component: HomeView
+    path: '/dostavaZaCas',
+    name: 'dostavaZaCas',
+    component: ONamaView
   },
+
   {
-    path: '/employees',
-    name: 'employees',
-    component: EmployeesView
+    path: '/dostavaZaCasMenadzer',
+    name: 'dostavaZaCasMenadzer',
+    component: ONamaMView
   },
+
   {
-    path: '/employee',
-    name: 'employee',
-    component: EmployeeView
+    path: '/dostavaZaCasDostavljac',
+    name: 'dostavaZaCasDostavljac',
+    component: ONamaDView
   },
+
   {
-    path: '/add-employee',
-    name: 'add-employee',
-    component: AddEmployeeView
-  }
+    path: '/dostavaZaCasAdmin',
+    name: 'dostavaZaCasAdmin',
+    component: ONamaAView
+  },
+
+  {
+    path: '/dostavaZaCasNeReg',
+    name: 'dostavaZaCasNeReg',
+    component: ONamaNeRegView
+  },
+
+  //
+
+  {
+    path: '/adminPocetna',
+    name: 'adminPocetna',
+    component: AdminPocetnaView
+  },
+
+  {
+    path: '/adminAzuriranjePodataka',
+    name: 'adminAzuriranjePodataka',
+    component: AdminAzuriranjePodatakaView
+  },
+  
+  {
+    path: '/adminRestorani',
+    name: 'adminRestorani',
+    component: AdminRestoraniView
+  },
+
+  {
+    path: '/adminDetaljanPrikazRestorana',
+    name: 'adminDetaljanPrikazRestorana',
+    component: AdminDetaljanPrikazRestoranaView
+  },
+
+  {
+    path: '/adminKreiranjeNovogRestoranaIMenadzera',
+    name: 'adminKreiranjeNovogRestoranaIMenadzera',
+    component: AdminKreiranjeNovogRestoranaIMenadzeraView
+  },
+
+  {
+    path: '/adminPrikazSvihKorisnika',
+    name: 'adminPrikazSvihKorisnika',
+    component: AdminPrikazSvihKorisnikaView
+  },
+
+  {
+    path: '/adminKreiranjeNovogDostavljaca',
+    name: 'adminKreiranjeNovogDostavljaca',
+    component: AdminKreiranjeNovogDostavljacaView
+  },
+
+  //
+
+  {
+    path: '/dostavljacPocetna',
+    name: 'dostavljacPocetna',
+    component: DostavljacPocetnaView
+  },
+
+  {
+    path: '/dostavljacAzuriranjePodataka',
+    name: 'dostavljacAzuriranjePodataka',
+    component: DostavljacAzuriranjePodatakaView
+  },
+
+  {
+    path: '/dostavljacRestorani',
+    name: 'dostavljacRestorani',
+    component: DostavljacRestoraniView
+  },
+
+  {
+    path: '/dostavljacPorudzbine',
+    name: 'dostavljacPorudzbine',
+    component: DostavljacNjegovPrikazPorudzbinaView
+  },
+
+  //
+
+  {
+    path: '/menadzerPocetna',
+    name: 'menadzerPocetna',
+    component: MenadzerPocetnaView
+  },
+
+  {
+    path: '/menadzerAzuriranjePodataka',
+    name: 'menadzerAzuriranjePodataka',
+    component: MenadzerAzuriranjePodatakaView
+  },
+
+  {
+    path: '/menadzerNjegovRestoran',
+    name: 'menadzerNjegovRestoran',
+    component: MenadzerUvidUSvojRestoranView
+  },
+
+  {
+    path: '/menadzerAzuriranjeArtikla',
+    name: 'menadzerAzuriranjeArtikla',
+    component: MenadzerAzuriranjeArtiklaView
+  },
+
+  {
+    path: '/menadzerDodavanjeArtikla',
+    name: 'menadzerDodavanjeArtikla',
+    component: MenadzerDodavanjeNovogArtiklaView
+  },
+
+  {
+    path: '/menadzerPorudzbine',
+    name: 'menadzerPorudzbine',
+    component: MenadzerPorudzbineView
+  },
+
+  //
+
 ]
 
 const router = createRouter({

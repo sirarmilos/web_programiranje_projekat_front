@@ -1,12 +1,13 @@
 <template>
 
     <div class="topnav">
-        <a class="active" href="/kupacRestorani">Restorani</a>
-        <a href="/kupacPorudzbine">Porudžbina</a>
-        <a href="/kupacPocetna" >Pregled podataka</a>
-        <a href="/kupacAzuriranjePodataka">Ažuriranje podataka</a>
+        <a href="/adminPrikazSvihKorisnika">Prikaz svih korisnika</a>
+        <a class="active"  href="/adminRestorani">Restorani</a>
+        <a href="/adminKreiranjeNovogRestoranaIMenadzera">Kreiraj novi restoran i menadžera</a>
+        <a href="/adminKreiranjeNovogDostavljaca">Kreiranje dostavljača</a>
+        <a href="/adminPocetna" >Pregled podataka</a>
+        <a href="/adminAzuriranjePodataka">Ažuriranje podataka</a>   
         <a v-on:click="odlogovanje()" style="color:white;">Izloguj se</a>
-        <a href="/kupackreiranjePorudzbine"><font-awesome-icon icon="fa-solid fa-cart-shopping" /></a>
     </div>
 
     <div class="container-fluid w-100 p-3 hv-100" style="background-color: #eee; border: 5px solid white;">
@@ -38,7 +39,7 @@
         </div>
         <br/>
 
-          <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
             <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
               <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
             </symbol>
@@ -68,18 +69,24 @@
               <th>Tip restorana</th>
               <th>Adresa restorana</th>
               <th>Više informacija</th>
+              <th>Obriši restoran</th>
             </tr>
           </thead>
 
           <tbody>
-          <tr class="text-center" v-for="restoran in restorani" :key="restoran.id" >
-            <td>{{ restoran.Basic }}</td>
+          <tr class="text-center" v-for="restoran in restorani" :key="restoran.id">
+            <td>{{ restoran.basicBrojac}}</td>
             <td>{{ restoran.naziv }}</td>
             <td>{{ restoran.tip }}</td>
-            <td>{{ restoran.adresa }}</td>
+            <td>{{ restoran.adresa }}</td>    
             <td>
-              <button class="btn btn-outline-secondary col-sm-5 dugmeViseInformacija" v-on:click="viseInformacija(restoran)" style="min-width:150px; max-width:150px;margin: 0 auto; display:block;">
-                <b>Više informacija</b>
+              <button class="btn btn-outline-secondary col-sm-5 dugmeViseInformacija" v-on:click="viseInformacija(restoran)" style="min-width:150px; max-width:150px;">
+                <b>Vise informacija</b>
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-outline-secondary col-sm-5 dugmeViseInformacija" v-on:click="obrisiRestoran(restoran)" style="min-width:140px; max-width:150px;">
+                <b>Obriši restoran</b>
               </button>
             </td>
           </tr>
@@ -104,7 +111,7 @@
       </div>
 
       <div class="footer-copyright text-center py-3">© 2022 Copyright:
-        <a href="/dostavaZaCas"> DostavaZaCas.com </a>
+        <a href="/dostavaZaCasAdmin"> DostavaZaCas.com </a>
       </div>
 
     </footer>
@@ -114,7 +121,7 @@
 <script>
 
 export default {
-  name: "KupacRestoraniView",
+  name: "AdminRestoraniView",
 
   data: function () {
     return {
@@ -140,7 +147,7 @@ export default {
         },
       })
         .then(response => response.json())
-        .then(data => { 
+        .then(data => {
           this.restorani = data;
           })
         .catch((error) => {
@@ -150,13 +157,32 @@ export default {
 
   methods: {
 
+    obrisiRestoran: function(restoran) {
+        // vodi racuna ono dto brisanje tri odjednom, da se obrisu i lokacija, i restoran i menadzer zaduzen za taj restoran
+        console.log(restoran.id);
+        fetch("http://localhost:8081/api/admin/obrisi_restoran/" + restoran.id, {
+        method: "DELETE",
+        credentials: 'include',
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+        },
+      }).then((res) => {
+        if (res.ok) {
+          window.location.reload();
+        }
+      }).catch((error) => {
+          console.error("Error:", error);
+        });
+    },
+
     viseInformacija : function(restoran) {
-      this.$router.push("/kupacDetaljanPrikazRestorana?id=" + restoran.id);
+      this.$router.push("/adminDetaljanPrikazRestorana?id=" + restoran.id);
     },
 
     pretraga : function() {
 
-      fetch("http://localhost:8081/api/restoran/pretraga", {
+      fetch("http://localhost:8081/api/restoran/pretraga" /*+ this.slanje*/, {
         method: "POST",
         credentials: 'include',
         headers: {
@@ -169,7 +195,6 @@ export default {
         {
           document.getElementById("prozorGreski").hidden = true;
           document.getElementById("tabela1").hidden = false;
-
           if(data.Restorani === "Ne postoji trazeni restoran.")
           {
             document.getElementById("tabela1").hidden = true;
@@ -183,7 +208,6 @@ export default {
         .catch((error) => {
           console.error("Error:", error);
       });
-
     },
 
     odlogovanje : function () {
@@ -204,7 +228,7 @@ export default {
         });
 
       }
-      
+
   },
 
 };
@@ -212,22 +236,5 @@ export default {
 </script>
 
 <style>
-
-table
-{
-    counter-reset: rowNumber;
-}
-
-table tr > td:first-child
-{
-    counter-increment: rowNumber;
-}
-
-table tr td:first-child::before
-{
-    content: counter(rowNumber);
-    min-width: 1em;
-    margin-right: 0.5em;
-}
 
 </style>
